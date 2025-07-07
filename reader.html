@@ -374,23 +374,27 @@
         }
         
         .feedback {
+            max-height: 500px;
+            overflow-y: auto;
+            border-radius: 16px;
+            padding: 0;
+            background: transparent;
+            border: none;
             margin-top: 20px;
-            padding: 20px;
-            border-radius: 12px;
-            font-weight: 600;
-            backdrop-filter: blur(10px);
         }
         
-        .feedback.correct {
-            background: rgba(220, 252, 231, 0.8);
-            color: #22543d;
-            border: 2px solid #38a169;
+        .feedback::-webkit-scrollbar {
+            width: 8px;
         }
         
-        .feedback.incorrect {
-            background: rgba(254, 242, 242, 0.8);
-            color: #c53030;
-            border: 2px solid #e53e3e;
+        .feedback::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        
+        .feedback::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #1e3a8a, #dc2626);
+            border-radius: 8px;
         }
         
         /* Animações de Gamificação */
@@ -974,7 +978,7 @@
             const currentChapterData = chapters[currentChapter];
             const questions = Object.keys(currentChapterData.questions);
             let score = 0;
-            let results = [];
+            let detailedResults = [];
             let grammarScore = 0;
             let comprehensionScore = 0;
             attempts++;
@@ -983,21 +987,60 @@
                 const selected = document.querySelector(`input[name="${questionKey}"]:checked`);
                 const questionDiv = document.querySelector(`input[name="${questionKey}"]`).closest('.question');
                 const correctAnswer = currentChapterData.questions[questionKey].correct;
-                const isGrammar = questionDiv.querySelector('.question-type').classList.contains('grammar');
+                const questionType = questionDiv.querySelector('.question-type').classList.contains('grammar') ? 'grammar' : 'comprehension';
+                const isGrammar = questionType === 'grammar';
+                
+                // Obter textos das opções
+                const correctOptionText = currentChapterData.questions[questionKey].options[correctAnswer.charCodeAt(0) - 97];
+                const selectedOptionText = selected ? currentChapterData.questions[questionKey].options[selected.value.charCodeAt(0) - 97] : "Não respondida";
+                const questionText = currentChapterData.questions[questionKey].text;
+                
+                let resultHTML = '';
                 
                 if (selected && selected.value === correctAnswer) {
+                    // RESPOSTA CORRETA
                     score++;
                     if (isGrammar) grammarScore++;
                     else comprehensionScore++;
                     
-                    results.push(`Questão ${index + 1}: ✅ Correto`);
                     questionDiv.classList.add('pulse-correct');
-                    setTimeout(() => questionDiv.classList.remove('pulse-correct'), 800);
+                    
+                    const iconType = isGrammar ? '🧠' : '📖';
+                    const typeLabel = isGrammar ? 'GRAMÁTICA' : 'INTERPRETAÇÃO';
+                    
+                    resultHTML = `
+                        <div style="background: rgba(34, 197, 94, 0.1); border-left: 4px solid #22c55e; padding: 15px; border-radius: 8px; margin-bottom: 12px;">
+                            <div style="font-weight: 700; color: #15803d; margin-bottom: 8px;">
+                                ✅ Questão ${index + 1} (${typeLabel}) ${iconType}: CORRETO!
+                            </div>
+                            <div style="color: #166534; font-size: 0.95em;">
+                                <strong>Pergunta:</strong> ${questionText}<br>
+                                <strong>Sua resposta:</strong> ${selectedOptionText} 🎯
+                            </div>
+                        </div>
+                    `;
                 } else {
-                    results.push(`Questão ${index + 1}: ❌ Incorreto`);
+                    // RESPOSTA INCORRETA OU NÃO RESPONDIDA
                     questionDiv.classList.add('shake-incorrect');
-                    setTimeout(() => questionDiv.classList.remove('shake-incorrect'), 800);
+                    
+                    const iconType = isGrammar ? '🧠' : '📖';
+                    const typeLabel = isGrammar ? 'GRAMÁTICA' : 'INTERPRETAÇÃO';
+                    
+                    resultHTML = `
+                        <div style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444; padding: 15px; border-radius: 8px; margin-bottom: 12px;">
+                            <div style="font-weight: 700; color: #dc2626; margin-bottom: 8px;">
+                                ❌ Questão ${index + 1} (${typeLabel}) ${iconType}: INCORRETO
+                            </div>
+                            <div style="color: #991b1b; font-size: 0.95em;">
+                                <strong>Pergunta:</strong> ${questionText}<br>
+                                <strong>Sua resposta:</strong> ${selectedOptionText}<br>
+                                <strong>Resposta correta:</strong> <span style="background: #fef3c7; padding: 3px 8px; border-radius: 4px; color: #92400e; font-weight: 600; border: 1px solid #fbbf24;">${correctOptionText}</span>
+                            </div>
+                        </div>
+                    `;
                 }
+                
+                detailedResults.push(resultHTML);
             });
             
             // Salvar progresso
@@ -1022,20 +1065,62 @@
             if (grammarScore >= 2) earnBadge('badge4');
             if (comprehensionScore >= 3) earnBadge('badge5');
             
+            // FEEDBACK DETALHADO NOVO
             const feedback = document.getElementById('feedback');
-            feedback.innerHTML = results.join('<br>');
-            feedback.className = score >= 4 ? 'feedback correct' : 'feedback incorrect';
+            
+            // Header do feedback baseado na pontuação
+            let feedbackHeader = '';
+            if (score === 5) {
+                feedbackHeader = `
+                    <div style="text-align: center; background: linear-gradient(135deg, #22c55e, #16a34a); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; font-size: 1.2em; font-weight: 700;">
+                        🎉 CAPÍTULO PERFEITO! 📚 Você entendeu perfeitamente a história! 🌟
+                    </div>
+                `;
+            } else if (score === 4) {
+                feedbackHeader = `
+                    <div style="text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; padding: 18px; border-radius: 12px; margin-bottom: 20px; font-size: 1.1em; font-weight: 700;">
+                        ⭐ EXCELENTE LEITURA! Quase perfeito! 👏
+                    </div>
+                `;
+            } else if (score === 3) {
+                feedbackHeader = `
+                    <div style="text-align: center; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 18px; border-radius: 12px; margin-bottom: 20px; font-size: 1.1em; font-weight: 700;">
+                        👍 BOM TRABALHO! Continue lendo e praticando! 💪
+                    </div>
+                `;
+            } else {
+                feedbackHeader = `
+                    <div style="text-align: center; background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 18px; border-radius: 12px; margin-bottom: 20px; font-size: 1.1em; font-weight: 700;">
+                        💪 CONTINUE TENTANDO! Leia cuidadosamente e escute novamente! 📖
+                    </div>
+                `;
+            }
+            
+            // Estatísticas por tipo
+            const statsHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                    <div style="background: rgba(59, 130, 246, 0.1); border: 2px solid #3b82f6; border-radius: 10px; padding: 15px; text-align: center;">
+                        <div style="font-size: 1.5em; font-weight: 700; color: #1d4ed8;">📖 ${comprehensionScore}/3</div>
+                        <div style="color: #1e40af; font-weight: 600;">Interpretação</div>
+                    </div>
+                    <div style="background: rgba(168, 85, 247, 0.1); border: 2px solid #a855f7; border-radius: 10px; padding: 15px; text-align: center;">
+                        <div style="font-size: 1.5em; font-weight: 700; color: #7c3aed;">🧠 ${grammarScore}/2</div>
+                        <div style="color: #6d28d9; font-weight: 600;">Gramática</div>
+                    </div>
+                </div>
+            `;
+            
+            // Combinar tudo
+            feedback.innerHTML = feedbackHeader + statsHTML + detailedResults.join('');
+            feedback.className = 'feedback';
             feedback.style.display = 'block';
             
-            if (score === 5) {
-                feedback.innerHTML += '<br><br>📚 CAPÍTULO PERFEITO! Você entende perfeitamente a história! 🌟';
-            } else if (score === 4) {
-                feedback.innerHTML += '<br><br>⭐ Excelente leitura! Quase perfeito! 👏';
-            } else if (score === 3) {
-                feedback.innerHTML += '<br><br>👍 Bom trabalho! Continue lendo e praticando! 💪';
-            } else {
-                feedback.innerHTML += '<br><br>💪 Continue tentando! Leia cuidadosamente e escute novamente! 📖';
-            }
+            // Remover animações após um tempo
+            setTimeout(() => {
+                document.querySelectorAll('.question').forEach(question => {
+                    question.classList.remove('pulse-correct', 'shake-incorrect');
+                });
+            }, 2000);
         }
         
         function resetQuiz() {
@@ -1054,6 +1139,11 @@
             document.getElementById('scoreSection').style.display = 'none';
             document.getElementById('feedback').style.display = 'none';
             document.getElementById('progressBar').style.width = '0%';
+            
+            // CORREÇÃO: Resetar badges
+            document.querySelectorAll('.badge').forEach(badge => {
+                badge.classList.remove('earned');
+            });
             
             pauseAudio();
             attempts = 0;
