@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English With Teacher Alex - Student Login</title>
+    <title>Teacher Alex English Academy - Portal do Estudante</title>
     <style>
         * {
             margin: 0;
@@ -12,147 +12,179 @@
         }
         
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1e3a8a 0%, #dc2626 50%, #1e3a8a 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #1f2937;
+            color: #333;
         }
         
         .login-container {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 40px;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
-            border: 3px solid #dc2626;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             text-align: center;
         }
         
-        .logo {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #1e3a8a;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        .academy-logo {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #4a5568;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
         }
         
-        .subtitle {
-            font-size: 1.2em;
+        .academy-subtitle {
+            font-size: 1.1em;
             color: #dc2626;
-            font-weight: 600;
+            font-weight: 500;
             margin-bottom: 30px;
         }
         
-        .exclusive-badge {
+        .welcome-text {
             background: linear-gradient(135deg, #1e3a8a, #dc2626);
             color: white;
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 0.9em;
-            font-weight: bold;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-size: 0.95em;
+            font-weight: 600;
             display: inline-block;
-            margin-bottom: 25px;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            margin-bottom: 30px;
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             text-align: left;
         }
         
         .form-label {
             display: block;
             font-weight: 600;
-            color: #1e3a8a;
+            color: #4a5568;
             margin-bottom: 8px;
-            font-size: 1em;
+            font-size: 0.95em;
         }
         
         .form-input {
             width: 100%;
-            padding: 15px;
+            padding: 16px 20px;
             border: 2px solid #e2e8f0;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 1em;
             transition: all 0.3s ease;
             background: #f8fafc;
+            color: #2d3748;
         }
         
         .form-input:focus {
             outline: none;
             border-color: #dc2626;
             background: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(220, 38, 38, 0.2);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
         }
         
         .login-btn {
             width: 100%;
             background: linear-gradient(135deg, #1e3a8a, #dc2626);
             color: white;
-            padding: 15px;
+            padding: 16px;
             border: none;
-            border-radius: 10px;
-            font-size: 1.1em;
-            font-weight: bold;
+            border-radius: 12px;
+            font-size: 1.05em;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             margin-bottom: 20px;
+            letter-spacing: 0.5px;
         }
         
         .login-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 25px rgba(30, 58, 138, 0.3);
             background: linear-gradient(135deg, #1e40af, #ef4444);
         }
         
+        .login-btn:active {
+            transform: translateY(0);
+        }
+        
         .error-message {
-            background: #fef2f2;
-            color: #dc2626;
-            padding: 12px;
-            border-radius: 8px;
-            border: 2px solid #ef4444;
+            background: #fed7d7;
+            color: #c53030;
+            padding: 14px 18px;
+            border-radius: 10px;
+            border-left: 4px solid #e53e3e;
             margin-top: 15px;
-            font-weight: 600;
+            font-weight: 500;
             display: none;
+            text-align: left;
         }
         
         .success-message {
-            background: #dcfce7;
-            color: #166534;
-            padding: 12px;
-            border-radius: 8px;
-            border: 2px solid #22c55e;
+            background: #c6f6d5;
+            color: #2f855a;
+            padding: 14px 18px;
+            border-radius: 10px;
+            border-left: 4px solid #38a169;
             margin-top: 15px;
-            font-weight: 600;
+            font-weight: 500;
             display: none;
+            text-align: left;
         }
         
-        .info-text {
-            color: #6b7280;
+        .contact-info {
+            color: #718096;
             font-size: 0.9em;
-            margin-top: 20px;
-            line-height: 1.5;
+            margin-top: 25px;
+            line-height: 1.6;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
         }
         
-        .contact-teacher {
+        .contact-link {
             color: #1e3a8a;
             text-decoration: none;
             font-weight: 600;
+            transition: color 0.3s ease;
         }
         
-        .contact-teacher:hover {
+        .contact-link:hover {
+            color: #1e40af;
             text-decoration: underline;
+        }
+        
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        
+        .loading .login-btn {
+            background: #a0aec0;
+            cursor: not-allowed;
+        }
+        
+        /* Animação sutil para a entrada */
+        .login-container {
+            animation: slideIn 0.6s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         @media (max-width: 480px) {
@@ -161,43 +193,47 @@
                 padding: 30px 25px;
             }
             
-            .logo {
-                font-size: 2em;
+            .academy-logo {
+                font-size: 1.8em;
+            }
+            
+            .academy-subtitle {
+                font-size: 1em;
             }
         }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <div class="logo">🟦🟥🤍 English With Teacher Alex</div>
-        <div class="subtitle">Student Portal</div>
-        <div class="exclusive-badge">🎓 Exclusive Access</div>
+        <div class="academy-logo">Teacher Alex English Academy</div>
+        <div class="academy-subtitle">Portal do Estudante</div>
+        <div class="welcome-text">🎓 Acesso Exclusivo para Alunos</div>
         
         <form id="loginForm">
             <div class="form-group">
-                <label class="form-label" for="username">👤 Student Username:</label>
-                <input type="text" id="username" class="form-input" placeholder="Enter your username" required>
+                <label class="form-label" for="username">Nome de usuário</label>
+                <input type="text" id="username" class="form-input" placeholder="Digite seu nome de usuário" required>
             </div>
             
             <div class="form-group">
-                <label class="form-label" for="password">🔑 Password:</label>
-                <input type="password" id="password" class="form-input" placeholder="Enter your password" required>
+                <label class="form-label" for="password">Senha</label>
+                <input type="password" id="password" class="form-input" placeholder="Digite sua senha" required>
             </div>
             
-            <button type="submit" class="login-btn">🚀 Access My Lessons</button>
+            <button type="submit" class="login-btn">Acessar Minhas Aulas</button>
         </form>
         
         <div id="errorMessage" class="error-message"></div>
         <div id="successMessage" class="success-message"></div>
         
-        <div class="info-text">
-            🎯 <strong>Welcome to your exclusive English learning platform!</strong><br>
-            Don't have access? Contact <a href="mailto:alex@teacher.com" class="contact-teacher">Teacher Alex</a>
+        <div class="contact-info">
+            <strong>Precisa de ajuda?</strong><br>
+            Entre em contato com <a href="mailto:alexmg@gmail.com" class="contact-link">Professor Alex</a>
         </div>
     </div>
     
     <script>
-        // Lista de usuários e senhas (você adiciona aqui os seus alunos)
+        // Lista de usuários e senhas
         const students = {
             "matheus": "english090803",
             "joao_santos": "student456", 
@@ -207,8 +243,8 @@
             "carlos_ferreira": "student123",
             "lucia_alves": "speaking456",
             "miguel_sousa": "listening789",
-	    "teacheralex": "teste1234",
-            "demo": "demo" // usuário de demonstração
+            "teacheralex": "teste1234",
+            "demo": "demo"
         };
         
         document.getElementById('loginForm').addEventListener('submit', function(e) {
@@ -218,35 +254,48 @@
             const password = document.getElementById('password').value.trim();
             const errorDiv = document.getElementById('errorMessage');
             const successDiv = document.getElementById('successMessage');
+            const container = document.querySelector('.login-container');
             
             // Limpar mensagens anteriores
             errorDiv.style.display = 'none';
             successDiv.style.display = 'none';
             
-            // Verificar credenciais
-            if (students[username] && students[username] === password) {
-                // Login bem-sucedido
-                successDiv.textContent = '✅ Welcome! Redirecting to your lessons...';
-                successDiv.style.display = 'block';
-                
-                // Salvar login no navegador
-                sessionStorage.setItem('studentLoggedIn', 'true');
-                sessionStorage.setItem('studentUsername', username);
-                
-                // Redirecionar após 1.5 segundos
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 1500);
-                
-            } else {
-                // Login falhou
-                errorDiv.textContent = '❌ Invalid username or password. Please try again.';
-                errorDiv.style.display = 'block';
-                
-                // Limpar campos
-                document.getElementById('password').value = '';
-                document.getElementById('username').focus();
-            }
+            // Adicionar estado de loading
+            container.classList.add('loading');
+            
+            // Simular um pequeno delay para melhor UX
+            setTimeout(() => {
+                // Verificar credenciais
+                if (students[username] && students[username] === password) {
+                    // Login bem-sucedido
+                    successDiv.textContent = '✅ Bem-vindo! Redirecionando para suas aulas...';
+                    successDiv.style.display = 'block';
+                    
+                    // Salvar login no navegador
+                    sessionStorage.setItem('studentLoggedIn', 'true');
+                    sessionStorage.setItem('studentUsername', username);
+                    
+                    // Redirecionar após 1.5 segundos
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                    
+                } else {
+                    // Login falhou
+                    container.classList.remove('loading');
+                    errorDiv.textContent = '❌ Usuário ou senha incorretos. Tente novamente.';
+                    errorDiv.style.display = 'block';
+                    
+                    // Limpar senha e focar no campo
+                    document.getElementById('password').value = '';
+                    document.getElementById('password').focus();
+                    
+                    // Shake animation para o container
+                    container.style.animation = 'none';
+                    container.offsetHeight; // Trigger reflow
+                    container.style.animation = 'shake 0.5s ease-in-out';
+                }
+            }, 800);
         });
         
         // Verificar se já está logado
@@ -256,6 +305,18 @@
         
         // Foco automático no campo username
         document.getElementById('username').focus();
+        
+        // Adicionar animação de shake para erro
+        const shakeKeyframes = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+        `;
+        const style = document.createElement('style');
+        style.textContent = shakeKeyframes;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
