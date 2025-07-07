@@ -462,8 +462,8 @@
         
         <div class="lesson-container">
             <div class="lesson-header">
-                <div class="lesson-title"><!-- Título carregado dinamicamente --></div>
-                <div class="lesson-number"><!-- Número carregado dinamicamente --></div>
+                <div class="lesson-title" id="lessonTitle">Personal Introduction</div>
+                <div class="lesson-number" id="lessonNumber">Lição 1</div>
             </div>
             
             <div class="progress-bar">
@@ -478,10 +478,10 @@
             </div>
             
             <div class="audio-section">
-                <div class="audio-title"><!-- Título do áudio carregado dinamicamente --></div>
+                <div class="audio-title" id="audioTitle">🎧 Escute a Lição: Personal Introduction</div>
                 <div class="audio-controls">
                     <audio id="mainAudio" controls>
-                        <source src="audios/audio1.mp3" type="audio/mpeg">
+                        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
                         Seu navegador não suporta o elemento de áudio.
                     </audio>
                 </div>
@@ -492,7 +492,7 @@
                 </div>
             </div>
             
-            <div class="questions-section">
+            <div class="questions-section" id="questionsContainer">
                 <!-- As perguntas serão carregadas dinamicamente aqui -->
             </div>
             
@@ -666,6 +666,7 @@
         const lessons = {
             1: {
                 title: "Personal Introduction",
+                audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav", // Placeholder
                 questions: {
                     q1: {
                         text: "How old is Sarah?",
@@ -696,6 +697,7 @@
             },
             2: {
                 title: "Daily Routine",
+                audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav", // Placeholder
                 questions: {
                     q1: {
                         text: "What time does she wake up?",
@@ -726,6 +728,7 @@
             },
             3: {
                 title: "Hobbies and Free Time",
+                audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav", // Placeholder
                 questions: {
                     q1: {
                         text: "How long has she been learning guitar?",
@@ -756,6 +759,7 @@
             },
             4: {
                 title: "Weather and Seasons",
+                audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav", // Placeholder
                 questions: {
                     q1: {
                         text: "Which country does she live in?",
@@ -786,6 +790,7 @@
             },
             5: {
                 title: "Shopping at the Store",
+                audioUrl: "https://www.soundjay.com/misc/sounds/bell-ringing-05.wav", // Placeholder
                 questions: {
                     q1: {
                         text: "Who did she go shopping with?",
@@ -820,6 +825,61 @@
         let attempts = 0;
         let lessonStartTime = Date.now();
         let studentProgress = new StudentProgress();
+        
+        // FUNÇÃO PRINCIPAL PARA CARREGAR LIÇÃO
+        function loadLesson(lessonNumber) {
+            if (!lessons[lessonNumber]) {
+                console.error('Lição não encontrada:', lessonNumber);
+                return;
+            }
+            
+            const lesson = lessons[lessonNumber];
+            
+            // Atualizar elementos da interface
+            document.getElementById('lessonTitle').textContent = lesson.title;
+            document.getElementById('lessonNumber').textContent = `Lição ${lessonNumber}`;
+            document.getElementById('audioTitle').textContent = `🎧 Escute a Lição: ${lesson.title}`;
+            
+            // Atualizar áudio
+            const audio = document.getElementById('mainAudio');
+            audio.src = lesson.audioUrl;
+            
+            // Carregar perguntas
+            loadQuestions(lesson.questions);
+            
+            // Reset outros elementos
+            resetQuiz();
+        }
+        
+        // FUNÇÃO PARA CARREGAR PERGUNTAS
+        function loadQuestions(questions) {
+            const questionsContainer = document.getElementById('questionsContainer');
+            questionsContainer.innerHTML = '';
+            
+            Object.keys(questions).forEach((questionKey, index) => {
+                const questionData = questions[questionKey];
+                
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                
+                questionDiv.innerHTML = `
+                    <div class="question-text">${index + 1}. ${questionData.text}</div>
+                    <div class="options">
+                        ${questionData.options.map((option, optIndex) => `
+                            <div class="option">
+                                <input type="radio" name="${questionKey}" value="${String.fromCharCode(97 + optIndex)}" id="${questionKey}_${optIndex}">
+                                <label for="${questionKey}_${optIndex}">${String.fromCharCode(97 + optIndex).toUpperCase()}) ${option}</label>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                questionsContainer.appendChild(questionDiv);
+            });
+            
+            // Adicionar event listeners
+            addOptionEventListeners();
+        }
         
         // Efeitos visuais
         function createCelebration(emoji) {
@@ -967,12 +1027,7 @@
         function nextLesson() {
             if (currentLesson < 5) {
                 currentLesson++;
-                document.querySelector('.lesson-title').textContent = lessons[currentLesson].title;
-                document.querySelector('.lesson-number').textContent = `Lição ${currentLesson}`;
-                document.getElementById('mainAudio').src = `audios/audio${currentLesson}.mp3`;
-                
-                resetQuiz();
-                lessonStartTime = Date.now();
+                loadLesson(currentLesson);
                 createCelebration('🎯');
             } else {
                 alert('🎉 Parabéns! Você completou todas as lições! 🏆');
