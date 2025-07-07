@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English With Teacher Alex - Listening Lessons</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #dc2626 50%, #1e3a8a 100%);
+            min-height: 100vh;
+            color: #1f2937;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 3px solid #dc2626;
+        }
+        
+        .logo {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .tagline {
+            font-size: 1.2em;
+            color: #dc2626;
+            font-weight: 600;
+        }
+        
+        .lesson-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 2px solid #1e3a8a;
+        }
+        
+        .lesson-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #dc2626;
+        }
+        
+        .lesson-title {
+            font-size: 1.8em;
+            color: #1e3a8a;
+            font-weight: bold;
+        }
+        
+        .lesson-number {
+            background: #dc2626;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+        
+        .audio-section {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .audio-title {
+            font-size: 1.3em;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .audio-controls {
+            margin-bottom: 20px;
+        }
+        
+        audio {
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .play-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+        
+        .btn-primary {
+            background: #1e3a8a;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1e40af;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #dc2626;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #ef4444;
+            transform: translateY(-2px);
+        }
+        
+        .questions-section {
+            margin-top: 25px;
+        }
+        
+        .question {
+            background: #f1f5f9;
+            border: 2px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .question-text {
+            font-size: 1.1em;
+            color: #1e3a8a;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .options {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option:hover {
+            border-color: #dc2626;
+            background: #fef2f2;
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+        }
+        
+        .score {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: #1e3a8a;
+            color: white;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        
+        .feedback.correct {
+            background: #dcfce7;
+            color: #166534;
+            border: 2px solid #22c55e;
+        }
+        
+        .feedback.incorrect {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 2px solid #ef4444;
+        }
+        
+        /* Efeitos de Gamificação */
+        .celebration {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4em;
+            animation: celebrate 2s ease-in-out;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        @keyframes celebrate {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #dc2626;
+            animation: confetti 3s ease-in-out forwards;
+            pointer-events: none;
+            z-index: 999;
+        }
+        
+        @keyframes confetti {
+            0% { 
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        .pulse-correct {
+            animation: pulseGreen 0.6s ease-in-out;
+        }
+        
+        @keyframes pulseGreen {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); background-color: #dcfce7; }
+            100% { transform: scale(1); }
+        }
+        
+        .shake-incorrect {
+            animation: shakeRed 0.6s ease-in-out;
+        }
+        
+        @keyframes shakeRed {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); background-color: #fef2f2; }
+            75% { transform: translateX(5px); background-color: #fef2f2; }
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1e3a8a, #dc2626);
+            width: 0%;
+            transition: width 0.5s ease-in-out;
+        }
+        
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .badge {
+            background: #f1f5f9;
+            border: 2px solid #cbd5e1;
+            border-radius: 50px;
+            padding: 8px 16px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+        
+        .badge.earned {
+            background: linear-gradient(135deg, #1e3a8a, #dc2626);
+            color: white;
+            border-color: #dc2626;
+            animation: badgeEarn 0.8s ease-in-out;
+        }
+        
+        @keyframes badgeEarn {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .logo {
+                font-size: 2em;
+            }
+            
+            .lesson-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .play-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🟦🟥🤍 English With Teacher Alex</div>
+            <div class="tagline">Master English Through Listening</div>
+        </div>
+        
+        <div class="lesson-container">
+            <div class="lesson-header">
+                <div class="lesson-title">Personal Introduction</div>
+                <div class="lesson-number">Lesson 1</div>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+            
+            <div class="badges">
+                <div class="badge" id="badge1">🎯 First Try</div>
+                <div class="badge" id="badge2">⭐ Good Score</div>
+                <div class="badge" id="badge3">🏆 Perfect</div>
+                <div class="badge" id="badge4">🔥 Streak</div>
+            </div>
+            
+            <div class="audio-section">
+                <div class="audio-title">🎧 Listen to the Audio</div>
+                <div class="audio-controls">
+                    <audio id="mainAudio" controls>
+                        <source src="audios/audio1.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="play-buttons">
+                    <button class="btn btn-primary" onclick="playAudio()">▶️ Play</button>
+                    <button class="btn btn-secondary" onclick="replayAudio()">🔄 Replay</button>
+                    <button class="btn btn-primary" onclick="pauseAudio()">⏸️ Pause</button>
+                </div>
+            </div>
+            
+            <div class="questions-section">
+                <div class="question">
+                    <div class="question-text">1. How old is Sarah?</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q1" value="a">
+                            <span>23 years old</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="b">
+                            <span>25 years old</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="c">
+                            <span>27 years old</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="d">
+                            <span>30 years old</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">2. Where does Sarah live?</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q2" value="a">
+                            <span>In London city center</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="b">
+                            <span>In a small town near London</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="c">
+                            <span>In Manchester</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q2" value="d">
+                            <span>In Birmingham</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">3. What is Sarah's job?</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q3" value="a">
+                            <span>She's a nurse</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="b">
+                            <span>She's a doctor</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="c">
+                            <span>She's a teacher</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q3" value="d">
+                            <span>She's a student</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">4. How many siblings does Sarah have?</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q4" value="a">
+                            <span>No siblings</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="b">
+                            <span>One brother and one sister</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="c">
+                            <span>Two brothers</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q4" value="d">
+                            <span>Three sisters</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">5. What is Sarah's favorite food?</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q5" value="a">
+                            <span>Hamburger</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="b">
+                            <span>Pasta</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="c">
+                            <span>Pizza</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q5" value="d">
+                            <span>Sushi</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn btn-primary" onclick="checkAnswers()">✅ Check Answers</button>
+                <button class="btn btn-secondary" onclick="resetQuiz()">🔄 Reset Quiz</button>
+                <button class="btn btn-primary" onclick="nextLesson()">➡️ Next Lesson</button>
+            </div>
+            
+            <div id="scoreSection" class="score" style="display: none;">
+                Your Score: <span id="scoreValue">0</span>/5 🎯
+            </div>
+            
+            <div id="feedback" class="feedback" style="display: none;"></div>
+        </div>
+    </div>
+    
+    <script>
+// ===== SISTEMA DE PROTEÇÃO DE LOGIN =====
+function checkLogin() {
+    if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
+        window.location.href = 'login.html';
+        return false;
+    }
+    return true;
+}
+
+function logout() {
+    sessionStorage.removeItem('studentLoggedIn');
+    sessionStorage.removeItem('studentUsername');
+    window.location.href = 'login.html';
+}
+
+function getStudentName() {
+    return sessionStorage.getItem('studentUsername') || 'Student';
+}
+
+// Verificar login ao carregar a página
+if (!checkLogin()) {
+    throw new Error('Not logged in');
+}
+        // Sistema completo de lições com perguntas específicas para cada roteiro
+        const lessons = {
+            1: {
+                title: "Personal Introduction",
+                questions: {
+                    q1: {
+                        text: "How old is Sarah?",
+                        options: ["23 years old", "25 years old", "27 years old", "30 years old"],
+                        correct: "b"
+                    },
+                    q2: {
+                        text: "Where does Sarah live?",
+                        options: ["In London city center", "In a small town near London", "In Manchester", "In Birmingham"],
+                        correct: "b"
+                    },
+                    q3: {
+                        text: "What is Sarah's job?",
+                        options: ["She's a nurse", "She's a doctor", "She's a teacher", "She's a student"],
+                        correct: "c"
+                    },
+                    q4: {
+                        text: "How many siblings does Sarah have?",
+                        options: ["No siblings", "One brother and one sister", "Two brothers", "Three sisters"],
+                        correct: "b"
+                    },
+                    q5: {
+                        text: "What is Sarah's favorite food?",
+                        options: ["Hamburger", "Pasta", "Pizza", "Sushi"],
+                        correct: "c"
+                    }
+                }
+            },
+            2: {
+                title: "Daily Routine",
+                questions: {
+                    q1: {
+                        text: "What time does she wake up?",
+                        options: ["6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM"],
+                        correct: "b"
+                    },
+                    q2: {
+                        text: "What does she have for breakfast?",
+                        options: ["Cereal and milk", "Toast and coffee", "Eggs and bacon", "Fruit and yogurt"],
+                        correct: "b"
+                    },
+                    q3: {
+                        text: "What time does she start working?",
+                        options: ["8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM"],
+                        correct: "b"
+                    },
+                    q4: {
+                        text: "What time is lunch?",
+                        options: ["12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM"],
+                        correct: "b"
+                    },
+                    q5: {
+                        text: "What does she do after work?",
+                        options: ["Go shopping", "Visit family", "Go to the gym or meet friends", "Study English"],
+                        correct: "c"
+                    }
+                }
+            },
+            3: {
+                title: "Hobbies and Free Time",
+                questions: {
+                    q1: {
+                        text: "How long has she been learning guitar?",
+                        options: ["Two years", "Three years", "Four years", "Five years"],
+                        correct: "b"
+                    },
+                    q2: {
+                        text: "When does she have guitar lessons?",
+                        options: ["Monday and Wednesday", "Tuesday and Thursday", "Wednesday and Friday", "Saturday and Sunday"],
+                        correct: "b"
+                    },
+                    q3: {
+                        text: "What type of food does she like to cook?",
+                        options: ["Chinese food", "Mexican food", "Italian food", "Indian food"],
+                        correct: "c"
+                    },
+                    q4: {
+                        text: "What is her dog's name?",
+                        options: ["Rex", "Max", "Sam", "Jack"],
+                        correct: "b"
+                    },
+                    q5: {
+                        text: "How many books does she read per month?",
+                        options: ["One book", "Two books", "Three books", "Four books"],
+                        correct: "b"
+                    }
+                }
+            },
+            4: {
+                title: "Weather and Seasons",
+                questions: {
+                    q1: {
+                        text: "Which country does she live in?",
+                        options: ["Scotland", "Ireland", "England", "Wales"],
+                        correct: "c"
+                    },
+                    q2: {
+                        text: "What is her favorite season?",
+                        options: ["Spring", "Summer", "Autumn", "Winter"],
+                        correct: "a"
+                    },
+                    q3: {
+                        text: "What is summer like where she lives?",
+                        options: ["Cold and rainy", "Warm and sunny", "Very hot", "Windy and cloudy"],
+                        correct: "b"
+                    },
+                    q4: {
+                        text: "What colors do the autumn leaves turn?",
+                        options: ["Green and blue", "Red, yellow, and orange", "Purple and pink", "Brown and black"],
+                        correct: "b"
+                    },
+                    q5: {
+                        text: "Why doesn't she like winter?",
+                        options: ["It's too expensive", "It's too busy", "The days are short and dark", "There's too much snow"],
+                        correct: "c"
+                    }
+                }
+            },
+            5: {
+                title: "Shopping at the Store",
+                questions: {
+                    q1: {
+                        text: "Who did she go shopping with?",
+                        options: ["Her father", "Her mother", "Her sister", "Her friend"],
+                        correct: "b"
+                    },
+                    q2: {
+                        text: "Which fruits did they buy?",
+                        options: ["Grapes, pears, and peaches", "Apples, bananas, and oranges", "Strawberries and kiwi", "Pineapple and mango"],
+                        correct: "b"
+                    },
+                    q3: {
+                        text: "What meat did they buy for dinner?",
+                        options: ["Beef", "Pork", "Chicken", "Fish"],
+                        correct: "c"
+                    },
+                    q4: {
+                        text: "How long did the shopping take?",
+                        options: ["30 minutes", "45 minutes", "One hour", "Two hours"],
+                        correct: "c"
+                    },
+                    q5: {
+                        text: "How much did the shopping cost?",
+                        options: ["Twenty-five pounds", "Thirty pounds", "Thirty-five pounds", "Forty pounds"],
+                        correct: "c"
+                    }
+                }
+            }
+        };
+        
+        let currentLesson = 1;
+        let attempts = 0;
+        let hasEarnedStreak = false;
+        
+        // Efeitos visuais de gamificação
+        function createCelebration(emoji) {
+            const celebration = document.createElement('div');
+            celebration.className = 'celebration';
+            celebration.textContent = emoji;
+            document.body.appendChild(celebration);
+            
+            setTimeout(() => {
+                document.body.removeChild(celebration);
+            }, 2000);
+        }
+        
+        function createConfetti() {
+            const colors = ['#1e3a8a', '#dc2626', '#ffffff'];
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.3 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        if (document.body.contains(confetti)) {
+                            document.body.removeChild(confetti);
+                        }
+                    }, 3000);
+                }, i * 100);
+            }
+        }
+        
+        function updateProgressBar(score, total) {
+            const progressBar = document.getElementById('progressBar');
+            const percentage = (score / total) * 100;
+            progressBar.style.width = percentage + '%';
+        }
+        
+        function earnBadge(badgeId) {
+            const badge = document.getElementById(badgeId);
+            if (!badge.classList.contains('earned')) {
+                badge.classList.add('earned');
+                createCelebration('🎖️');
+            }
+        }
+        function loadLesson(lessonNumber) {
+            const lesson = lessons[lessonNumber];
+            if (!lesson) return;
+            
+            // Atualizar título
+            document.querySelector('.lesson-title').textContent = lesson.title;
+            document.querySelector('.lesson-number').textContent = `Lesson ${lessonNumber}`;
+            
+            // Atualizar perguntas
+            const questionsHtml = Object.keys(lesson.questions).map((questionKey, index) => {
+                const questionData = lesson.questions[questionKey];
+                const questionNumber = index + 1;
+                
+                const optionsHtml = questionData.options.map((option, optIndex) => {
+                    const optionValue = String.fromCharCode(97 + optIndex); // a, b, c, d
+                    return `
+                        <label class="option">
+                            <input type="radio" name="${questionKey}" value="${optionValue}">
+                            <span>${option}</span>
+                        </label>
+                    `;
+                }).join('');
+                
+                return `
+                    <div class="question">
+                        <div class="question-text">${questionNumber}. ${questionData.text}</div>
+                        <div class="options">
+                            ${optionsHtml}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Atualizar HTML das perguntas
+            document.querySelector('.questions-section').innerHTML = questionsHtml;
+            
+            // Atualizar áudio
+            const audio = document.getElementById('mainAudio');
+            audio.src = `audios/audio${lessonNumber}.mp3`;
+            
+            // Re-adicionar event listeners para as novas opções
+            addOptionEventListeners();
+        }
+        
+        // Função para adicionar event listeners às opções
+        function addOptionEventListeners() {
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    
+                    // Remove highlight de outras opções da mesma pergunta
+                    const questionName = radio.name;
+                    const allOptionsInQuestion = document.querySelectorAll(`input[name="${questionName}"]`);
+                    allOptionsInQuestion.forEach(opt => {
+                        opt.closest('.option').style.background = 'white';
+                        opt.closest('.option').style.borderColor = '#e2e8f0';
+                        opt.closest('.option').style.transform = 'scale(1)';
+                    });
+                    
+                    // Highlight da opção selecionada com animação
+                    this.style.background = '#dbeafe';
+                    this.style.borderColor = '#1e3a8a';
+                    this.style.transform = 'scale(1.02)';
+                    
+                    // Efeito de "click" visual
+                    this.style.transition = 'all 0.2s ease';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+                
+                // Efeito hover melhorado
+                option.addEventListener('mouseenter', function() {
+                    if (!this.querySelector('input[type="radio"]').checked) {
+                        this.style.transform = 'scale(1.01)';
+                        this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+                    }
+                });
+                
+                option.addEventListener('mouseleave', function() {
+                    if (!this.querySelector('input[type="radio"]').checked) {
+                        this.style.transform = 'scale(1)';
+                        this.style.boxShadow = 'none';
+                    }
+                });
+            });
+        }
+        function createCelebration(emoji) {
+            const celebration = document.createElement('div');
+            celebration.className = 'celebration';
+            celebration.textContent = emoji;
+            document.body.appendChild(celebration);
+            
+            setTimeout(() => {
+                document.body.removeChild(celebration);
+            }, 2000);
+        }
+        
+        function createConfetti() {
+            const colors = ['#1e3a8a', '#dc2626', '#ffffff'];
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.3 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        if (document.body.contains(confetti)) {
+                            document.body.removeChild(confetti);
+                        }
+                    }, 3000);
+                }, i * 100);
+            }
+        }
+        
+        function updateProgressBar(score, total) {
+            const progressBar = document.getElementById('progressBar');
+            const percentage = (score / total) * 100;
+            progressBar.style.width = percentage + '%';
+        }
+        
+        function earnBadge(badgeId) {
+            const badge = document.getElementById(badgeId);
+            if (!badge.classList.contains('earned')) {
+                badge.classList.add('earned');
+                createCelebration('🎖️');
+            }
+        }
+        
+        function playAudio() {
+            const audio = document.getElementById('mainAudio');
+            audio.play();
+        }
+        
+        function replayAudio() {
+            const audio = document.getElementById('mainAudio');
+            audio.currentTime = 0;
+            audio.play();
+        }
+        
+        function pauseAudio() {
+            const audio = document.getElementById('mainAudio');
+            audio.pause();
+        }
+        
+        function checkAnswers() {
+            const currentLessonData = lessons[currentLesson];
+            const questions = Object.keys(currentLessonData.questions);
+            let score = 0;
+            let results = [];
+            attempts++;
+            
+            questions.forEach((questionKey, index) => {
+                const selected = document.querySelector(`input[name="${questionKey}"]:checked`);
+                const questionDiv = document.querySelector(`input[name="${questionKey}"]`).closest('.question');
+                const correctAnswer = currentLessonData.questions[questionKey].correct;
+                
+                if (selected && selected.value === correctAnswer) {
+                    score++;
+                    results.push(`Question ${index + 1}: ✅ Correct`);
+                    questionDiv.classList.add('pulse-correct');
+                    setTimeout(() => questionDiv.classList.remove('pulse-correct'), 600);
+                } else {
+                    results.push(`Question ${index + 1}: ❌ Incorrect`);
+                    questionDiv.classList.add('shake-incorrect');
+                    setTimeout(() => questionDiv.classList.remove('shake-incorrect'), 600);
+                }
+            });
+            
+            // Atualizar barra de progresso
+            updateProgressBar(score, 5);
+            
+            // Mostrar pontuação
+            const scoreSection = document.getElementById('scoreSection');
+            const scoreValue = document.getElementById('scoreValue');
+            scoreValue.textContent = score;
+            scoreSection.style.display = 'block';
+            
+            // Sistema de badges
+            if (attempts === 1) {
+                earnBadge('badge1'); // First Try
+            }
+            if (score >= 4) {
+                earnBadge('badge2'); // Good Score
+            }
+            if (score === 5) {
+                earnBadge('badge3'); // Perfect
+                createConfetti();
+                createCelebration('🎉');
+            }
+            if (score >= 4 && !hasEarnedStreak) {
+                earnBadge('badge4'); // Streak
+                hasEarnedStreak = true;
+            }
+            
+            // Mostrar feedback com efeitos
+            const feedback = document.getElementById('feedback');
+            feedback.innerHTML = results.join('<br>');
+            feedback.className = score >= 4 ? 'feedback correct' : 'feedback incorrect';
+            feedback.style.display = 'block';
+            
+            // Mensagens motivacionais com emojis
+            if (score === 5) {
+                feedback.innerHTML += '<br><br>🎉 PERFECT SCORE! You are amazing! 🌟';
+                createCelebration('🏆');
+            } else if (score === 4) {
+                feedback.innerHTML += '<br><br>⭐ Excellent! Almost perfect! 👏';
+                createCelebration('⭐');
+            } else if (score === 3) {
+                feedback.innerHTML += '<br><br>👍 Good job! Keep practicing! 💪';
+            } else if (score === 2) {
+                feedback.innerHTML += '<br><br>😊 Not bad! Listen again and try! 🎧';
+            } else {
+                feedback.innerHTML += '<br><br>💪 Keep trying! Focus on the details! 🎯';
+            }
+        }
+        
+        function resetQuiz() {
+            // Limpar todas as seleções
+            const radios = document.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => {
+                radio.checked = false;
+                radio.closest('.option').style.background = 'white';
+                radio.closest('.option').style.borderColor = '#e2e8f0';
+            });
+            
+            // Resetar classes de animação
+            const questions = document.querySelectorAll('.question');
+            questions.forEach(question => {
+                question.classList.remove('pulse-correct', 'shake-incorrect');
+            });
+            
+            // Esconder resultados
+            document.getElementById('scoreSection').style.display = 'none';
+            document.getElementById('feedback').style.display = 'none';
+            
+            // Resetar barra de progresso
+            document.getElementById('progressBar').style.width = '0%';
+            
+            // Pausar áudio
+            pauseAudio();
+            
+            // Resetar tentativas (mas manter badges)
+            attempts = 0;
+        }
+        
+        function nextLesson() {
+            if (currentLesson < 5) {
+                currentLesson++;
+                
+                // Carregar nova lição
+                loadLesson(currentLesson);
+                
+                // Reset quiz mas manter alguns badges
+                resetQuiz();
+                
+                // Resetar badges específicos para nova lição
+                const badges = document.querySelectorAll('.badge');
+                badges.forEach(badge => {
+                    if (badge.id !== 'badge4') { // Manter streak badge
+                        badge.classList.remove('earned');
+                    }
+                });
+                
+                createCelebration('🎯');
+            } else {
+                alert('🎉 Congratulations! You completed all lessons! 🏆');
+            }
+        }
+        
+        // Adicionar event listeners para melhor experiência
+        document.addEventListener('DOMContentLoaded', function() {
+ // COLE ESTE CÓDIGO AQUI 👇
+    const logoutBtn = document.createElement('div');
+    logoutBtn.innerHTML = `
+        <div style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
+            <div style="background: white; border-radius: 15px; padding: 12px 18px; box-shadow: 0 6px 20px rgba(0,0,0,0.15); border: 2px solid #dc2626;">
+                <span style="color: #1e3a8a; font-weight: 600; margin-right: 12px; font-size: 0.95em;">👋 Hi, ${getStudentName()}!</span>
+                <button onclick="logout()" style="background: #dc2626; color: white; border: none; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 0.9em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='#ef4444'" onmouseout="this.style.background='#dc2626'">🚪 Logout</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(logoutBtn);
+    
+    // Resto do código continua aqui...
+    // Auto-focus no primeiro áudio quando carregado
+    
+    // etc...
+            // Auto-focus no primeiro áudio quando carregado
+            const audio = document.getElementById('mainAudio');
+            audio.addEventListener('loadeddata', function() {
+                console.log('Audio loaded and ready to play');
+            });
+            
+            // Adicionar event listeners para as opções iniciais
+            addOptionEventListeners();
+            
+            // Efeito hover nos botões
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 6px 12px rgba(0,0,0,0.2)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

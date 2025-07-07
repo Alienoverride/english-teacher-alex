@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English With Teacher Alex - Learning Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #dc2626 50%, #1e3a8a 100%);
+            min-height: 100vh;
+            color: #1f2937;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            border: 3px solid #dc2626;
+        }
+        
+        .logo {
+            font-size: 3em;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .tagline {
+            font-size: 1.4em;
+            color: #dc2626;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .description {
+            font-size: 1.1em;
+            color: #4b5563;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .activity-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 2px solid #1e3a8a;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+        }
+        
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
+            border-color: #dc2626;
+        }
+        
+        .activity-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .activity-title {
+            font-size: 1.8em;
+            color: #1e3a8a;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .activity-subtitle {
+            font-size: 1.2em;
+            color: #dc2626;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .activity-description {
+            color: #4b5563;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        
+        .feature-tag {
+            background: #f1f5f9;
+            color: #1e3a8a;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: 600;
+            border: 1px solid #cbd5e1;
+        }
+        
+        .btn-activity {
+            background: linear-gradient(135deg, #1e3a8a, #dc2626);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .btn-activity:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #1e40af, #ef4444);
+        }
+        
+        .info-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 2px solid #cbd5e1;
+        }
+        
+        .info-title {
+            font-size: 1.8em;
+            color: #1e3a8a;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .instructions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .instruction-item {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .instruction-number {
+            background: #dc2626;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .instruction-text {
+            color: #4b5563;
+            line-height: 1.5;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .stat-card {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #1e3a8a;
+        }
+        
+        .stat-label {
+            color: #6b7280;
+            font-weight: 600;
+        }
+        
+        .footer {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 2px solid #cbd5e1;
+        }
+        
+        .footer-text {
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+        
+        .contact-info {
+            color: #1e3a8a;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .new-badge {
+            background: #ef4444;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 0.7em;
+            font-weight: bold;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .logo {
+                font-size: 2.2em;
+            }
+            
+            .tagline {
+                font-size: 1.2em;
+            }
+            
+            .activities-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .instructions {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">🇺🇸 English With Teacher Alex</div>
+            <div class="tagline">Your Personal English Learning Hub</div>
+            <div class="description">
+                Practice your English skills anytime, anywhere! Access interactive listening exercises and graded reading activities designed to improve your comprehension and grammar.
+            </div>
+        </div>
+        
+        <!-- Activities Grid -->
+        <div class="activities-grid">
+            <!-- Listening Lessons -->
+            <div class="activity-card">
+                <div class="new-badge">NEW!</div>
+                <div class="activity-icon">🎧</div>
+                <div class="activity-title">Listening Lessons</div>
+                <div class="activity-subtitle">Interactive Audio Practice</div>
+                <div class="activity-description">
+                    Improve your listening skills with real-life conversations and exercises. Each lesson includes audio, questions, and instant feedback with gamified rewards!
+                </div>
+                <div class="features">
+                    <span class="feature-tag">5 Lessons</span>
+                    <span class="feature-tag">Audio + Questions</span>
+                    <span class="feature-tag">Instant Feedback</span>
+                    <span class="feature-tag">Progress Tracking</span>
+                </div>
+                <a href="listening.html" class="btn-activity">🎯 Start Listening Practice</a>
+            </div>
+            
+            <!-- Graded Reader -->
+            <div class="activity-card">
+                <div class="new-badge">NEW!</div>
+                <div class="activity-icon">📚</div>
+                <div class="activity-title">Graded Reader</div>
+                <div class="activity-subtitle">"The Secret in the Old House"</div>
+                <div class="activity-description">
+                    Read an engaging mystery story with audio narration. Test your comprehension and grammar skills with interactive questions for each chapter.
+                </div>
+                <div class="features">
+                    <span class="feature-tag">A2 Level</span>
+                    <span class="feature-tag">4 Chapters</span>
+                    <span class="feature-tag">Audio + Text</span>
+                    <span class="feature-tag">Grammar Focus</span>
+                </div>
+                <a href="reader.html" class="btn-activity">📖 Start Reading Adventure</a>
+            </div>
+        </div>
+        
+        <!-- How to Use Section -->
+        <div class="info-section">
+            <div class="info-title">📋 How to Use This Platform</div>
+            <div class="instructions">
+                <div class="instruction-item">
+                    <div class="instruction-number">1</div>
+                    <div class="instruction-text">
+                        <strong>Choose an Activity:</strong> Select between Listening Lessons or Graded Reader based on what you want to practice today.
+                    </div>
+                </div>
+                <div class="instruction-item">
+                    <div class="instruction-number">2</div>
+                    <div class="instruction-text">
+                        <strong>Listen & Read:</strong> Use headphones for the best audio experience. Read along with the text when available.
+                    </div>
+                </div>
+                <div class="instruction-item">
+                    <div class="instruction-number">3</div>
+                    <div class="instruction-text">
+                        <strong>Answer Questions:</strong> Test your understanding with comprehension and grammar questions after each audio/chapter.
+                    </div>
+                </div>
+                <div class="instruction-item">
+                    <div class="instruction-number">4</div>
+                    <div class="instruction-text">
+                        <strong>Track Progress:</strong> Earn badges and see your scores improve as you practice more!
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Stats Section -->
+        <div class="info-section">
+            <div class="info-title">🎯 What You'll Learn</div>
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Listening Topics</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Story Chapters</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">45</div>
+                    <div class="stat-label">Practice Questions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">Achievement Badges</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Study Tips -->
+        <div class="info-section">
+            <div class="info-title">💡 Study Tips for Success</div>
+            <div class="instructions">
+                <div class="instruction-item">
+                    <div class="instruction-number">🎧</div>
+                    <div class="instruction-text">
+                        <strong>Listen Multiple Times:</strong> Don't worry if you don't understand everything the first time. Listen again and focus on different details each time.
+                    </div>
+                </div>
+                <div class="instruction-item">
+                    <div class="instruction-number">📝</div>
+                    <div class="instruction-text">
+                        <strong>Take Notes:</strong> Write down new words or phrases you hear. Look them up later to expand your vocabulary.
+                    </div>
+                </div>
+                <div class="instruction-item">
+                    <div class="instruction-number">🎯</div>
+                    <div class="instruction-text">
+                        <strong>Practice Daily:</strong> Even 15-20 minutes of daily practice will improve your English faster than long, infrequent sessions.
+                    </div>
+                </div>
+                <div class="instruction-item">
+                    <div class="instruction-number">🏆</div>
+                    <div class="instruction-text">
+                        <strong>Celebrate Progress:</strong> Collect all the badges and aim for perfect scores. Every small improvement counts!
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-text">
+                Questions about the lessons? Need help with your English studies?
+            </div>
+            <div class="contact-info">
+                📧 Contact Teacher Alex: alex@englishteacher.com
+            </div>
+            <div class="footer-text" style="margin-top: 15px; font-size: 0.9em;">
+                🌟 Keep practicing, keep improving! Your English journey starts here. 🌟
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // ===== SISTEMA DE PROTEÇÃO DE LOGIN =====
+        function checkLogin() {
+            if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+
+        function logout() {
+            sessionStorage.removeItem('studentLoggedIn');
+            sessionStorage.removeItem('studentUsername');
+            window.location.href = 'login.html';
+        }
+
+        function getStudentName() {
+            return sessionStorage.getItem('studentUsername') || 'Student';
+        }
+
+        // Verificar login ao carregar a página
+        if (!checkLogin()) {
+            throw new Error('Not logged in');
+        }
+
+        // Adicionar efeitos interativos
+        document.addEventListener('DOMContentLoaded', function() {
+            // PRIMEIRO: Criar botão de logout
+            const logoutBtn = document.createElement('div');
+            logoutBtn.innerHTML = `
+                <div style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
+                    <div style="background: white; border-radius: 15px; padding: 12px 18px; box-shadow: 0 6px 20px rgba(0,0,0,0.15); border: 2px solid #dc2626;">
+                        <span style="color: #1e3a8a; font-weight: 600; margin-right: 12px; font-size: 0.95em;">👋 Hi, ${getStudentName()}!</span>
+                        <button onclick="logout()" style="background: #dc2626; color: white; border: none; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 0.9em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='#ef4444'" onmouseout="this.style.background='#dc2626'">🚪 Logout</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(logoutBtn);
+            
+            // Efeito hover nas cards
+            const activityCards = document.querySelectorAll('.activity-card');
+            activityCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // Efeito pulse no logo a cada 5 segundos
+            const logo = document.querySelector('.logo');
+            setInterval(() => {
+                logo.classList.add('pulse');
+                setTimeout(() => {
+                    logo.classList.remove('pulse');
+                }, 2000);
+            }, 5000);
+            
+            // Animação dos números das estatísticas
+            const statNumbers = document.querySelectorAll('.stat-number');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = parseInt(entry.target.textContent);
+                        let current = 0;
+                        const increment = target / 20;
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= target) {
+                                entry.target.textContent = target;
+                                clearInterval(timer);
+                            } else {
+                                entry.target.textContent = Math.floor(current);
+                            }
+                        }, 50);
+                    }
+                });
+            });
+            
+            statNumbers.forEach(number => {
+                observer.observe(number);
+            });
+        });
+    </script>
+</body>
+</html>

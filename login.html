@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English With Teacher Alex - Student Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #dc2626 50%, #1e3a8a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1f2937;
+        }
+        
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+            border: 3px solid #dc2626;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            color: #dc2626;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+        
+        .exclusive-badge {
+            background: linear-gradient(135deg, #1e3a8a, #dc2626);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 25px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #dc2626;
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 38, 38, 0.2);
+        }
+        
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #1e3a8a, #dc2626);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #1e40af, #ef4444);
+        }
+        
+        .error-message {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #ef4444;
+            margin-top: 15px;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .success-message {
+            background: #dcfce7;
+            color: #166534;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #22c55e;
+            margin-top: 15px;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .info-text {
+            color: #6b7280;
+            font-size: 0.9em;
+            margin-top: 20px;
+            line-height: 1.5;
+        }
+        
+        .contact-teacher {
+            color: #1e3a8a;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .contact-teacher:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 20px;
+                padding: 30px 25px;
+            }
+            
+            .logo {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">🟦🟥🤍 English With Teacher Alex</div>
+        <div class="subtitle">Student Portal</div>
+        <div class="exclusive-badge">🎓 Exclusive Access</div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label class="form-label" for="username">👤 Student Username:</label>
+                <input type="text" id="username" class="form-input" placeholder="Enter your username" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="password">🔑 Password:</label>
+                <input type="password" id="password" class="form-input" placeholder="Enter your password" required>
+            </div>
+            
+            <button type="submit" class="login-btn">🚀 Access My Lessons</button>
+        </form>
+        
+        <div id="errorMessage" class="error-message"></div>
+        <div id="successMessage" class="success-message"></div>
+        
+        <div class="info-text">
+            🎯 <strong>Welcome to your exclusive English learning platform!</strong><br>
+            Don't have access? Contact <a href="mailto:alex@teacher.com" class="contact-teacher">Teacher Alex</a>
+        </div>
+    </div>
+    
+    <script>
+        // Lista de usuários e senhas (você adiciona aqui os seus alunos)
+        const students = {
+            "ana_silva": "english123",
+            "joao_santos": "student456", 
+            "maria_oliveira": "learn789",
+            "pedro_costa": "alex2024",
+            "julia_rodrigues": "englishfun",
+            "carlos_ferreira": "student123",
+            "lucia_alves": "speaking456",
+            "miguel_sousa": "listening789",
+	    "teacheralex": "teste1234",
+            "demo": "demo" // usuário de demonstração
+        };
+        
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const errorDiv = document.getElementById('errorMessage');
+            const successDiv = document.getElementById('successMessage');
+            
+            // Limpar mensagens anteriores
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            
+            // Verificar credenciais
+            if (students[username] && students[username] === password) {
+                // Login bem-sucedido
+                successDiv.textContent = '✅ Welcome! Redirecting to your lessons...';
+                successDiv.style.display = 'block';
+                
+                // Salvar login no navegador
+                sessionStorage.setItem('studentLoggedIn', 'true');
+                sessionStorage.setItem('studentUsername', username);
+                
+                // Redirecionar após 1.5 segundos
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+                
+            } else {
+                // Login falhou
+                errorDiv.textContent = '❌ Invalid username or password. Please try again.';
+                errorDiv.style.display = 'block';
+                
+                // Limpar campos
+                document.getElementById('password').value = '';
+                document.getElementById('username').focus();
+            }
+        });
+        
+        // Verificar se já está logado
+        if (sessionStorage.getItem('studentLoggedIn') === 'true') {
+            window.location.href = 'index.html';
+        }
+        
+        // Foco automático no campo username
+        document.getElementById('username').focus();
+    </script>
+</body>
+</html>
