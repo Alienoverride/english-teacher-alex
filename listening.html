@@ -462,8 +462,8 @@
         
         <div class="lesson-container">
             <div class="lesson-header">
-                <div class="lesson-title">Personal Introduction</div>
-                <div class="lesson-number">Lição 1</div>
+                <div class="lesson-title"><!-- Título carregado dinamicamente --></div>
+                <div class="lesson-number"><!-- Número carregado dinamicamente --></div>
             </div>
             
             <div class="progress-bar">
@@ -478,7 +478,7 @@
             </div>
             
             <div class="audio-section">
-                <div class="audio-title">🎧 Escute o Áudio</div>
+                <div class="audio-title"><!-- Título do áudio carregado dinamicamente --></div>
                 <div class="audio-controls">
                     <audio id="mainAudio" controls>
                         <source src="audios/audio1.mp3" type="audio/mpeg">
@@ -493,115 +493,7 @@
             </div>
             
             <div class="questions-section">
-                <div class="question">
-                    <div class="question-text">1. How old is Sarah?</div>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="q1" value="a">
-                            <span>23 years old</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q1" value="b">
-                            <span>25 years old</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q1" value="c">
-                            <span>27 years old</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q1" value="d">
-                            <span>30 years old</span>
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">2. Where does Sarah live?</div>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="q2" value="a">
-                            <span>In London city center</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q2" value="b">
-                            <span>In a small town near London</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q2" value="c">
-                            <span>In Manchester</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q2" value="d">
-                            <span>In Birmingham</span>
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">3. What is Sarah's job?</div>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="q3" value="a">
-                            <span>She's a nurse</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q3" value="b">
-                            <span>She's a doctor</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q3" value="c">
-                            <span>She's a teacher</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q3" value="d">
-                            <span>She's a student</span>
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">4. How many siblings does Sarah have?</div>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="q4" value="a">
-                            <span>No siblings</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q4" value="b">
-                            <span>One brother and one sister</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q4" value="c">
-                            <span>Two brothers</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q4" value="d">
-                            <span>Three sisters</span>
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="question">
-                    <div class="question-text">5. What is Sarah's favorite food?</div>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="q5" value="a">
-                            <span>Hamburger</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q5" value="b">
-                            <span>Pasta</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q5" value="c">
-                            <span>Pizza</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="q5" value="d">
-                            <span>Sushi</span>
-                        </label>
-                    </div>
-                </div>
+                <!-- As perguntas serão carregadas dinamicamente aqui -->
             </div>
             
             <div class="controls">
@@ -775,51 +667,151 @@
             1: {
                 title: "Personal Introduction",
                 questions: {
-                    q1: { correct: "b" },
-                    q2: { correct: "b" },
-                    q3: { correct: "c" },
-                    q4: { correct: "b" },
-                    q5: { correct: "c" }
+                    q1: {
+                        text: "How old is Sarah?",
+                        options: ["23 years old", "25 years old", "27 years old", "30 years old"],
+                        correct: "b"
+                    },
+                    q2: {
+                        text: "Where does Sarah live?",
+                        options: ["In London city center", "In a small town near London", "In Manchester", "In Birmingham"],
+                        correct: "b"
+                    },
+                    q3: {
+                        text: "What is Sarah's job?",
+                        options: ["She's a nurse", "She's a doctor", "She's a teacher", "She's a student"],
+                        correct: "c"
+                    },
+                    q4: {
+                        text: "How many siblings does Sarah have?",
+                        options: ["No siblings", "One brother and one sister", "Two brothers", "Three sisters"],
+                        correct: "b"
+                    },
+                    q5: {
+                        text: "What is Sarah's favorite food?",
+                        options: ["Hamburger", "Pasta", "Pizza", "Sushi"],
+                        correct: "c"
+                    }
                 }
             },
             2: {
                 title: "Daily Routine",
                 questions: {
-                    q1: { correct: "b" },
-                    q2: { correct: "b" },
-                    q3: { correct: "b" },
-                    q4: { correct: "b" },
-                    q5: { correct: "c" }
+                    q1: {
+                        text: "What time does she wake up?",
+                        options: ["6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM"],
+                        correct: "b"
+                    },
+                    q2: {
+                        text: "What does she have for breakfast?",
+                        options: ["Cereal and milk", "Toast and coffee", "Eggs and bacon", "Fruit and yogurt"],
+                        correct: "b"
+                    },
+                    q3: {
+                        text: "What time does she start working?",
+                        options: ["8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM"],
+                        correct: "b"
+                    },
+                    q4: {
+                        text: "What time is lunch?",
+                        options: ["12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM"],
+                        correct: "b"
+                    },
+                    q5: {
+                        text: "What does she do after work?",
+                        options: ["Go shopping", "Visit family", "Go to the gym or meet friends", "Study English"],
+                        correct: "c"
+                    }
                 }
             },
             3: {
                 title: "Hobbies and Free Time",
                 questions: {
-                    q1: { correct: "b" },
-                    q2: { correct: "b" },
-                    q3: { correct: "c" },
-                    q4: { correct: "b" },
-                    q5: { correct: "b" }
+                    q1: {
+                        text: "How long has she been learning guitar?",
+                        options: ["Two years", "Three years", "Four years", "Five years"],
+                        correct: "b"
+                    },
+                    q2: {
+                        text: "When does she have guitar lessons?",
+                        options: ["Monday and Wednesday", "Tuesday and Thursday", "Wednesday and Friday", "Saturday and Sunday"],
+                        correct: "b"
+                    },
+                    q3: {
+                        text: "What type of food does she like to cook?",
+                        options: ["Chinese food", "Mexican food", "Italian food", "Indian food"],
+                        correct: "c"
+                    },
+                    q4: {
+                        text: "What is her dog's name?",
+                        options: ["Rex", "Max", "Sam", "Jack"],
+                        correct: "b"
+                    },
+                    q5: {
+                        text: "How many books does she read per month?",
+                        options: ["One book", "Two books", "Three books", "Four books"],
+                        correct: "b"
+                    }
                 }
             },
             4: {
                 title: "Weather and Seasons",
                 questions: {
-                    q1: { correct: "c" },
-                    q2: { correct: "a" },
-                    q3: { correct: "b" },
-                    q4: { correct: "b" },
-                    q5: { correct: "c" }
+                    q1: {
+                        text: "Which country does she live in?",
+                        options: ["Scotland", "Ireland", "England", "Wales"],
+                        correct: "c"
+                    },
+                    q2: {
+                        text: "What is her favorite season?",
+                        options: ["Spring", "Summer", "Autumn", "Winter"],
+                        correct: "a"
+                    },
+                    q3: {
+                        text: "What is summer like where she lives?",
+                        options: ["Cold and rainy", "Warm and sunny", "Very hot", "Windy and cloudy"],
+                        correct: "b"
+                    },
+                    q4: {
+                        text: "What colors do the autumn leaves turn?",
+                        options: ["Green and blue", "Red, yellow, and orange", "Purple and pink", "Brown and black"],
+                        correct: "b"
+                    },
+                    q5: {
+                        text: "Why doesn't she like winter?",
+                        options: ["It's too expensive", "It's too busy", "The days are short and dark", "There's too much snow"],
+                        correct: "c"
+                    }
                 }
             },
             5: {
                 title: "Shopping at the Store",
                 questions: {
-                    q1: { correct: "b" },
-                    q2: { correct: "b" },
-                    q3: { correct: "c" },
-                    q4: { correct: "c" },
-                    q5: { correct: "c" }
+                    q1: {
+                        text: "Who did she go shopping with?",
+                        options: ["Her father", "Her mother", "Her sister", "Her friend"],
+                        correct: "b"
+                    },
+                    q2: {
+                        text: "Which fruits did they buy?",
+                        options: ["Grapes, pears, and peaches", "Apples, bananas, and oranges", "Strawberries and kiwi", "Pineapple and mango"],
+                        correct: "b"
+                    },
+                    q3: {
+                        text: "What meat did they buy for dinner?",
+                        options: ["Beef", "Pork", "Chicken", "Fish"],
+                        correct: "c"
+                    },
+                    q4: {
+                        text: "How long did the shopping take?",
+                        options: ["30 minutes", "45 minutes", "One hour", "Two hours"],
+                        correct: "c"
+                    },
+                    q5: {
+                        text: "How much did the shopping cost?",
+                        options: ["Twenty-five pounds", "Thirty pounds", "Thirty-five pounds", "Forty pounds"],
+                        correct: "c"
+                    }
                 }
             }
         };
@@ -1020,7 +1012,8 @@
             `;
             document.body.appendChild(logoutBtn);
             
-            addOptionEventListeners();
+            // Carregar a primeira lição
+            loadLesson(currentLesson);
             lessonStartTime = Date.now();
         });
     </script>
