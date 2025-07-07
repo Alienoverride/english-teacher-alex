@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Alex English Academy - Listening Lessons</title>
+    <title>Teacher Alex English Academy - The Secret in the Old House</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -22,7 +22,7 @@
         }
         
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -51,7 +51,7 @@
         }
         
         .logo {
-            font-size: 2.5em;
+            font-size: 2.3em;
             font-weight: 800;
             background: linear-gradient(135deg, #1e3a8a, #dc2626, #1e3a8a);
             background-clip: text;
@@ -62,10 +62,22 @@
             animation: glow 3s ease-in-out infinite alternate;
         }
         
-        .tagline {
-            font-size: 1.3em;
+        .story-title {
+            font-size: 1.9em;
             color: #dc2626;
-            font-weight: 600;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .level-badge {
+            background: linear-gradient(135deg, #1e3a8a, #dc2626);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: 700;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(30, 58, 138, 0.3);
         }
         
         @keyframes glow {
@@ -77,7 +89,7 @@
             }
         }
         
-        .lesson-container {
+        .chapter-container {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             border-radius: 20px;
@@ -86,7 +98,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        .lesson-header {
+        .chapter-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -97,7 +109,7 @@
                        linear-gradient(90deg, #1e3a8a, #dc2626) border-box;
         }
         
-        .lesson-title {
+        .chapter-title {
             font-size: 2em;
             background: linear-gradient(135deg, #1e3a8a, #dc2626);
             background-clip: text;
@@ -106,7 +118,7 @@
             font-weight: 800;
         }
         
-        .lesson-number {
+        .chapter-number {
             background: linear-gradient(135deg, #dc2626, #ef4444);
             color: white;
             padding: 10px 20px;
@@ -286,6 +298,21 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         }
         
+        .question-type {
+            background: #1e3a8a;
+            color: white;
+            padding: 6px 15px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+        
+        .question-type.grammar {
+            background: #dc2626;
+        }
+        
         .question-text {
             font-size: 1.2em;
             background: linear-gradient(135deg, #1e3a8a, #dc2626);
@@ -432,10 +459,14 @@
             }
             
             .logo {
-                font-size: 2em;
+                font-size: 1.8em;
             }
             
-            .lesson-header {
+            .story-title {
+                font-size: 1.4em;
+            }
+            
+            .chapter-header {
                 flex-direction: column;
                 gap: 15px;
                 text-align: center;
@@ -450,6 +481,10 @@
                 flex-direction: column;
                 align-items: center;
             }
+            
+            .badges {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -457,13 +492,14 @@
     <div class="container">
         <div class="header">
             <a href="index.html" style="text-decoration: none;"><div class="logo">Teacher Alex English Academy</div></a>
-            <div class="tagline">Domine o Inglês Através do Listening</div>
+            <div class="story-title">The Secret in the Old House</div>
+            <div class="level-badge">📖 Nível A2 - Graded Reader</div>
         </div>
         
-        <div class="lesson-container">
-            <div class="lesson-header">
-                <div class="lesson-title"><!-- Título carregado dinamicamente --></div>
-                <div class="lesson-number"><!-- Número carregado dinamicamente --></div>
+        <div class="chapter-container">
+            <div class="chapter-header">
+                <div class="chapter-title"><!-- Título carregado dinamicamente --></div>
+                <div class="chapter-number"><!-- Número carregado dinamicamente --></div>
             </div>
             
             <div class="progress-bar">
@@ -471,17 +507,18 @@
             </div>
             
             <div class="badges">
-                <div class="badge" id="badge1">🎯 Primeira Tentativa</div>
-                <div class="badge" id="badge2">⭐ Boa Pontuação</div>
-                <div class="badge" id="badge3">🏆 Perfeito</div>
-                <div class="badge" id="badge4">🔥 Sequência</div>
+                <div class="badge" id="badge1">📚 Primeira Leitura</div>
+                <div class="badge" id="badge2">🎯 Boa Pontuação</div>
+                <div class="badge" id="badge3">⭐ Capítulo Perfeito</div>
+                <div class="badge" id="badge4">🧠 Mestre da Gramática</div>
+                <div class="badge" id="badge5">🔍 Detetive</div>
             </div>
             
             <div class="audio-section">
                 <div class="audio-title"><!-- Título do áudio carregado dinamicamente --></div>
                 <div class="audio-controls">
                     <audio id="mainAudio" controls>
-                        <source src="audios/audio1.mp3" type="audio/mpeg">
+                        <source src="audios/chapter1.mp3" type="audio/mpeg">
                         Seu navegador não suporta o elemento de áudio.
                     </audio>
                 </div>
@@ -498,12 +535,12 @@
             
             <div class="controls">
                 <button class="btn btn-primary" onclick="checkAnswers()">✅ Verificar Respostas</button>
-                <button class="btn btn-secondary" onclick="resetQuiz()">🔄 Reiniciar Quiz</button>
-                <button class="btn btn-primary" onclick="nextLesson()">➡️ Próxima Lição</button>
+                <button class="btn btn-secondary" onclick="resetQuiz()">🔄 Reiniciar Capítulo</button>
+                <button class="btn btn-primary" onclick="nextChapter()">➡️ Próximo Capítulo</button>
             </div>
             
             <div id="scoreSection" class="score" style="display: none;">
-                Sua Pontuação: <span id="scoreValue">0</span>/5 🎯
+                Sua Pontuação: <span id="scoreValue">0</span>/5 📖
             </div>
             
             <div id="feedback" class="feedback" style="display: none;"></div>
@@ -573,46 +610,47 @@
                 localStorage.setItem(this.progressKey, JSON.stringify(this.data));
             }
 
-            completeListeningLesson(lessonNumber, score, timeSpent) {
-                const lesson = `lesson_${lessonNumber}`;
+            completeReadingChapter(chapterNumber, score, timeSpent) {
+                const chapter = `chapter_${chapterNumber}`;
                 
-                if (!this.data.listening.lessonsCompleted.includes(lesson)) {
-                    this.data.listening.lessonsCompleted.push(lesson);
+                if (!this.data.reading.chaptersCompleted.includes(chapter)) {
+                    this.data.reading.chaptersCompleted.push(chapter);
                 }
                 
-                if (!this.data.listening.bestScores[lesson] || score > this.data.listening.bestScores[lesson]) {
-                    this.data.listening.bestScores[lesson] = score;
+                if (!this.data.reading.bestScores[chapter] || score > this.data.reading.bestScores[chapter]) {
+                    this.data.reading.bestScores[chapter] = score;
                 }
                 
-                this.data.listening.totalAttempts++;
+                this.data.reading.totalAttempts++;
                 this.data.totalStudyTime += timeSpent;
                 this.data.lastActivity = new Date().toISOString();
                 
-                this.checkListeningBadges(lessonNumber, score);
+                this.checkReadingBadges(chapterNumber, score);
                 this.saveProgress();
             }
 
-            checkListeningBadges(lessonNumber, score) {
-                const badges = this.data.listening.badges;
+            checkReadingBadges(chapterNumber, score) {
+                const badges = this.data.reading.badges;
                 
-                if (!badges.includes('first_try')) {
-                    badges.push('first_try');
-                    this.showBadgeNotification('🎯 Primeira Tentativa!', 'Você completou sua primeira lição!');
+                if (!badges.includes('first_chapter')) {
+                    badges.push('first_chapter');
+                    this.showBadgeNotification('📚 Primeiro Capítulo!', 'Você começou a aventura de leitura!');
                 }
                 
-                if (score === 5 && !badges.includes('perfect_score')) {
-                    badges.push('perfect_score');
-                    this.showBadgeNotification('⭐ Pontuação Perfeita!', 'Você acertou todas as perguntas!');
+                if (score === 5 && !badges.includes('perfect_chapter')) {
+                    badges.push('perfect_chapter');
+                    this.showBadgeNotification('⭐ Capítulo Perfeito!', 'Você entendeu perfeitamente a história!');
                 }
                 
-                if (this.data.listening.lessonsCompleted.length >= 3 && !badges.includes('three_lessons')) {
-                    badges.push('three_lessons');
-                    this.showBadgeNotification('🏆 Estudante Dedicado!', 'Você completou 3 lições!');
+                if (this.data.reading.chaptersCompleted.length >= 4 && !badges.includes('complete_story')) {
+                    badges.push('complete_story');
+                    this.showBadgeNotification('🎉 Detetive Completo!', 'Você terminou toda a história!');
                 }
                 
-                if (this.data.listening.lessonsCompleted.length >= 5 && !badges.includes('all_lessons')) {
-                    badges.push('all_lessons');
-                    this.showBadgeNotification('🎉 Mestre do Listening!', 'Você completou todas as lições!');
+                // Badge para gramática (questões 3 e 5)
+                if (score >= 4 && !badges.includes('grammar_master')) {
+                    badges.push('grammar_master');
+                    this.showBadgeNotification('🧠 Mestre da Gramática!', 'Excelente conhecimento gramatical!');
                 }
             }
 
@@ -662,163 +700,153 @@
             }
         }
 
-        // ===== SISTEMA DE LIÇÕES =====
-        const lessons = {
+        // ===== SISTEMA DE CAPÍTULOS =====
+        const chapters = {
             1: {
-                title: "Personal Introduction",
+                title: "The New Neighbor",
                 questions: {
                     q1: {
-                        text: "How old is Sarah?",
-                        options: ["23 years old", "25 years old", "27 years old", "30 years old"],
+                        type: "comprehension",
+                        text: "How old is Emma?",
+                        options: ["Fifteen years old", "Sixteen years old", "Seventeen years old", "Eighteen years old"],
                         correct: "b"
                     },
                     q2: {
-                        text: "Where does Sarah live?",
-                        options: ["In London city center", "In a small town near London", "In Manchester", "In Birmingham"],
+                        type: "comprehension", 
+                        text: "How long was the old house empty?",
+                        options: ["For one year", "For many years", "For fifty years", "For two months"],
                         correct: "b"
                     },
                     q3: {
-                        text: "What is Sarah's job?",
-                        options: ["She's a nurse", "She's a doctor", "She's a teacher", "She's a student"],
-                        correct: "c"
+                        type: "grammar",
+                        text: '"She _____ from her bedroom window." Which past tense form is correct?',
+                        options: ["was watching", "watched", "has watched", "watches"],
+                        correct: "b"
                     },
                     q4: {
-                        text: "How many siblings does Sarah have?",
-                        options: ["No siblings", "One brother and one sister", "Two brothers", "Three sisters"],
+                        type: "comprehension",
+                        text: "What did Emma see in the old house that night?",
+                        options: ["A television", "A strange light moving around", "The new neighbor cooking", "Nothing unusual"],
                         correct: "b"
                     },
                     q5: {
-                        text: "What is Sarah's favorite food?",
-                        options: ["Hamburger", "Pasta", "Pizza", "Sushi"],
-                        correct: "c"
+                        type: "grammar",
+                        text: '"Wait _____ tomorrow." Which preposition completes the sentence?',
+                        options: ["until", "for", "at", "in"],
+                        correct: "a"
                     }
                 }
             },
             2: {
-                title: "Daily Routine",
+                title: "The Meeting",
                 questions: {
                     q1: {
-                        text: "What time does she wake up?",
-                        options: ["6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM"],
-                        correct: "b"
+                        type: "comprehension",
+                        text: "What is the new neighbor's name?",
+                        options: ["Mrs. Peterson", "Mrs. Johnson", "Mrs. Williams", "Mrs. Anderson"],
+                        correct: "a"
                     },
                     q2: {
-                        text: "What does she have for breakfast?",
-                        options: ["Cereal and milk", "Toast and coffee", "Eggs and bacon", "Fruit and yogurt"],
-                        correct: "b"
+                        type: "comprehension",
+                        text: "Who lived in the house fifty years ago?",
+                        options: ["Mrs. Peterson", "Mrs. Peterson's mother", "Mrs. Peterson's grandmother", "Mrs. Peterson's sister"],
+                        correct: "c"
                     },
                     q3: {
-                        text: "What time does she start working?",
-                        options: ["8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM"],
+                        type: "grammar",
+                        text: '"Do you need help?" This is an example of:',
+                        options: ["A statement", "A yes/no question", "A wh-question", "An exclamation"],
                         correct: "b"
                     },
                     q4: {
-                        text: "What time is lunch?",
-                        options: ["12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM"],
+                        type: "comprehension",
+                        text: "What is Mrs. Peterson looking for?",
+                        options: ["Her keys", "A special box", "Her glasses", "A book"],
                         correct: "b"
                     },
                     q5: {
-                        text: "What does she do after work?",
-                        options: ["Go shopping", "Visit family", "Go to the gym or meet friends", "Study English"],
-                        correct: "c"
+                        type: "grammar",
+                        text: '"I _____ find it anywhere." Which modal verb fits best?',
+                        options: ["can't", "mustn't", "shouldn't", "wouldn't"],
+                        correct: "a"
                     }
                 }
             },
             3: {
-                title: "Hobbies and Free Time",
+                title: "The Search",
                 questions: {
                     q1: {
-                        text: "How long has she been learning guitar?",
-                        options: ["Two years", "Three years", "Four years", "Five years"],
+                        type: "comprehension",
+                        text: "How many days did they search together?",
+                        options: ["Two days", "Three days", "Four days", "Five days"],
                         correct: "b"
                     },
                     q2: {
-                        text: "When does she have guitar lessons?",
-                        options: ["Monday and Wednesday", "Tuesday and Thursday", "Wednesday and Friday", "Saturday and Sunday"],
-                        correct: "b"
+                        type: "grammar",
+                        text: '"They _____ looking for three days." Which verb form is correct?',
+                        options: ["were", "was", "are", "is"],
+                        correct: "a"
                     },
                     q3: {
-                        text: "What type of food does she like to cook?",
-                        options: ["Chinese food", "Mexican food", "Italian food", "Indian food"],
+                        type: "comprehension",
+                        text: "What did Emma notice about the kitchen wall?",
+                        options: ["It was dirty", "It was damaged", "It was shorter than the others", "It was painted differently"],
                         correct: "c"
                     },
                     q4: {
-                        text: "What is her dog's name?",
-                        options: ["Rex", "Max", "Sam", "Jack"],
+                        type: "grammar",
+                        text: '"One wall was _____ than the others." What type of adjective is this?',
+                        options: ["Positive", "Comparative", "Superlative", "Possessive"],
                         correct: "b"
                     },
                     q5: {
-                        text: "How many books does she read per month?",
-                        options: ["One book", "Two books", "Three books", "Four books"],
+                        type: "comprehension",
+                        text: "What did they move to find the hidden door?",
+                        options: ["The stove", "The refrigerator", "The table", "The cabinet"],
                         correct: "b"
                     }
                 }
             },
             4: {
-                title: "Weather and Seasons",
+                title: "The Discovery",
                 questions: {
                     q1: {
-                        text: "Which country does she live in?",
-                        options: ["Scotland", "Ireland", "England", "Wales"],
+                        type: "comprehension",
+                        text: "What was inside the wooden box?",
+                        options: ["Money and coins", "Books and papers", "Photos, letters, and a necklace", "Toys and games"],
                         correct: "c"
                     },
                     q2: {
-                        text: "What is her favorite season?",
-                        options: ["Spring", "Summer", "Autumn", "Winter"],
-                        correct: "a"
-                    },
-                    q3: {
-                        text: "What is summer like where she lives?",
-                        options: ["Cold and rainy", "Warm and sunny", "Very hot", "Windy and cloudy"],
-                        correct: "b"
-                    },
-                    q4: {
-                        text: "What colors do the autumn leaves turn?",
-                        options: ["Green and blue", "Red, yellow, and orange", "Purple and pink", "Brown and black"],
-                        correct: "b"
-                    },
-                    q5: {
-                        text: "Why doesn't she like winter?",
-                        options: ["It's too expensive", "It's too busy", "The days are short and dark", "There's too much snow"],
-                        correct: "c"
-                    }
-                }
-            },
-            5: {
-                title: "Shopping at the Store",
-                questions: {
-                    q1: {
-                        text: "Who did she go shopping with?",
-                        options: ["Her father", "Her mother", "Her sister", "Her friend"],
-                        correct: "b"
-                    },
-                    q2: {
-                        text: "Which fruits did they buy?",
-                        options: ["Grapes, pears, and peaches", "Apples, bananas, and oranges", "Strawberries and kiwi", "Pineapple and mango"],
+                        type: "grammar",
+                        text: '"These are photos of my grandmother _____ was young." Which relative pronoun fits?',
+                        options: ["who", "when", "which", "where"],
                         correct: "b"
                     },
                     q3: {
-                        text: "What meat did they buy for dinner?",
-                        options: ["Beef", "Pork", "Chicken", "Fish"],
+                        type: "comprehension",
+                        text: "What did Mrs. Peterson give to Emma?",
+                        options: ["The photos", "The letters", "The gold necklace", "The wooden box"],
                         correct: "c"
                     },
                     q4: {
-                        text: "How long did the shopping take?",
-                        options: ["30 minutes", "45 minutes", "One hour", "Two hours"],
-                        correct: "c"
+                        type: "grammar",
+                        text: '"I _____ it was lost forever." Which verb form shows past belief?',
+                        options: ["think", "thought", "have thought", "was thinking"],
+                        correct: "b"
                     },
                     q5: {
-                        text: "How much did the shopping cost?",
-                        options: ["Twenty-five pounds", "Thirty pounds", "Thirty-five pounds", "Forty pounds"],
-                        correct: "c"
+                        type: "comprehension",
+                        text: "What do Emma and Mrs. Peterson do every afternoon now?",
+                        options: ["Search for more treasures", "Have tea together", "Read mystery books", "Go shopping"],
+                        correct: "b"
                     }
                 }
             }
         };
         
-        let currentLesson = 1;
+        let currentChapter = 1;
         let attempts = 0;
-        let lessonStartTime = Date.now();
+        let chapterStartTime = Date.now();
         let studentProgress = new StudentProgress();
         
         // Efeitos visuais
@@ -883,19 +911,25 @@
         }
         
         function checkAnswers() {
-            const currentLessonData = lessons[currentLesson];
-            const questions = Object.keys(currentLessonData.questions);
+            const currentChapterData = chapters[currentChapter];
+            const questions = Object.keys(currentChapterData.questions);
             let score = 0;
             let results = [];
+            let grammarScore = 0;
+            let comprehensionScore = 0;
             attempts++;
             
             questions.forEach((questionKey, index) => {
                 const selected = document.querySelector(`input[name="${questionKey}"]:checked`);
                 const questionDiv = document.querySelector(`input[name="${questionKey}"]`).closest('.question');
-                const correctAnswer = currentLessonData.questions[questionKey].correct;
+                const correctAnswer = currentChapterData.questions[questionKey].correct;
+                const isGrammar = questionDiv.querySelector('.question-type').classList.contains('grammar');
                 
                 if (selected && selected.value === correctAnswer) {
                     score++;
+                    if (isGrammar) grammarScore++;
+                    else comprehensionScore++;
+                    
                     results.push(`Questão ${index + 1}: ✅ Correto`);
                     questionDiv.classList.add('pulse-correct');
                     setTimeout(() => questionDiv.classList.remove('pulse-correct'), 800);
@@ -907,8 +941,8 @@
             });
             
             // Salvar progresso
-            const timeSpent = Date.now() - lessonStartTime;
-            studentProgress.completeListeningLesson(currentLesson, score, timeSpent);
+            const timeSpent = Date.now() - chapterStartTime;
+            studentProgress.completeReadingChapter(currentChapter, score, timeSpent);
             
             updateProgressBar(score, 5);
             
@@ -925,6 +959,8 @@
                 createConfetti();
                 createCelebration('🎉');
             }
+            if (grammarScore >= 2) earnBadge('badge4');
+            if (comprehensionScore >= 3) earnBadge('badge5');
             
             const feedback = document.getElementById('feedback');
             feedback.innerHTML = results.join('<br>');
@@ -932,13 +968,13 @@
             feedback.style.display = 'block';
             
             if (score === 5) {
-                feedback.innerHTML += '<br><br>🎉 PONTUAÇÃO PERFEITA! Você é incrível! 🌟';
+                feedback.innerHTML += '<br><br>📚 CAPÍTULO PERFEITO! Você entende perfeitamente a história! 🌟';
             } else if (score === 4) {
-                feedback.innerHTML += '<br><br>⭐ Excelente! Quase perfeito! 👏';
+                feedback.innerHTML += '<br><br>⭐ Excelente leitura! Quase perfeito! 👏';
             } else if (score === 3) {
-                feedback.innerHTML += '<br><br>👍 Bom trabalho! Continue praticando! 💪';
+                feedback.innerHTML += '<br><br>👍 Bom trabalho! Continue lendo e praticando! 💪';
             } else {
-                feedback.innerHTML += '<br><br>💪 Continue tentando! Foque nos detalhes! 🎯';
+                feedback.innerHTML += '<br><br>💪 Continue tentando! Leia cuidadosamente e escute novamente! 📖';
             }
         }
         
@@ -961,21 +997,22 @@
             
             pauseAudio();
             attempts = 0;
-            lessonStartTime = Date.now();
+            chapterStartTime = Date.now();
         }
         
-        function nextLesson() {
-            if (currentLesson < 5) {
-                currentLesson++;
-                document.querySelector('.lesson-title').textContent = lessons[currentLesson].title;
-                document.querySelector('.lesson-number').textContent = `Lição ${currentLesson}`;
-                document.getElementById('mainAudio').src = `audios/audio${currentLesson}.mp3`;
+        function nextChapter() {
+            if (currentChapter < 4) {
+                currentChapter++;
+                document.querySelector('.chapter-title').textContent = chapters[currentChapter].title;
+                document.querySelector('.chapter-number').textContent = `Capítulo ${currentChapter}`;
+                document.querySelector('.audio-title').textContent = `🎧 Escute o Capítulo ${currentChapter}`;
+                document.getElementById('mainAudio').src = `audios/chapter${currentChapter}.mp3`;
                 
                 resetQuiz();
-                lessonStartTime = Date.now();
-                createCelebration('🎯');
+                chapterStartTime = Date.now();
+                createCelebration('📖');
             } else {
-                alert('🎉 Parabéns! Você completou todas as lições! 🏆');
+                alert('🎉 Parabéns! Você terminou "The Secret in the Old House"! 🏆📚');
             }
         }
         
@@ -1012,9 +1049,9 @@
             `;
             document.body.appendChild(logoutBtn);
             
-            // Carregar a primeira lição
-            loadLesson(currentLesson);
-            lessonStartTime = Date.now();
+            // Carregar o primeiro capítulo
+            loadChapter(currentChapter);
+            chapterStartTime = Date.now();
         });
     </script>
 </body>
