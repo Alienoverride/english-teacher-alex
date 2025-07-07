@@ -231,6 +231,19 @@
             box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
         }
         
+        .progress-badge {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: 700;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+        }
+        
         /* Seções de Informação */
         .info-section {
             background: rgba(255, 255, 255, 0.95);
@@ -254,25 +267,6 @@
             letter-spacing: -1px;
             text-shadow: 0 0 20px rgba(30, 58, 138, 0.3);
             filter: drop-shadow(0 2px 4px rgba(220, 38, 38, 0.2));
-        }
-        
-        /* Efeito especial para emojis nos títulos */
-        .info-title::first-letter {
-            font-size: 1.3em;
-            animation: title-emoji-spin 4s ease-in-out infinite;
-            display: inline-block;
-        }
-        
-        @keyframes title-emoji-spin {
-            0%, 100% { 
-                transform: scale(1) rotate(0deg);
-            }
-            25% { 
-                transform: scale(1.2) rotate(-10deg);
-            }
-            75% { 
-                transform: scale(1.2) rotate(10deg);
-            }
         }
         
         .instructions {
@@ -329,28 +323,6 @@
             box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
             border: 3px solid rgba(255, 255, 255, 0.2);
             animation: pulse-number 2s ease-in-out infinite;
-        }
-        
-        /* Estilo especial para emojis nas dicas */
-        .instruction-item:nth-child(1) .instruction-number,
-        .instruction-item:nth-child(2) .instruction-number,
-        .instruction-item:nth-child(3) .instruction-number,
-        .instruction-item:nth-child(4) .instruction-number {
-            background: linear-gradient(135deg, #1e3a8a, #dc2626);
-            font-size: 1.8em;
-            animation: emoji-bounce 3s ease-in-out infinite;
-        }
-        
-        @keyframes emoji-bounce {
-            0%, 100% { 
-                transform: scale(1) rotate(0deg);
-            }
-            25% { 
-                transform: scale(1.1) rotate(-5deg);
-            }
-            75% { 
-                transform: scale(1.1) rotate(5deg);
-            }
         }
         
         @keyframes pulse-number {
@@ -482,8 +454,6 @@
             animation: float 3s ease-in-out infinite;
         }
         
-
-        
         /* Responsivo */
         @media (max-width: 768px) {
             .container {
@@ -540,7 +510,7 @@
         <!-- Activities Grid -->
         <div class="activities-grid">
             <!-- Listening Lessons -->
-            <div class="activity-card">
+            <div class="activity-card" id="listeningCard">
                 <div class="new-badge">NOVO!</div>
                 <div class="activity-icon">🎧</div>
                 <div class="activity-title">Listening Lessons</div>
@@ -558,7 +528,7 @@
             </div>
             
             <!-- Graded Reader -->
-            <div class="activity-card">
+            <div class="activity-card" id="readingCard">
                 <div class="new-badge">NOVO!</div>
                 <div class="activity-icon">📚</div>
                 <div class="activity-title">Graded Reader</div>
@@ -612,19 +582,19 @@
             <div class="info-title">🎯 O Que Você Vai Aprender</div>
             <div class="stats">
                 <div class="stat-card">
-                    <div class="stat-number">5</div>
+                    <div class="stat-number" data-target="5">0</div>
                     <div class="stat-label">Tópicos de Listening</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">4</div>
+                    <div class="stat-number" data-target="4">0</div>
                     <div class="stat-label">Capítulos da História</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">45</div>
+                    <div class="stat-number" data-target="45">0</div>
                     <div class="stat-label">Perguntas Práticas</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">10</div>
+                    <div class="stat-number" data-target="10">0</div>
                     <div class="stat-label">Badges de Conquista</div>
                 </div>
             </div>
@@ -740,94 +710,76 @@
                     totalChapters: this.data.reading.chaptersCompleted.length,
                     totalBadges: this.data.listening.badges.length + this.data.reading.badges.length,
                     totalAttempts: this.data.listening.totalAttempts + this.data.reading.totalAttempts,
-                    studyTime: Math.round(this.data.totalStudyTime / 60000), // em minutos
+                    studyTime: Math.round(this.data.totalStudyTime / 60000),
                     joinDate: new Date(this.data.joinDate).toLocaleDateString('pt-BR'),
                     lastActivity: this.data.lastActivity ? new Date(this.data.lastActivity).toLocaleDateString('pt-BR') : 'Nunca'
                 };
             }
+        }
 
-            isListeningLessonCompleted(lessonNumber) {
-                return this.data.listening.lessonsCompleted.includes(`lesson_${lessonNumber}`);
+        // ===== ANIMAÇÕES E EFEITOS =====
+        function animateStats() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = parseInt(entry.target.getAttribute('data-target'));
+                        let current = 0;
+                        const increment = target / 30;
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= target) {
+                                entry.target.textContent = target;
+                                clearInterval(timer);
+                            } else {
+                                entry.target.textContent = Math.floor(current);
+                            }
+                        }, 50);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            statNumbers.forEach(number => {
+                observer.observe(number);
+            });
+        }
+
+        function updateProgressIndicators() {
+            const studentProgress = new StudentProgress();
+            const stats = studentProgress.getStats();
+            
+            // Atualizar indicadores de progresso nos cards
+            const listeningCard = document.getElementById('listeningCard');
+            const readingCard = document.getElementById('readingCard');
+            
+            if (stats.totalLessons > 0) {
+                const progressBadge = document.createElement('div');
+                progressBadge.className = 'progress-badge';
+                progressBadge.textContent = `${stats.totalLessons}/5 ✓`;
+                listeningCard.appendChild(progressBadge);
             }
-
-            isReadingChapterCompleted(chapterNumber) {
-                return this.data.reading.chaptersCompleted.includes(`chapter_${chapterNumber}`);
+            
+            if (stats.totalChapters > 0) {
+                const progressBadge = document.createElement('div');
+                progressBadge.className = 'progress-badge';
+                progressBadge.textContent = `${stats.totalChapters}/4 ✓`;
+                readingCard.appendChild(progressBadge);
             }
-
-            getBestScore(type, number) {
-                const key = type === 'listening' ? `lesson_${number}` : `chapter_${number}`;
-                return this.data[type].bestScores[key] || 0;
-            }
-
-            getAllBadges() {
-                return {
-                    listening: this.data.listening.badges,
-                    reading: this.data.reading.badges,
-                    global: this.data.globalBadges
-                };
+            
+            // Atualizar estatísticas dinâmicas
+            const statCards = document.querySelectorAll('.stat-number');
+            if (statCards.length >= 4) {
+                statCards[0].setAttribute('data-target', Math.max(5, stats.totalLessons + 5));
+                statCards[1].setAttribute('data-target', Math.max(4, stats.totalChapters + 4));
+                statCards[2].setAttribute('data-target', Math.max(45, (stats.totalLessons * 5) + (stats.totalChapters * 5) + 25));
+                statCards[3].setAttribute('data-target', Math.max(10, stats.totalBadges + 10));
             }
         }
 
-        // Adicionar efeitos interativos
+        // ===== INICIALIZAÇÃO =====
         document.addEventListener('DOMContentLoaded', function() {
-            // Inicializar sistema de progresso
-            const studentProgress = new StudentProgress();
-            
-            // Atualizar estatísticas com dados reais do progresso
-            setTimeout(() => {
-                const stats = studentProgress.getStats();
-                
-                // Atualizar números nas estatísticas
-                const statNumbers = document.querySelectorAll('.stat-number');
-                if (statNumbers[0]) statNumbers[0].textContent = Math.max(5, stats.totalLessons + 5); // Sempre mostrar pelo menos 5
-                if (statNumbers[1]) statNumbers[1].textContent = Math.max(4, stats.totalChapters + 4); // Sempre mostrar pelo menos 4
-                if (statNumbers[2]) statNumbers[2].textContent = Math.max(45, (stats.totalLessons * 5) + (stats.totalChapters * 5) + 25); // Total de perguntas
-                if (statNumbers[3]) statNumbers[3].textContent = Math.max(10, stats.totalBadges + 5); // Badges disponíveis
-                
-                // Adicionar indicadores de progresso aos cards
-                const listeningCard = document.querySelector('.activity-card:first-child');
-                const readingCard = document.querySelector('.activity-card:last-child');
-                
-                if (stats.totalLessons > 0) {
-                    const completedBadge = document.createElement('div');
-                    completedBadge.style.cssText = `
-                        position: absolute;
-                        top: 15px;
-                        left: 15px;
-                        background: linear-gradient(135deg, #22c55e, #16a34a);
-                        color: white;
-                        padding: 6px 12px;
-                        border-radius: 12px;
-                        font-size: 0.7em;
-                        font-weight: 700;
-                        box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
-                    `;
-                    completedBadge.textContent = `${stats.totalLessons}/5 ✓`;
-                    listeningCard.appendChild(completedBadge);
-                }
-                
-                if (stats.totalChapters > 0) {
-                    const completedBadge = document.createElement('div');
-                    completedBadge.style.cssText = `
-                        position: absolute;
-                        top: 15px;
-                        left: 15px;
-                        background: linear-gradient(135deg, #22c55e, #16a34a);
-                        color: white;
-                        padding: 6px 12px;
-                        border-radius: 12px;
-                        font-size: 0.7em;
-                        font-weight: 700;
-                        box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
-                    `;
-                    completedBadge.textContent = `${stats.totalChapters}/4 ✓`;
-                    readingCard.appendChild(completedBadge);
-                }
-                
-                console.log('📊 Estatísticas do aluno:', stats);
-            }, 500);
-            
-            // Criar botão de logout (mantendo o original que funciona bem no mobile)
+            // Logout button
             const logoutBtn = document.createElement('div');
             logoutBtn.innerHTML = `
                 <div style="position: fixed; top: 10px; right: 10px; z-index: 1000;">
@@ -838,6 +790,10 @@
                 </div>
             `;
             document.body.appendChild(logoutBtn);
+            
+            // Atualizar progresso e animar
+            updateProgressIndicators();
+            animateStats();
             
             // Efeito hover nas cards
             const activityCards = document.querySelectorAll('.activity-card');
@@ -850,33 +806,8 @@
                     this.style.transform = 'translateY(0) scale(1)';
                 });
             });
-            
-            // Animação dos números das estatísticas
-            const statNumbers = document.querySelectorAll('.stat-number');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const target = parseInt(entry.target.textContent);
-                        let current = 0;
-                        const increment = target / 30;
-                        const timer = setInterval(() => {
-                            current += increment;
-                            if (current >= target) {
-                                entry.target.textContent = target;
-                                clearInterval(timer);
-                            } else {
-                                entry.target.textContent = Math.floor(current);
-                            }
-                        }, 50);
-                    }
-                });
-            });
-            
-            statNumbers.forEach(number => {
-                observer.observe(number);
-            });
 
-            // Adicionar efeitos de parallax sutil
+            // Efeito de parallax sutil
             window.addEventListener('scroll', () => {
                 const scrolled = window.pageYOffset;
                 const header = document.querySelector('.header');
@@ -885,17 +816,7 @@
                 }
             });
 
-            // Efeito de brilho nos botões
-            const buttons = document.querySelectorAll('.btn-activity');
-            buttons.forEach(button => {
-                button.addEventListener('mouseenter', function() {
-                    this.style.background = 'linear-gradient(135deg, #1e40af, #ef4444)';
-                });
-                
-                button.addEventListener('mouseleave', function() {
-                    this.style.background = 'linear-gradient(135deg, #1e3a8a, #dc2626)';
-                });
-            });
+            console.log('🎓 Teacher Alex Platform carregada com sucesso!');
         });
     </script>
 </body>
