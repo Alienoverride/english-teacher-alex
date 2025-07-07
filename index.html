@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Alex English Academy - Learning Hub</title>
+    <title>Teacher Alex English Academy - Listening Lessons</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -22,20 +22,19 @@
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
         }
         
-        /* Header Principal */
         .header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 50px 40px;
+            border-radius: 20px;
+            padding: 30px;
             text-align: center;
-            margin-bottom: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
             overflow: hidden;
@@ -47,156 +46,189 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
+            height: 3px;
             background: linear-gradient(90deg, #1e3a8a, #dc2626, #1e3a8a);
         }
         
         .logo {
-            font-size: 3.5em;
+            font-size: 2.5em;
             font-weight: 800;
             background: linear-gradient(135deg, #1e3a8a, #dc2626, #1e3a8a);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 15px;
-            letter-spacing: -2px;
-            text-shadow: 0 0 30px rgba(30, 58, 138, 0.5);
-            filter: drop-shadow(0 0 20px rgba(220, 38, 38, 0.3));
+            margin-bottom: 12px;
+            letter-spacing: -1px;
             animation: glow 3s ease-in-out infinite alternate;
+        }
+        
+        .tagline {
+            font-size: 1.3em;
+            color: #dc2626;
+            font-weight: 600;
         }
         
         @keyframes glow {
             from {
-                filter: drop-shadow(0 0 20px rgba(220, 38, 38, 0.3));
+                filter: drop-shadow(0 0 10px rgba(220, 38, 38, 0.3));
             }
             to {
-                filter: drop-shadow(0 0 30px rgba(30, 58, 138, 0.6)) drop-shadow(0 0 40px rgba(220, 38, 38, 0.4));
+                filter: drop-shadow(0 0 20px rgba(30, 58, 138, 0.5));
             }
         }
         
-        .tagline {
-            font-size: 1.5em;
-            color: #dc2626;
-            font-weight: 600;
-            margin-bottom: 20px;
-            opacity: 0.9;
-        }
-        
-        .description {
-            font-size: 1.1em;
-            color: #64748b;
-            max-width: 650px;
-            margin: 0 auto;
-            font-weight: 400;
-        }
-        
-        /* Cards de Atividades */
-        .activities-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
-        }
-        
-        .activity-card {
+        .lesson-container {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             border-radius: 20px;
             padding: 35px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
         }
         
-        .activity-card::before {
+        .lesson-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                       linear-gradient(90deg, #1e3a8a, #dc2626) border-box;
+        }
+        
+        .lesson-title {
+            font-size: 2em;
+            background: linear-gradient(135deg, #1e3a8a, #dc2626);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+        
+        .lesson-number {
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(220, 38, 38, 0.4);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            margin: 25px 0;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1e3a8a, #dc2626);
+            width: 0%;
+            transition: width 0.8s ease-in-out;
+            border-radius: 10px;
+        }
+        
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            background: rgba(241, 245, 249, 0.7);
+            border: 2px solid #cbd5e1;
+            border-radius: 25px;
+            padding: 10px 18px;
+            font-size: 0.9em;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .badge.earned {
+            background: linear-gradient(135deg, #1e3a8a, #dc2626);
+            color: white;
+            border-color: #dc2626;
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(30, 58, 138, 0.4);
+            animation: badgeEarn 1s ease-in-out;
+        }
+        
+        @keyframes badgeEarn {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3) rotate(5deg); }
+            100% { transform: scale(1.05); }
+        }
+        
+        .audio-section {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.05), rgba(220, 38, 38, 0.05));
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .audio-section::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #1e3a8a, #dc2626);
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
+            bottom: 0;
+            border-radius: 16px;
+            padding: 2px;
+            background: linear-gradient(135deg, #1e3a8a, #dc2626);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: exclude;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
         }
         
-        .activity-card:hover::before {
-            transform: scaleX(1);
-        }
-        
-        .activity-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
-        }
-        
-        .activity-icon {
-            font-size: 4.5em;
-            margin-bottom: 25px;
-            display: block;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
-        }
-        
-        .activity-title {
-            font-size: 2em;
-            color: #1e3a8a;
+        .audio-title {
+            font-size: 1.4em;
+            background: linear-gradient(135deg, #1e3a8a, #dc2626);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
             font-weight: 700;
-            margin-bottom: 15px;
-            letter-spacing: -0.5px;
         }
         
-        .activity-subtitle {
-            font-size: 1.3em;
-            color: #dc2626;
-            font-weight: 600;
+        audio {
+            width: 100%;
+            max-width: 500px;
             margin-bottom: 20px;
         }
         
-        .activity-description {
-            color: #64748b;
-            margin-bottom: 25px;
-            line-height: 1.7;
-            font-weight: 400;
-        }
-        
-        .features {
+        .play-buttons {
             display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
             justify-content: center;
-            margin-bottom: 30px;
+            gap: 15px;
+            flex-wrap: wrap;
         }
         
-        .feature-tag {
-            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
-            color: #475569;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: 500;
-            border: 1px solid rgba(71, 85, 105, 0.1);
-        }
-        
-        .btn-activity {
-            background: linear-gradient(135deg, #1e3a8a, #dc2626);
-            color: white;
-            padding: 16px 32px;
+        .btn {
+            padding: 14px 28px;
             border: none;
-            border-radius: 16px;
-            font-size: 1.1em;
+            border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            width: 100%;
+            font-size: 1em;
             position: relative;
             overflow: hidden;
         }
         
-        .btn-activity::before {
+        .btn::before {
             content: '';
             position: absolute;
             top: 0;
@@ -207,251 +239,190 @@
             transition: left 0.5s;
         }
         
-        .btn-activity:hover::before {
+        .btn:hover::before {
             left: 100%;
         }
         
-        .btn-activity:hover {
+        .btn-primary {
+            background: linear-gradient(135deg, #1e3a8a, #1e40af);
+            color: white;
+            box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1e40af, #2563eb);
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(30, 58, 138, 0.4);
-            background: linear-gradient(135deg, #1e40af, #ef4444);
+            box-shadow: 0 8px 25px rgba(30, 58, 138, 0.4);
         }
         
-        .new-badge {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 12px;
-            font-size: 0.7em;
-            font-weight: 700;
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            animation: pulse 2s infinite;
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
-        }
-        
-        .progress-badge {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 12px;
-            font-size: 0.7em;
-            font-weight: 700;
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
-        }
-        
-        /* Seções de Informação */
-        .info-section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .info-title {
-            font-size: 2.2em;
-            background: linear-gradient(135deg, #1e3a8a, #dc2626, #1e3a8a);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-            margin-bottom: 35px;
-            text-align: center;
-            letter-spacing: -1px;
-            text-shadow: 0 0 20px rgba(30, 58, 138, 0.3);
-            filter: drop-shadow(0 2px 4px rgba(220, 38, 38, 0.2));
-        }
-        
-        .instructions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 20px;
-        }
-        
-        .instruction-item {
-            background: linear-gradient(135deg, rgba(30, 58, 138, 0.05), rgba(220, 38, 38, 0.05));
-            padding: 25px;
-            border-radius: 16px;
-            border: 2px solid transparent;
-            background-clip: padding-box;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .instruction-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 16px;
-            padding: 2px;
-            background: linear-gradient(135deg, #1e3a8a, #dc2626);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: exclude;
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask-composite: exclude;
-        }
-        
-        .instruction-item:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(30, 58, 138, 0.2);
-        }
-        
-        .instruction-number {
+        .btn-secondary {
             background: linear-gradient(135deg, #dc2626, #ef4444);
             color: white;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.2em;
-            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #ef4444, #f87171);
+            transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
-            border: 3px solid rgba(255, 255, 255, 0.2);
-            animation: pulse-number 2s ease-in-out infinite;
         }
         
-        @keyframes pulse-number {
-            0%, 100% { 
-                transform: scale(1);
-                box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
-            }
-            50% { 
-                transform: scale(1.1);
-                box-shadow: 0 12px 35px rgba(220, 38, 38, 0.6);
-            }
-        }
-        
-        .instruction-text {
-            color: #475569;
-            line-height: 1.6;
-            font-weight: 400;
-        }
-        
-        .instruction-text strong {
-            color: #1e3a8a;
-            font-weight: 600;
-        }
-        
-        /* Estatísticas */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
+        .questions-section {
             margin-top: 30px;
         }
         
-        .stat-card {
-            background: linear-gradient(135deg, rgba(30, 58, 138, 0.05), rgba(220, 38, 38, 0.05));
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            border: 2px solid transparent;
-            background-clip: padding-box;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
+        .question {
+            background: linear-gradient(135deg, rgba(248, 250, 252, 0.8), rgba(241, 245, 249, 0.8));
+            border: 2px solid #cbd5e1;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
         
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 20px;
-            padding: 2px;
-            background: linear-gradient(135deg, #1e3a8a, #dc2626, #1e3a8a);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: exclude;
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask-composite: exclude;
+        .question:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         }
         
-        .stat-card:hover {
-            transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 20px 50px rgba(30, 58, 138, 0.3);
-        }
-        
-        .stat-number {
-            font-size: 4em;
-            font-weight: 900;
-            background: linear-gradient(135deg, #1e3a8a, #dc2626, #1e3a8a);
+        .question-text {
+            font-size: 1.2em;
+            background: linear-gradient(135deg, #1e3a8a, #dc2626);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
-            text-shadow: 0 0 30px rgba(30, 58, 138, 0.5);
-            filter: drop-shadow(0 4px 8px rgba(220, 38, 38, 0.3));
-            animation: stat-glow 2s ease-in-out infinite alternate;
-        }
-        
-        @keyframes stat-glow {
-            from {
-                filter: drop-shadow(0 4px 8px rgba(220, 38, 38, 0.3));
-            }
-            to {
-                filter: drop-shadow(0 8px 16px rgba(30, 58, 138, 0.5)) drop-shadow(0 4px 12px rgba(220, 38, 38, 0.4));
-            }
-        }
-        
-        .stat-label {
-            color: #64748b;
-            font-weight: 500;
-            font-size: 0.95em;
-        }
-        
-        /* Footer */
-        .footer {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .footer-text {
-            color: #64748b;
-            margin-bottom: 12px;
-            font-weight: 400;
-        }
-        
-        .contact-info {
-            color: #1e3a8a;
             font-weight: 600;
-            font-size: 1.1em;
+            margin-bottom: 20px;
         }
         
-        /* Animações */
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        .options {
+            display: grid;
+            gap: 12px;
         }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
         
-        .floating {
-            animation: float 3s ease-in-out infinite;
+        .option:hover {
+            border-color: #dc2626;
+            background: rgba(254, 242, 242, 0.8);
+            transform: scale(1.01);
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.3);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 2px solid #e2e8f0;
+            flex-wrap: wrap;
+        }
+        
+        .score {
+            text-align: center;
+            margin-top: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3a8a, #dc2626);
+            color: white;
+            border-radius: 16px;
+            font-size: 1.3em;
+            font-weight: 700;
+            box-shadow: 0 8px 25px rgba(30, 58, 138, 0.3);
+        }
+        
+        .feedback {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+        
+        .feedback.correct {
+            background: rgba(220, 252, 231, 0.8);
+            color: #22543d;
+            border: 2px solid #38a169;
+        }
+        
+        .feedback.incorrect {
+            background: rgba(254, 242, 242, 0.8);
+            color: #c53030;
+            border: 2px solid #e53e3e;
+        }
+        
+        /* Animações de Gamificação */
+        .celebration {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5em;
+            animation: celebrate 2s ease-in-out;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        @keyframes celebrate {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background: #dc2626;
+            animation: confetti 3s ease-in-out forwards;
+            pointer-events: none;
+            z-index: 999;
+        }
+        
+        @keyframes confetti {
+            0% { 
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        .pulse-correct {
+            animation: pulseGreen 0.8s ease-in-out;
+        }
+        
+        @keyframes pulseGreen {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); background-color: rgba(220, 252, 231, 0.8); }
+            100% { transform: scale(1); }
+        }
+        
+        .shake-incorrect {
+            animation: shakeRed 0.8s ease-in-out;
+        }
+        
+        @keyframes shakeRed {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); background-color: rgba(254, 242, 242, 0.8); }
+            75% { transform: translateX(8px); background-color: rgba(254, 242, 242, 0.8); }
         }
         
         /* Responsivo */
@@ -461,187 +432,81 @@
             }
             
             .logo {
-                font-size: 2.5em;
+                font-size: 2em;
             }
             
-            .tagline {
-                font-size: 1.2em;
+            .lesson-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
             }
             
-            .activities-grid {
-                grid-template-columns: 1fr;
+            .play-buttons {
+                flex-direction: column;
+                align-items: center;
             }
             
-            .activity-card {
-                padding: 25px;
-            }
-            
-            .instructions {
-                grid-template-columns: 1fr;
-            }
-            
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .stats {
-                grid-template-columns: 1fr;
-            }
-            
-            .stat-number {
-                font-size: 2.5em;
+            .controls {
+                flex-direction: column;
+                align-items: center;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
         <div class="header">
-            <div class="logo floating">Teacher Alex English Academy</div>
-            <div class="tagline">Sua Plataforma Personalizada de Inglês</div>
-            <div class="description">
-                Pratique suas habilidades em inglês a qualquer hora, em qualquer lugar! Acesse exercícios interativos de listening e atividades de leitura graduadas para melhorar sua compreensão e gramática.
-            </div>
+            <a href="index.html" style="text-decoration: none;"><div class="logo">Teacher Alex English Academy</div></a>
+            <div class="tagline">Domine o Inglês Através do Listening</div>
         </div>
         
-        <!-- Activities Grid -->
-        <div class="activities-grid">
-            <!-- Listening Lessons -->
-            <div class="activity-card" id="listeningCard">
-                <div class="new-badge">NOVO!</div>
-                <div class="activity-icon">🎧</div>
-                <div class="activity-title">Listening Lessons</div>
-                <div class="activity-subtitle">Prática Interativa de Áudio</div>
-                <div class="activity-description">
-                    Melhore suas habilidades de listening com conversas reais e exercícios. Cada lição inclui áudio, perguntas e feedback instantâneo com recompensas gamificadas!
-                </div>
-                <div class="features">
-                    <span class="feature-tag">5 Lições</span>
-                    <span class="feature-tag">Áudio + Perguntas</span>
-                    <span class="feature-tag">Feedback Instantâneo</span>
-                    <span class="feature-tag">Progresso</span>
-                </div>
-                <a href="listening.html" class="btn-activity">🎯 Iniciar Prática de Listening</a>
+        <div class="lesson-container">
+            <div class="lesson-header">
+                <div class="lesson-title" id="lessonTitle">Personal Introduction</div>
+                <div class="lesson-number" id="lessonNumber">Lição 1</div>
             </div>
             
-            <!-- Graded Reader -->
-            <div class="activity-card" id="readingCard">
-                <div class="new-badge">NOVO!</div>
-                <div class="activity-icon">📚</div>
-                <div class="activity-title">Graded Reader</div>
-                <div class="activity-subtitle">"The Secret in the Old House"</div>
-                <div class="activity-description">
-                    Leia uma história de mistério envolvente com narração em áudio. Teste sua compreensão e habilidades gramaticais com perguntas interativas para cada capítulo.
-                </div>
-                <div class="features">
-                    <span class="feature-tag">Nível A2</span>
-                    <span class="feature-tag">4 Capítulos</span>
-                    <span class="feature-tag">Áudio + Texto</span>
-                    <span class="feature-tag">Foco Gramatical</span>
-                </div>
-                <a href="reader.html" class="btn-activity">📖 Iniciar Aventura de Leitura</a>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
             </div>
-        </div>
-        
-        <!-- How to Use Section -->
-        <div class="info-section">
-            <div class="info-title">📋 Como Usar Esta Plataforma</div>
-            <div class="instructions">
-                <div class="instruction-item">
-                    <div class="instruction-number">1</div>
-                    <div class="instruction-text">
-                        <strong>Escolha uma Atividade:</strong> Selecione entre Listening Lessons ou Graded Reader baseado no que você quer praticar hoje.
-                    </div>
+            
+            <div class="badges">
+                <div class="badge" id="badge1">🎯 Primeira Tentativa</div>
+                <div class="badge" id="badge2">⭐ Boa Pontuação</div>
+                <div class="badge" id="badge3">🏆 Perfeito</div>
+                <div class="badge" id="badge4">🔥 Sequência</div>
+            </div>
+            
+            <div class="audio-section">
+                <div class="audio-title" id="audioTitle">🎧 Escute a Lição: Personal Introduction</div>
+                <div class="audio-controls">
+                    <audio id="mainAudio" controls>
+                        <source src="audios/audio1.mp3" type="audio/mpeg">
+                        Seu navegador não suporta o elemento de áudio.
+                    </audio>
                 </div>
-                <div class="instruction-item">
-                    <div class="instruction-number">2</div>
-                    <div class="instruction-text">
-                        <strong>Escute e Leia:</strong> Use fones de ouvido para a melhor experiência de áudio. Acompanhe com o texto quando disponível.
-                    </div>
-                </div>
-                <div class="instruction-item">
-                    <div class="instruction-number">3</div>
-                    <div class="instruction-text">
-                        <strong>Responda as Perguntas:</strong> Teste sua compreensão com perguntas de interpretação e gramática após cada áudio/capítulo.
-                    </div>
-                </div>
-                <div class="instruction-item">
-                    <div class="instruction-number">4</div>
-                    <div class="instruction-text">
-                        <strong>Acompanhe seu Progresso:</strong> Ganhe badges e veja suas notas melhorarem conforme você pratica mais!
-                    </div>
+                <div class="play-buttons">
+                    <button class="btn btn-primary" onclick="playAudio()">▶️ Reproduzir</button>
+                    <button class="btn btn-secondary" onclick="replayAudio()">🔄 Repetir</button>
+                    <button class="btn btn-primary" onclick="pauseAudio()">⏸️ Pausar</button>
                 </div>
             </div>
-        </div>
-        
-        <!-- Stats Section -->
-        <div class="info-section">
-            <div class="info-title">🎯 O Que Você Vai Aprender</div>
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-number" data-target="5">0</div>
-                    <div class="stat-label">Tópicos de Listening</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" data-target="4">0</div>
-                    <div class="stat-label">Capítulos da História</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" data-target="45">0</div>
-                    <div class="stat-label">Perguntas Práticas</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" data-target="10">0</div>
-                    <div class="stat-label">Badges de Conquista</div>
-                </div>
+            
+            <div class="questions-section" id="questionsContainer">
+                <!-- As perguntas serão carregadas dinamicamente aqui -->
             </div>
-        </div>
-        
-        <!-- Study Tips -->
-        <div class="info-section">
-            <div class="info-title">💡 Dicas de Estudo para o Sucesso</div>
-            <div class="instructions">
-                <div class="instruction-item">
-                    <div class="instruction-number">🎧</div>
-                    <div class="instruction-text">
-                        <strong>Escute Várias Vezes:</strong> Não se preocupe se não entender tudo na primeira vez. Escute novamente e foque em detalhes diferentes a cada vez.
-                    </div>
-                </div>
-                <div class="instruction-item">
-                    <div class="instruction-number">📝</div>
-                    <div class="instruction-text">
-                        <strong>Faça Anotações:</strong> Anote palavras ou frases novas que você ouvir. Procure depois para expandir seu vocabulário.
-                    </div>
-                </div>
-                <div class="instruction-item">
-                    <div class="instruction-number">🎯</div>
-                    <div class="instruction-text">
-                        <strong>Pratique Diariamente:</strong> Mesmo 15-20 minutos de prática diária melhorarão seu inglês mais rápido que sessões longas e esparsas.
-                    </div>
-                </div>
-                <div class="instruction-item">
-                    <div class="instruction-number">🏆</div>
-                    <div class="instruction-text">
-                        <strong>Celebre o Progresso:</strong> Colete todos os badges e busque notas perfeitas. Cada pequena melhoria conta!
-                    </div>
-                </div>
+            
+            <div class="controls">
+                <button class="btn btn-primary" onclick="checkAnswers()">✅ Verificar Respostas</button>
+                <button class="btn btn-secondary" onclick="resetQuiz()">🔄 Reiniciar Quiz</button>
+                <button class="btn btn-primary" onclick="nextLesson()">➡️ Próxima Lição</button>
             </div>
-        </div>
-        
-        <!-- Footer -->
-        <div class="footer">
-            <div class="footer-text">
-                Dúvidas sobre as lições? Precisa de ajuda com seus estudos de inglês?
+            
+            <div id="scoreSection" class="score" style="display: none;">
+                Sua Pontuação: <span id="scoreValue">0</span>/5 🎯
             </div>
-            <div class="contact-info">
-                📧 Contato Professor Alex: alexmg@gmail.com
-            </div>
-            <div class="footer-text" style="margin-top: 15px; font-size: 0.9em;">
-                🌟 Continue praticando, continue melhorando! Sua jornada no inglês começa aqui. 🌟
-            </div>
+            
+            <div id="feedback" class="feedback" style="display: none;"></div>
         </div>
     </div>
     
@@ -704,80 +569,491 @@
                 }
             }
 
-            getStats() {
-                return {
-                    totalLessons: this.data.listening.lessonsCompleted.length,
-                    totalChapters: this.data.reading.chaptersCompleted.length,
-                    totalBadges: this.data.listening.badges.length + this.data.reading.badges.length,
-                    totalAttempts: this.data.listening.totalAttempts + this.data.reading.totalAttempts,
-                    studyTime: Math.round(this.data.totalStudyTime / 60000),
-                    joinDate: new Date(this.data.joinDate).toLocaleDateString('pt-BR'),
-                    lastActivity: this.data.lastActivity ? new Date(this.data.lastActivity).toLocaleDateString('pt-BR') : 'Nunca'
-                };
+            saveProgress() {
+                localStorage.setItem(this.progressKey, JSON.stringify(this.data));
+            }
+
+            completeListeningLesson(lessonNumber, score, timeSpent) {
+                const lesson = `lesson_${lessonNumber}`;
+                
+                if (!this.data.listening.lessonsCompleted.includes(lesson)) {
+                    this.data.listening.lessonsCompleted.push(lesson);
+                }
+                
+                if (!this.data.listening.bestScores[lesson] || score > this.data.listening.bestScores[lesson]) {
+                    this.data.listening.bestScores[lesson] = score;
+                }
+                
+                this.data.listening.totalAttempts++;
+                this.data.totalStudyTime += timeSpent;
+                this.data.lastActivity = new Date().toISOString();
+                
+                this.checkListeningBadges(lessonNumber, score);
+                this.saveProgress();
+            }
+
+            checkListeningBadges(lessonNumber, score) {
+                const badges = this.data.listening.badges;
+                
+                if (!badges.includes('first_try')) {
+                    badges.push('first_try');
+                    this.showBadgeNotification('🎯 Primeira Tentativa!', 'Você completou sua primeira lição!');
+                }
+                
+                if (score === 5 && !badges.includes('perfect_score')) {
+                    badges.push('perfect_score');
+                    this.showBadgeNotification('⭐ Pontuação Perfeita!', 'Você acertou todas as perguntas!');
+                }
+                
+                if (this.data.listening.lessonsCompleted.length >= 3 && !badges.includes('three_lessons')) {
+                    badges.push('three_lessons');
+                    this.showBadgeNotification('🏆 Estudante Dedicado!', 'Você completou 3 lições!');
+                }
+                
+                if (this.data.listening.lessonsCompleted.length >= 5 && !badges.includes('all_lessons')) {
+                    badges.push('all_lessons');
+                    this.showBadgeNotification('🎉 Mestre do Listening!', 'Você completou todas as lições!');
+                }
+            }
+
+            showBadgeNotification(title, message) {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: linear-gradient(135deg, #1e3a8a, #dc2626);
+                    color: white;
+                    padding: 25px 35px;
+                    border-radius: 20px;
+                    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+                    z-index: 10000;
+                    text-align: center;
+                    animation: badgeAppear 3s ease-in-out forwards;
+                    backdrop-filter: blur(10px);
+                `;
+                
+                notification.innerHTML = `
+                    <div style="font-size: 1.8em; font-weight: bold; margin-bottom: 15px;">${title}</div>
+                    <div style="font-size: 1.1em;">${message}</div>
+                `;
+                
+                if (!document.getElementById('badge-animation-css')) {
+                    const style = document.createElement('style');
+                    style.id = 'badge-animation-css';
+                    style.textContent = `
+                        @keyframes badgeAppear {
+                            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+                            20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+                            80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+                            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+                
+                document.body.appendChild(notification);
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 3000);
             }
         }
 
-        // ===== ANIMAÇÕES E EFEITOS =====
-        function animateStats() {
-            const statNumbers = document.querySelectorAll('.stat-number');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const target = parseInt(entry.target.getAttribute('data-target'));
-                        let current = 0;
-                        const increment = target / 30;
-                        const timer = setInterval(() => {
-                            current += increment;
-                            if (current >= target) {
-                                entry.target.textContent = target;
-                                clearInterval(timer);
-                            } else {
-                                entry.target.textContent = Math.floor(current);
-                            }
-                        }, 50);
-                        observer.unobserve(entry.target);
+        // ===== SISTEMA DE LIÇÕES =====
+        const lessons = {
+            1: {
+                title: "Personal Introduction",
+                audioUrl: "audios/audio1.mp3",
+                questions: {
+                    q1: {
+                        text: "How old is Sarah?",
+                        options: ["23 years old", "25 years old", "27 years old", "30 years old"],
+                        correct: "b"
+                    },
+                    q2: {
+                        text: "Where does Sarah live?",
+                        options: ["In London city center", "In a small town near London", "In Manchester", "In Birmingham"],
+                        correct: "b"
+                    },
+                    q3: {
+                        text: "What is Sarah's job?",
+                        options: ["She's a nurse", "She's a doctor", "She's a teacher", "She's a student"],
+                        correct: "c"
+                    },
+                    q4: {
+                        text: "How many siblings does Sarah have?",
+                        options: ["No siblings", "One brother and one sister", "Two brothers", "Three sisters"],
+                        correct: "b"
+                    },
+                    q5: {
+                        text: "What is Sarah's favorite food?",
+                        options: ["Hamburger", "Pasta", "Pizza", "Sushi"],
+                        correct: "c"
                     }
+                }
+            },
+            2: {
+                title: "Daily Routine",
+                audioUrl: "audios/audio2.mp3",
+                questions: {
+                    q1: {
+                        text: "What time does she wake up?",
+                        options: ["6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM"],
+                        correct: "b"
+                    },
+                    q2: {
+                        text: "What does she have for breakfast?",
+                        options: ["Cereal and milk", "Toast and coffee", "Eggs and bacon", "Fruit and yogurt"],
+                        correct: "b"
+                    },
+                    q3: {
+                        text: "What time does she start working?",
+                        options: ["8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM"],
+                        correct: "b"
+                    },
+                    q4: {
+                        text: "What time is lunch?",
+                        options: ["12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM"],
+                        correct: "b"
+                    },
+                    q5: {
+                        text: "What does she do after work?",
+                        options: ["Go shopping", "Visit family", "Go to the gym or meet friends", "Study English"],
+                        correct: "c"
+                    }
+                }
+            },
+            3: {
+                title: "Hobbies and Free Time",
+                audioUrl: "audios/audio3.mp3",
+                questions: {
+                    q1: {
+                        text: "How long has she been learning guitar?",
+                        options: ["Two years", "Three years", "Four years", "Five years"],
+                        correct: "b"
+                    },
+                    q2: {
+                        text: "When does she have guitar lessons?",
+                        options: ["Monday and Wednesday", "Tuesday and Thursday", "Wednesday and Friday", "Saturday and Sunday"],
+                        correct: "b"
+                    },
+                    q3: {
+                        text: "What type of food does she like to cook?",
+                        options: ["Chinese food", "Mexican food", "Italian food", "Indian food"],
+                        correct: "c"
+                    },
+                    q4: {
+                        text: "What is her dog's name?",
+                        options: ["Rex", "Max", "Sam", "Jack"],
+                        correct: "b"
+                    },
+                    q5: {
+                        text: "How many books does she read per month?",
+                        options: ["One book", "Two books", "Three books", "Four books"],
+                        correct: "b"
+                    }
+                }
+            },
+            4: {
+                title: "Weather and Seasons",
+                audioUrl: "audios/audio4.mp3",
+                questions: {
+                    q1: {
+                        text: "Which country does she live in?",
+                        options: ["Scotland", "Ireland", "England", "Wales"],
+                        correct: "c"
+                    },
+                    q2: {
+                        text: "What is her favorite season?",
+                        options: ["Spring", "Summer", "Autumn", "Winter"],
+                        correct: "a"
+                    },
+                    q3: {
+                        text: "What is summer like where she lives?",
+                        options: ["Cold and rainy", "Warm and sunny", "Very hot", "Windy and cloudy"],
+                        correct: "b"
+                    },
+                    q4: {
+                        text: "What colors do the autumn leaves turn?",
+                        options: ["Green and blue", "Red, yellow, and orange", "Purple and pink", "Brown and black"],
+                        correct: "b"
+                    },
+                    q5: {
+                        text: "Why doesn't she like winter?",
+                        options: ["It's too expensive", "It's too busy", "The days are short and dark", "There's too much snow"],
+                        correct: "c"
+                    }
+                }
+            },
+            5: {
+                title: "Shopping at the Store",
+                audioUrl: "audios/audio5.mp3",
+                questions: {
+                    q1: {
+                        text: "Who did she go shopping with?",
+                        options: ["Her father", "Her mother", "Her sister", "Her friend"],
+                        correct: "b"
+                    },
+                    q2: {
+                        text: "Which fruits did they buy?",
+                        options: ["Grapes, pears, and peaches", "Apples, bananas, and oranges", "Strawberries and kiwi", "Pineapple and mango"],
+                        correct: "b"
+                    },
+                    q3: {
+                        text: "What meat did they buy for dinner?",
+                        options: ["Beef", "Pork", "Chicken", "Fish"],
+                        correct: "c"
+                    },
+                    q4: {
+                        text: "How long did the shopping take?",
+                        options: ["30 minutes", "45 minutes", "One hour", "Two hours"],
+                        correct: "c"
+                    },
+                    q5: {
+                        text: "How much did the shopping cost?",
+                        options: ["Twenty-five pounds", "Thirty pounds", "Thirty-five pounds", "Forty pounds"],
+                        correct: "c"
+                    }
+                }
+            }
+        };
+        
+        let currentLesson = 1;
+        let attempts = 0;
+        let lessonStartTime = Date.now();
+        let studentProgress = new StudentProgress();
+        
+        // FUNÇÃO PRINCIPAL PARA CARREGAR LIÇÃO
+        function loadLesson(lessonNumber) {
+            if (!lessons[lessonNumber]) {
+                console.error('Lição não encontrada:', lessonNumber);
+                return;
+            }
+            
+            const lesson = lessons[lessonNumber];
+            
+            // Atualizar elementos da interface
+            document.getElementById('lessonTitle').textContent = lesson.title;
+            document.getElementById('lessonNumber').textContent = `Lição ${lessonNumber}`;
+            document.getElementById('audioTitle').textContent = `🎧 Escute a Lição: ${lesson.title}`;
+            
+            // Atualizar áudio
+            const audio = document.getElementById('mainAudio');
+            audio.src = lesson.audioUrl;
+            
+            // Carregar perguntas
+            loadQuestions(lesson.questions);
+            
+            // Reset outros elementos
+            resetQuiz();
+        }
+        
+        // FUNÇÃO PARA CARREGAR PERGUNTAS
+        function loadQuestions(questions) {
+            const questionsContainer = document.getElementById('questionsContainer');
+            questionsContainer.innerHTML = '';
+            
+            Object.keys(questions).forEach((questionKey, index) => {
+                const questionData = questions[questionKey];
+                
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                
+                questionDiv.innerHTML = `
+                    <div class="question-text">${index + 1}. ${questionData.text}</div>
+                    <div class="options">
+                        ${questionData.options.map((option, optIndex) => `
+                            <div class="option">
+                                <input type="radio" name="${questionKey}" value="${String.fromCharCode(97 + optIndex)}" id="${questionKey}_${optIndex}">
+                                <label for="${questionKey}_${optIndex}">${String.fromCharCode(97 + optIndex).toUpperCase()}) ${option}</label>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                questionsContainer.appendChild(questionDiv);
+            });
+            
+            // Adicionar event listeners
+            addOptionEventListeners();
+        }
+        
+        // Efeitos visuais
+        function createCelebration(emoji) {
+            const celebration = document.createElement('div');
+            celebration.className = 'celebration';
+            celebration.textContent = emoji;
+            document.body.appendChild(celebration);
+            
+            setTimeout(() => {
+                document.body.removeChild(celebration);
+            }, 2000);
+        }
+        
+        function createConfetti() {
+            const colors = ['#1e3a8a', '#dc2626', '#ffffff'];
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.3 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        if (document.body.contains(confetti)) {
+                            document.body.removeChild(confetti);
+                        }
+                    }, 3000);
+                }, i * 100);
+            }
+        }
+        
+        function updateProgressBar(score, total) {
+            const progressBar = document.getElementById('progressBar');
+            const percentage = (score / total) * 100;
+            progressBar.style.width = percentage + '%';
+        }
+        
+        function earnBadge(badgeId) {
+            const badge = document.getElementById(badgeId);
+            if (!badge.classList.contains('earned')) {
+                badge.classList.add('earned');
+            }
+        }
+        
+        function playAudio() {
+            const audio = document.getElementById('mainAudio');
+            audio.play();
+        }
+        
+        function replayAudio() {
+            const audio = document.getElementById('mainAudio');
+            audio.currentTime = 0;
+            audio.play();
+        }
+        
+        function pauseAudio() {
+            const audio = document.getElementById('mainAudio');
+            audio.pause();
+        }
+        
+        function checkAnswers() {
+            const currentLessonData = lessons[currentLesson];
+            const questions = Object.keys(currentLessonData.questions);
+            let score = 0;
+            let results = [];
+            attempts++;
+            
+            questions.forEach((questionKey, index) => {
+                const selected = document.querySelector(`input[name="${questionKey}"]:checked`);
+                const questionDiv = document.querySelector(`input[name="${questionKey}"]`).closest('.question');
+                const correctAnswer = currentLessonData.questions[questionKey].correct;
+                
+                if (selected && selected.value === correctAnswer) {
+                    score++;
+                    results.push(`Questão ${index + 1}: ✅ Correto`);
+                    questionDiv.classList.add('pulse-correct');
+                    setTimeout(() => questionDiv.classList.remove('pulse-correct'), 800);
+                } else {
+                    results.push(`Questão ${index + 1}: ❌ Incorreto`);
+                    questionDiv.classList.add('shake-incorrect');
+                    setTimeout(() => questionDiv.classList.remove('shake-incorrect'), 800);
+                }
+            });
+            
+            // Salvar progresso
+            const timeSpent = Date.now() - lessonStartTime;
+            studentProgress.completeListeningLesson(currentLesson, score, timeSpent);
+            
+            updateProgressBar(score, 5);
+            
+            const scoreSection = document.getElementById('scoreSection');
+            const scoreValue = document.getElementById('scoreValue');
+            scoreValue.textContent = score;
+            scoreSection.style.display = 'block';
+            
+            // Badges locais
+            if (attempts === 1) earnBadge('badge1');
+            if (score >= 4) earnBadge('badge2');
+            if (score === 5) {
+                earnBadge('badge3');
+                createConfetti();
+                createCelebration('🎉');
+            }
+            
+            const feedback = document.getElementById('feedback');
+            feedback.innerHTML = results.join('<br>');
+            feedback.className = score >= 4 ? 'feedback correct' : 'feedback incorrect';
+            feedback.style.display = 'block';
+            
+            if (score === 5) {
+                feedback.innerHTML += '<br><br>🎉 PONTUAÇÃO PERFEITA! Você é incrível! 🌟';
+            } else if (score === 4) {
+                feedback.innerHTML += '<br><br>⭐ Excelente! Quase perfeito! 👏';
+            } else if (score === 3) {
+                feedback.innerHTML += '<br><br>👍 Bom trabalho! Continue praticando! 💪';
+            } else {
+                feedback.innerHTML += '<br><br>💪 Continue tentando! Foque nos detalhes! 🎯';
+            }
+        }
+        
+        function resetQuiz() {
+            const radios = document.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => {
+                radio.checked = false;
+                radio.closest('.option').style.background = 'rgba(255, 255, 255, 0.8)';
+                radio.closest('.option').style.borderColor = '#e2e8f0';
+            });
+            
+            const questions = document.querySelectorAll('.question');
+            questions.forEach(question => {
+                question.classList.remove('pulse-correct', 'shake-incorrect');
+            });
+            
+            document.getElementById('scoreSection').style.display = 'none';
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('progressBar').style.width = '0%';
+            
+            pauseAudio();
+            attempts = 0;
+            lessonStartTime = Date.now();
+        }
+        
+        function nextLesson() {
+            if (currentLesson < 5) {
+                currentLesson++;
+                loadLesson(currentLesson);
+                createCelebration('🎯');
+            } else {
+                alert('🎉 Parabéns! Você completou todas as lições! 🏆');
+            }
+        }
+        
+        function addOptionEventListeners() {
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    
+                    const questionName = radio.name;
+                    const allOptionsInQuestion = document.querySelectorAll(`input[name="${questionName}"]`);
+                    allOptionsInQuestion.forEach(opt => {
+                        opt.closest('.option').style.background = 'rgba(255, 255, 255, 0.8)';
+                        opt.closest('.option').style.borderColor = '#e2e8f0';
+                    });
+                    
+                    this.style.background = 'rgba(219, 234, 254, 0.8)';
+                    this.style.borderColor = '#1e3a8a';
                 });
             });
-            
-            statNumbers.forEach(number => {
-                observer.observe(number);
-            });
         }
-
-        function updateProgressIndicators() {
-            const studentProgress = new StudentProgress();
-            const stats = studentProgress.getStats();
-            
-            // Atualizar indicadores de progresso nos cards
-            const listeningCard = document.getElementById('listeningCard');
-            const readingCard = document.getElementById('readingCard');
-            
-            if (stats.totalLessons > 0) {
-                const progressBadge = document.createElement('div');
-                progressBadge.className = 'progress-badge';
-                progressBadge.textContent = `${stats.totalLessons}/5 ✓`;
-                listeningCard.appendChild(progressBadge);
-            }
-            
-            if (stats.totalChapters > 0) {
-                const progressBadge = document.createElement('div');
-                progressBadge.className = 'progress-badge';
-                progressBadge.textContent = `${stats.totalChapters}/4 ✓`;
-                readingCard.appendChild(progressBadge);
-            }
-            
-            // Atualizar estatísticas dinâmicas
-            const statCards = document.querySelectorAll('.stat-number');
-            if (statCards.length >= 4) {
-                statCards[0].setAttribute('data-target', Math.max(5, stats.totalLessons + 5));
-                statCards[1].setAttribute('data-target', Math.max(4, stats.totalChapters + 4));
-                statCards[2].setAttribute('data-target', Math.max(45, (stats.totalLessons * 5) + (stats.totalChapters * 5) + 25));
-                statCards[3].setAttribute('data-target', Math.max(10, stats.totalBadges + 10));
-            }
-        }
-
-        // ===== INICIALIZAÇÃO =====
+        
         document.addEventListener('DOMContentLoaded', function() {
             // Logout button
             const logoutBtn = document.createElement('div');
@@ -791,32 +1067,9 @@
             `;
             document.body.appendChild(logoutBtn);
             
-            // Atualizar progresso e animar
-            updateProgressIndicators();
-            animateStats();
-            
-            // Efeito hover nas cards
-            const activityCards = document.querySelectorAll('.activity-card');
-            activityCards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-8px) scale(1.02)';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) scale(1)';
-                });
-            });
-
-            // Efeito de parallax sutil
-            window.addEventListener('scroll', () => {
-                const scrolled = window.pageYOffset;
-                const header = document.querySelector('.header');
-                if (header) {
-                    header.style.transform = `translateY(${scrolled * 0.1}px)`;
-                }
-            });
-
-            console.log('🎓 Teacher Alex Platform carregada com sucesso!');
+            // Carregar a primeira lição
+            loadLesson(currentLesson);
+            lessonStartTime = Date.now();
         });
     </script>
 </body>
