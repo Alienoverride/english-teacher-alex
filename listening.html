@@ -169,11 +169,13 @@
         }
         
         .feedback {
-            margin-top: 20px; padding: 20px; border-radius: 12px; font-weight: 600;
+            max-height: 500px; overflow-y: auto; border-radius: 16px; padding: 0;
+            background: transparent; border: none; margin-top: 20px;
         }
         
-        .feedback.correct { background: rgba(220, 252, 231, 0.8); color: #22543d; border: 2px solid #38a169; }
-        .feedback.incorrect { background: rgba(254, 242, 242, 0.8); color: #c53030; border: 2px solid #e53e3e; }
+        .feedback::-webkit-scrollbar { width: 8px; }
+        .feedback::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 8px; }
+        .feedback::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #1e3a8a, #dc2626); border-radius: 8px; }
         
         .pulse-correct { animation: pulseGreen 0.8s ease-in-out; }
         .shake-incorrect { animation: shakeRed 0.8s ease-in-out; }
@@ -391,19 +393,51 @@
             const lesson = lessons[currentLesson];
             const questions = Object.keys(lesson.questions);
             let score = 0;
+            let detailedResults = [];
             attempts++;
             
             questions.forEach((key, index) => {
                 const selected = document.querySelector(`input[name="${key}"]:checked`);
                 const questionDiv = selected ? selected.closest('.question') : null;
                 const correct = lesson.questions[key].correct;
+                const correctOptionText = lesson.questions[key].options[correct.charCodeAt(0) - 97];
+                const selectedOptionText = selected ? lesson.questions[key].options[selected.value.charCodeAt(0) - 97] : "Não respondida";
+                
+                let resultHTML = '';
                 
                 if (selected && selected.value === correct) {
                     score++;
                     if (questionDiv) questionDiv.classList.add('pulse-correct');
+                    
+                    resultHTML = `
+                        <div style="background: rgba(34, 197, 94, 0.1); border-left: 4px solid #22c55e; padding: 15px; border-radius: 8px; margin-bottom: 12px;">
+                            <div style="font-weight: 700; color: #15803d; margin-bottom: 8px;">
+                                ✅ Questão ${index + 1}: CORRETO!
+                            </div>
+                            <div style="color: #166534; font-size: 0.95em;">
+                                <strong>Pergunta:</strong> ${lesson.questions[key].text}<br>
+                                <strong>Sua resposta:</strong> ${selectedOptionText} 🎯
+                            </div>
+                        </div>
+                    `;
                 } else {
                     if (questionDiv) questionDiv.classList.add('shake-incorrect');
+                    
+                    resultHTML = `
+                        <div style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid #ef4444; padding: 15px; border-radius: 8px; margin-bottom: 12px;">
+                            <div style="font-weight: 700; color: #dc2626; margin-bottom: 8px;">
+                                ❌ Questão ${index + 1}: INCORRETO
+                            </div>
+                            <div style="color: #991b1b; font-size: 0.95em;">
+                                <strong>Pergunta:</strong> ${lesson.questions[key].text}<br>
+                                <strong>Sua resposta:</strong> ${selectedOptionText}<br>
+                                <strong>Resposta correta:</strong> <span style="background: #fef3c7; padding: 2px 6px; border-radius: 4px; color: #92400e; font-weight: 600;">${correctOptionText}</span>
+                            </div>
+                        </div>
+                    `;
                 }
+                
+                detailedResults.push(resultHTML);
             });
             
             studentProgress.completeListeningLesson(currentLesson, score, Date.now() - lessonStartTime);
@@ -417,17 +451,61 @@
             if (score === 5) document.getElementById('badge3').classList.add('earned');
             
             const feedback = document.getElementById('feedback');
-            feedback.className = score >= 4 ? 'feedback correct' : 'feedback incorrect';
+            
+            let feedbackHeader = '';
+            if (score === 5) {
+                feedbackHeader = `
+                    <div style="text-align: center; background: linear-gradient(135deg, #22c55e, #16a34a); color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; font-size: 1.2em; font-weight: 700;">
+                        🎉 PERFEITO! 🎯 Você dominou esta lição! 
+                    </div>
+                `;
+            } else if (score === 4) {
+                feedbackHeader = `
+                    <div style="text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; padding: 18px; border-radius: 12px; margin-bottom: 20px; font-size: 1.1em; font-weight: 700;">
+                        ⭐ EXCELENTE! Quase perfeito! 
+                    </div>
+                `;
+            } else if (score === 3) {
+                feedbackHeader = `
+                    <div style="text-align: center; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 18px; border-radius: 12px; margin-bottom: 20px; font-size: 1.1em; font-weight: 700;">
+                        👍 BOM TRABALHO! Continue praticando! 
+                    </div>
+                `;
+            } else {
+                feedbackHeader = `
+                    <div style="text-align: center; background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 18px; border-radius: 12px; margin-bottom: 20px; font-size: 1.1em; font-weight: 700;">
+                        💪 CONTINUE TENTANDO! Escute novamente! 
+                    </div>
+                `;
+            }
+            
+            feedback.innerHTML = feedbackHeader + detailedResults.join('');
+            feedback.className = 'feedback';
             feedback.style.display = 'block';
-            feedback.innerHTML = score === 5 ? '🎉 PERFEITO! Você é incrível!' : score >= 4 ? '⭐ Excelente trabalho!' : '💪 Continue praticando!';
+            
+            setTimeout(() => {
+                document.querySelectorAll('.question').forEach(q => {
+                    q.classList.remove('pulse-correct', 'shake-incorrect');
+                });
+            }, 2000);
         }
         
         function resetQuiz() {
-            document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+                radio.closest('.option').style.background = 'rgba(255, 255, 255, 0.8)';
+                radio.closest('.option').style.borderColor = '#e2e8f0';
+            });
             document.querySelectorAll('.question').forEach(q => q.classList.remove('pulse-correct', 'shake-incorrect'));
             document.getElementById('scoreSection').style.display = 'none';
             document.getElementById('feedback').style.display = 'none';
             document.getElementById('progressBar').style.width = '0%';
+            
+            // CORREÇÃO: Resetar badges
+            document.querySelectorAll('.badge').forEach(badge => {
+                badge.classList.remove('earned');
+            });
+            
             attempts = 0;
             lessonStartTime = Date.now();
         }
