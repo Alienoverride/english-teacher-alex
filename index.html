@@ -700,8 +700,133 @@
             throw new Error('Not logged in');
         }
 
+        // ===== SISTEMA DE PROGRESSO =====
+        class StudentProgress {
+            constructor() {
+                this.studentId = sessionStorage.getItem('studentUsername') || 'student';
+                this.progressKey = `progress_${this.studentId}`;
+                this.loadProgress();
+            }
+
+            loadProgress() {
+                const saved = localStorage.getItem(this.progressKey);
+                if (saved) {
+                    this.data = JSON.parse(saved);
+                } else {
+                    this.data = {
+                        listening: {
+                            lessonsCompleted: [],
+                            bestScores: {},
+                            totalAttempts: 0,
+                            badges: []
+                        },
+                        reading: {
+                            chaptersCompleted: [],
+                            bestScores: {},
+                            totalAttempts: 0,
+                            badges: []
+                        },
+                        globalBadges: [],
+                        lastActivity: null,
+                        joinDate: new Date().toISOString(),
+                        totalStudyTime: 0
+                    };
+                }
+            }
+
+            getStats() {
+                return {
+                    totalLessons: this.data.listening.lessonsCompleted.length,
+                    totalChapters: this.data.reading.chaptersCompleted.length,
+                    totalBadges: this.data.listening.badges.length + this.data.reading.badges.length,
+                    totalAttempts: this.data.listening.totalAttempts + this.data.reading.totalAttempts,
+                    studyTime: Math.round(this.data.totalStudyTime / 60000), // em minutos
+                    joinDate: new Date(this.data.joinDate).toLocaleDateString('pt-BR'),
+                    lastActivity: this.data.lastActivity ? new Date(this.data.lastActivity).toLocaleDateString('pt-BR') : 'Nunca'
+                };
+            }
+
+            isListeningLessonCompleted(lessonNumber) {
+                return this.data.listening.lessonsCompleted.includes(`lesson_${lessonNumber}`);
+            }
+
+            isReadingChapterCompleted(chapterNumber) {
+                return this.data.reading.chaptersCompleted.includes(`chapter_${chapterNumber}`);
+            }
+
+            getBestScore(type, number) {
+                const key = type === 'listening' ? `lesson_${number}` : `chapter_${number}`;
+                return this.data[type].bestScores[key] || 0;
+            }
+
+            getAllBadges() {
+                return {
+                    listening: this.data.listening.badges,
+                    reading: this.data.reading.badges,
+                    global: this.data.globalBadges
+                };
+            }
+        }
+
         // Adicionar efeitos interativos
         document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar sistema de progresso
+            const studentProgress = new StudentProgress();
+            
+            // Atualizar estatísticas com dados reais do progresso
+            setTimeout(() => {
+                const stats = studentProgress.getStats();
+                
+                // Atualizar números nas estatísticas
+                const statNumbers = document.querySelectorAll('.stat-number');
+                if (statNumbers[0]) statNumbers[0].textContent = Math.max(5, stats.totalLessons + 5); // Sempre mostrar pelo menos 5
+                if (statNumbers[1]) statNumbers[1].textContent = Math.max(4, stats.totalChapters + 4); // Sempre mostrar pelo menos 4
+                if (statNumbers[2]) statNumbers[2].textContent = Math.max(45, (stats.totalLessons * 5) + (stats.totalChapters * 5) + 25); // Total de perguntas
+                if (statNumbers[3]) statNumbers[3].textContent = Math.max(10, stats.totalBadges + 5); // Badges disponíveis
+                
+                // Adicionar indicadores de progresso aos cards
+                const listeningCard = document.querySelector('.activity-card:first-child');
+                const readingCard = document.querySelector('.activity-card:last-child');
+                
+                if (stats.totalLessons > 0) {
+                    const completedBadge = document.createElement('div');
+                    completedBadge.style.cssText = `
+                        position: absolute;
+                        top: 15px;
+                        left: 15px;
+                        background: linear-gradient(135deg, #22c55e, #16a34a);
+                        color: white;
+                        padding: 6px 12px;
+                        border-radius: 12px;
+                        font-size: 0.7em;
+                        font-weight: 700;
+                        box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+                    `;
+                    completedBadge.textContent = `${stats.totalLessons}/5 ✓`;
+                    listeningCard.appendChild(completedBadge);
+                }
+                
+                if (stats.totalChapters > 0) {
+                    const completedBadge = document.createElement('div');
+                    completedBadge.style.cssText = `
+                        position: absolute;
+                        top: 15px;
+                        left: 15px;
+                        background: linear-gradient(135deg, #22c55e, #16a34a);
+                        color: white;
+                        padding: 6px 12px;
+                        border-radius: 12px;
+                        font-size: 0.7em;
+                        font-weight: 700;
+                        box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+                    `;
+                    completedBadge.textContent = `${stats.totalChapters}/4 ✓`;
+                    readingCard.appendChild(completedBadge);
+                }
+                
+                console.log('📊 Estatísticas do aluno:', stats);
+            }, 500);
+            
             // Criar botão de logout (mantendo o original que funciona bem no mobile)
             const logoutBtn = document.createElement('div');
             logoutBtn.innerHTML = `
