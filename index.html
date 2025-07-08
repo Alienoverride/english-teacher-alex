@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Alex English Academy - Portal do Estudante</title>
+    <title>Teacher Alex English Academy BETA - Portal do Estudante</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         
@@ -229,7 +229,7 @@
     <div class="container">
         <div class="header">
             <div class="logo">
-                Teacher Alex <span class="logo-highlight">English Academy</span>
+                Teacher Alex <span class="logo-highlight">English Academy</span> BETA
             </div>
             <div class="welcome-message" id="welcomeMessage">Bem-vindo de volta!</div>
             <div class="subtitle">Escolha sua atividade e continue aprendendo inglês</div>
@@ -273,7 +273,7 @@
             
             <a href="reader.html" class="activity-card">
                 <div class="activity-icon">📚</div>
-                <div class="activity-title">Graded Reader</div>
+                <div class="activity-title">Graded Reader A2</div>
                 <div class="activity-description">Pratique leitura com história envolvente em nível A2</div>
                 <ul class="activity-features">
                     <li>História: "The Secret in the Old House"</li>
@@ -281,7 +281,20 @@
                     <li>Questões de interpretação</li>
                     <li>Exercícios de gramática</li>
                 </ul>
-                <button class="start-button">Começar Leitura</button>
+                <button class="start-button">Começar Leitura A2</button>
+            </a>
+            
+            <a href="roommate.html" class="activity-card">
+                <div class="activity-icon">🏠</div>
+                <div class="activity-title">Beginner Reading A1</div>
+                <div class="activity-description">História perfeita para iniciantes: vocabulário simples e envolvente</div>
+                <ul class="activity-features">
+                    <li>História: "The Roommate Problem"</li>
+                    <li>3 capítulos nível A1</li>
+                    <li>Gramática básica</li>
+                    <li>Vocabulário do dia a dia</li>
+                </ul>
+                <button class="start-button">Começar Leitura A1</button>
             </a>
         </div>
         
@@ -346,7 +359,7 @@
         </div>
         
         <div class="footer">
-            <h3>🎓 Teacher Alex English Academy</h3>
+            <h3>🎓 Teacher Alex English Academy BETA</h3>
             <p>Sua jornada para dominar o inglês começa aqui!</p>
             <p>Dúvidas? Entre em contato: <a href="mailto:alexmg@gmail.com" class="contact-link">alexmg@gmail.com</a></p>
         </div>
@@ -403,10 +416,25 @@
                             totalAttempts: 0,
                             badges: []
                         },
+                        roommate: {
+                            chaptersCompleted: [],
+                            bestScores: {},
+                            totalAttempts: 0,
+                            badges: []
+                        },
                         globalBadges: [],
                         lastActivity: null,
                         joinDate: new Date().toISOString(),
                         totalStudyTime: 0
+                    };
+                }
+                // Adicionar roommate se não existir (compatibilidade)
+                if (!this.data.roommate) {
+                    this.data.roommate = {
+                        chaptersCompleted: [],
+                        bestScores: {},
+                        totalAttempts: 0,
+                        badges: []
                     };
                 }
             }
@@ -414,12 +442,14 @@
             getStats() {
                 const listeningLessons = this.data.listening.lessonsCompleted.length;
                 const readingChapters = this.data.reading.chaptersCompleted.length;
-                const totalBadges = this.data.listening.badges.length + this.data.reading.badges.length + this.data.globalBadges.length;
+                const roommateChapters = this.data.roommate ? this.data.roommate.chaptersCompleted.length : 0;
+                const totalChapters = readingChapters + roommateChapters;
+                const totalBadges = this.data.listening.badges.length + this.data.reading.badges.length + (this.data.roommate ? this.data.roommate.badges.length : 0) + this.data.globalBadges.length;
                 const studyTimeHours = Math.floor(this.data.totalStudyTime / (1000 * 60 * 60));
 
                 return {
                     lessonsCompleted: listeningLessons,
-                    chaptersRead: readingChapters,
+                    chaptersRead: totalChapters,
                     totalBadges: totalBadges,
                     studyTime: studyTimeHours
                 };
@@ -446,6 +476,7 @@
             // Adicionar badges de progresso
             const listeningCard = document.querySelector('.activity-card[href="listening.html"]');
             const readingCard = document.querySelector('.activity-card[href="reader.html"]');
+            const roommateCard = document.querySelector('.activity-card[href="roommate.html"]');
             
             if (stats.lessonsCompleted > 0) {
                 const badge = document.createElement('div');
@@ -454,11 +485,20 @@
                 listeningCard.appendChild(badge);
             }
             
-            if (stats.chaptersRead > 0) {
+            const readingCompleted = progressTracker.data.reading.chaptersCompleted.length;
+            if (readingCompleted > 0) {
                 const badge = document.createElement('div');
                 badge.className = 'progress-badge';
-                badge.textContent = `${stats.chaptersRead}/4 ✓`;
+                badge.textContent = `${readingCompleted}/4 ✓`;
                 readingCard.appendChild(badge);
+            }
+            
+            const roommateCompleted = progressTracker.data.roommate ? progressTracker.data.roommate.chaptersCompleted.length : 0;
+            if (roommateCompleted > 0) {
+                const badge = document.createElement('div');
+                badge.className = 'progress-badge';
+                badge.textContent = `${roommateCompleted}/3 ✓`;
+                roommateCard.appendChild(badge);
             }
             
             // Animação de contadores
