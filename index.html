@@ -603,7 +603,7 @@
             return sessionStorage.getItem('studentUsername') || 'Student';
         }
 
-        if (!checkLogin()) //throw new Error('Not logged in');
+        if (!checkLogin()) throw new Error('Not logged in');
 
         // ===== SISTEMA DE PROGRESSO =====
         class ProgressTracker {
