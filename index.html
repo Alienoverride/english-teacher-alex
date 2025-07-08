@@ -41,14 +41,32 @@
             position: relative; margin-bottom: 25px;
         }
         
-        .logo {
-            font-family: 'Inter', sans-serif; font-size: 3.2em; font-weight: 900;
-            letter-spacing: -1px; position: relative; display: inline-block;
-            background: linear-gradient(135deg, #0f172a, #1e3a8a, #dc2626, #fbbf24);
-            background-size: 300% 300%; background-clip: text; -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; animation: logoShift 6s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px rgba(30, 58, 138, 0.4)) drop-shadow(0 0 20px rgba(220, 38, 38, 0.3));
-        }
+/* ==== BLOCO .logo — sempre visível ==== */
+.logo{
+    font-family: 'Inter', sans-serif;
+    font-size: 3.2em;
+    font-weight: 900;
+    letter-spacing: -1px;
+    position: relative;
+    display: inline-block;
+    filter: drop-shadow(0 0 30px rgba(30,58,138,.4))
+            drop-shadow(0 0 20px rgba(220,38,38,.3));
+
+    /* Fallback que todo navegador entende */
+    color: #1e3a8a;
+}
+
+/* ==== Gradiente animado só se o browser suportar ==== */
+@supports (-webkit-background-clip:text){
+    .logo{
+        background: linear-gradient(135deg,#0f172a,#1e3a8a,#dc2626,#fbbf24);
+        background-size: 300% 300%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: logoShift 6s ease-in-out infinite;
+    }
+}
         
         @keyframes logoShift {
             0%, 100% { background-position: 0% 50%; }
