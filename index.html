@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Alex — English Academy | Portal do Estudante</title>
+    <title>Teacher Alex English Academy - Portal do Estudante</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -17,408 +17,226 @@
         
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
         
-        /* LOGO GENIAL NOVO */
+        /* Header Limpo */
         .header {
-            background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(25px);
-            border-radius: 30px; padding: 50px 40px; text-align: center; margin-bottom: 40px;
-            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15); border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
+            border-radius: 20px; padding: 40px; text-align: center; margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
             position: relative; overflow: hidden;
         }
         
         .header::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
-            background: linear-gradient(90deg, #1e3a8a, #dc2626, #fbbf24, #10b981, #8b5cf6, #dc2626, #1e3a8a);
-            background-size: 400% 400%; animation: rainbowFlow 4s ease-in-out infinite;
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, #1e3a8a, #dc2626, #1e3a8a);
         }
         
-        @keyframes rainbowFlow {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        /* Logo Simples e Funcional */
+        .logo {
+            font-size: 2.8em; font-weight: 800; color: #1e3a8a; margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(220, 38, 38, 0.3);
         }
         
-        /* LOGO REVOLUCIONÁRIO */
-        .logo-container {
-            position: relative; margin-bottom: 25px;
-        }
-        
-/* ==== BLOCO .logo — sempre visível ==== */
-.logo{
-    font-family: 'Inter', sans-serif;
-    font-size: 3.2em;
-    font-weight: 900;
-    letter-spacing: -1px;
-    position: relative;
-    display: inline-block;
-    filter: drop-shadow(0 0 30px rgba(30,58,138,.4))
-            drop-shadow(0 0 20px rgba(220,38,38,.3));
-
-    /* Fallback que todo navegador entende */
-    color: #1e3a8a;
-}
-
-/* ==== Gradiente animado só se o browser suportar ==== */
-@supports (-webkit-background-clip:text){
-    .logo{
-        background: linear-gradient(135deg,#0f172a,#1e3a8a,#dc2626,#fbbf24);
-        background-size: 300% 300%;
-        background-clip: text;
-        -webkit-background-clip: text;
-        /* -webkit-text-fill-color: transparent; */
-        animation: logoShift 6s ease-in-out infinite;
-    }
-}
-        
-        @keyframes logoShift {
-            0%, 100% { background-position: 0% 50%; }
-            33% { background-position: 50% 25%; }
-            66% { background-position: 100% 75%; }
-        }
-        
-        .logo-teacher { position: relative; }
-        .logo-alex { position: relative; margin: 0 8px; }
-        .logo-academy { position: relative; }
-        
-        /* HÍFEN GENIAL */
-        .logo-divider {
-            font-family: 'JetBrains Mono', monospace; font-size: 1.2em; font-weight: 700;
-            background: linear-gradient(135deg, #fbbf24, #f59e0b); color: transparent;
-            background-clip: text; -webkit-background-clip: text; position: relative;
-            display: inline-block; margin: 0 15px; animation: dividerGlow 3s ease-in-out infinite;
-            filter: drop-shadow(0 0 15px #fbbf24);
-        }
-        
-        @keyframes dividerGlow {
-            0%, 100% { 
-                transform: scale(1) rotate(0deg);
-                filter: drop-shadow(0 0 15px #fbbf24);
-            }
-            50% { 
-                transform: scale(1.2) rotate(5deg);
-                filter: drop-shadow(0 0 25px #f59e0b) drop-shadow(0 0 35px #fbbf24);
-            }
-        }
-        
-        /* EFEITOS ESPECIAIS NO LOGO */
-        .logo-teacher::before {
-            content: ''; position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px;
-            background: radial-gradient(circle, rgba(30, 58, 138, 0.1) 0%, transparent 70%);
-            border-radius: 50%; animation: pulse1 4s ease-in-out infinite;
-        }
-        
-        .logo-academy::after {
-            content: ''; position: absolute; top: -15px; left: -15px; right: -15px; bottom: -15px;
-            background: radial-gradient(circle, rgba(220, 38, 38, 0.1) 0%, transparent 70%);
-            border-radius: 50%; animation: pulse2 4s ease-in-out infinite 2s;
-        }
-        
-        @keyframes pulse1 {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.5); opacity: 0.2; }
-        }
-        
-        @keyframes pulse2 {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.3); opacity: 0.3; }
-        }
-        
-        .tagline {
-            font-size: 1.6em; color: #dc2626; font-weight: 700; margin-bottom: 20px;
-            text-shadow: 0 2px 4px rgba(220, 38, 38, 0.2);
-            background: linear-gradient(135deg, #dc2626, #ef4444, #dc2626);
-            background-size: 200% 200%; background-clip: text; -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; animation: taglineShine 3s ease-in-out infinite;
-        }
-        
-        @keyframes taglineShine {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
+        .logo-highlight { color: #dc2626; }
         
         .welcome-message { 
-            font-size: 1.4em; color: #dc2626; font-weight: 700; margin-bottom: 12px;
+            font-size: 1.4em; color: #dc2626; font-weight: 600; margin-bottom: 12px;
         }
         
-        .description {
-            font-size: 1.15em; color: #64748b; max-width: 700px; margin: 0 auto;
-            font-weight: 500; line-height: 1.7;
-        }
+        .subtitle { font-size: 1.1em; color: #64748b; font-weight: 500; }
         
-        /* SEÇÃO DE PROGRESSO */
-        .progress-overview {
+        /* Seção de Progresso */
+        .stats-section {
             background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
-            border-radius: 25px; padding: 35px; margin-bottom: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px; padding: 30px; margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        .progress-title {
-            font-size: 2em; background: linear-gradient(135deg, #1e3a8a, #dc2626);
-            background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            font-weight: 900; margin-bottom: 30px; text-align: center;
+        .stats-title {
+            font-size: 1.8em; font-weight: 800; color: #1e3a8a; margin-bottom: 25px; text-align: center;
         }
         
         .stats-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px; margin-bottom: 30px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;
         }
         
         .stat-item {
-            background: linear-gradient(135deg, rgba(30, 58, 138, 0.05), rgba(220, 38, 38, 0.05));
-            border-radius: 20px; padding: 25px; text-align: center;
-            border: 2px solid rgba(30, 58, 138, 0.1); transition: all 0.4s ease;
-            position: relative; overflow: hidden;
+            text-align: center; padding: 20px; background: linear-gradient(135deg, rgba(30, 58, 138, 0.05), rgba(220, 38, 38, 0.05));
+            border-radius: 16px; border: 2px solid rgba(30, 58, 138, 0.1); transition: all 0.3s ease;
         }
         
-        .stat-item::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.6s;
-        }
-        
-        .stat-item:hover {
-            transform: translateY(-5px) scale(1.03); 
-            box-shadow: 0 15px 40px rgba(30, 58, 138, 0.2);
-            border-color: #dc2626;
-        }
-        
-        .stat-item:hover::before { left: 100%; }
+        .stat-item:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(30, 58, 138, 0.2); }
         
         .stat-number {
-            font-size: 2.5em; font-weight: 900;
-            background: linear-gradient(135deg, #1e3a8a, #dc2626);
-            background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            display: block; margin-bottom: 8px;
+            font-size: 2.5em; font-weight: 800; color: #1e3a8a; display: block;
         }
         
-        .stat-label { color: #64748b; font-weight: 600; }
+        .stat-label { color: #64748b; font-weight: 600; margin-top: 5px; }
         
-        /* CARDS DE ATIVIDADES */
-        .activities-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 35px; margin-bottom: 50px;
+        /* Cards de Atividades */
+        .dashboard-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-bottom: 40px;
         }
         
         .activity-card {
-            background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(25px);
-            border-radius: 25px; padding: 40px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.3); transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
-            text-align: center; position: relative; overflow: hidden;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
+            border-radius: 20px; padding: 35px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2); transition: all 0.4s ease;
+            text-decoration: none; color: inherit; position: relative; overflow: hidden;
         }
         
         .activity-card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-            background: linear-gradient(90deg, #1e3a8a, #dc2626); transform: scaleX(0);
-            transition: transform 0.5s ease; transform-origin: left;
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, #1e3a8a, #dc2626); transform: scaleX(0); transition: transform 0.4s ease;
         }
         
         .activity-card:hover::before { transform: scaleX(1); }
-        
-        .activity-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 35px 80px rgba(0, 0, 0, 0.18);
-        }
+        .activity-card:hover { transform: translateY(-8px); box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15); }
         
         .activity-icon {
-            font-size: 5em; margin-bottom: 25px; display: block;
-            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15));
-            animation: float 4s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
+            font-size: 4em; margin-bottom: 20px; display: block; text-align: center;
         }
         
         .activity-title {
-            font-size: 2.2em; color: #1e3a8a; font-weight: 800; margin-bottom: 15px;
-            letter-spacing: -0.5px;
-        }
-        
-        .activity-subtitle {
-            font-size: 1.4em; color: #dc2626; font-weight: 700; margin-bottom: 20px;
+            font-size: 1.8em; font-weight: 800; color: #1e3a8a; margin-bottom: 15px; text-align: center;
         }
         
         .activity-description {
-            color: #64748b; margin-bottom: 25px; line-height: 1.8; font-weight: 500;
-            font-size: 1.05em;
+            color: #64748b; font-size: 1.1em; text-align: center; margin-bottom: 20px; font-weight: 500;
         }
         
-        .features {
-            display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 30px;
+        .activity-features {
+            list-style: none; margin-bottom: 25px;
         }
         
-        .feature-tag {
-            background: linear-gradient(135deg, #f1f5f9, #e2e8f0); color: #475569;
-            padding: 10px 18px; border-radius: 25px; font-size: 0.9em; font-weight: 600;
-            border: 2px solid rgba(71, 85, 105, 0.1); transition: all 0.3s ease;
+        .activity-features li {
+            color: #475569; margin-bottom: 8px; font-weight: 500; position: relative; padding-left: 25px;
         }
         
-        .feature-tag:hover {
-            background: linear-gradient(135deg, #1e3a8a, #dc2626); color: white;
-            transform: scale(1.05);
+        .activity-features li::before {
+            content: '✓'; position: absolute; left: 0; color: #10b981; font-weight: bold; font-size: 1.1em;
         }
         
-        .btn-activity {
-            background: linear-gradient(135deg, #1e3a8a, #dc2626); color: white;
-            padding: 18px 35px; border: none; border-radius: 20px; font-size: 1.15em;
-            font-weight: 700; cursor: pointer; transition: all 0.4s ease;
-            text-decoration: none; display: inline-block; width: 100%;
-            position: relative; overflow: hidden; text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .start-button {
+            width: 100%; background: linear-gradient(135deg, #1e3a8a, #dc2626); color: white;
+            padding: 15px 25px; border: none; border-radius: 12px; font-size: 1.1em; font-weight: 600;
+            cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px;
         }
         
-        .btn-activity::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.6s;
-        }
-        
-        .btn-activity:hover::before { left: 100%; }
-        
-        .btn-activity:hover {
-            transform: translateY(-3px); box-shadow: 0 15px 40px rgba(30, 58, 138, 0.5);
-            background: linear-gradient(135deg, #1e40af, #ef4444);
+        .start-button:hover {
+            background: linear-gradient(135deg, #1e40af, #ef4444); transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 58, 138, 0.4);
         }
         
         .progress-badge {
-            position: absolute; top: 15px; left: 15px;
-            background: linear-gradient(135deg, #22c55e, #16a34a); color: white;
-            padding: 8px 16px; border-radius: 15px; font-size: 0.8em; font-weight: 700;
-            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+            position: absolute; top: 15px; left: 15px; background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white; padding: 6px 12px; border-radius: 12px; font-size: 0.8em; font-weight: 700;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
         }
         
-        .new-badge {
-            background: linear-gradient(135deg, #ef4444, #dc2626); color: white;
-            padding: 8px 16px; border-radius: 15px; font-size: 0.75em; font-weight: 800;
-            position: absolute; top: 15px; right: 15px; animation: pulse 2s infinite;
-            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4); text-transform: uppercase;
-        }
-        
-        /* SEÇÕES DE INFORMAÇÃO */
+        /* Seções Informativas */
         .info-section {
-            background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(25px);
-            border-radius: 25px; padding: 45px; margin-bottom: 35px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
+            border-radius: 20px; padding: 35px; margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .info-title {
-            font-size: 2.5em; background: linear-gradient(135deg, #1e3a8a, #dc2626, #fbbf24, #1e3a8a);
-            background-size: 300% 300%; background-clip: text; -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; font-weight: 900; margin-bottom: 40px;
-            text-align: center; letter-spacing: -1px; animation: titleGradient 4s ease-in-out infinite;
-        }
-        
-        @keyframes titleGradient {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+            font-size: 2em; font-weight: 800; color: #1e3a8a; margin-bottom: 30px; text-align: center;
         }
         
         .instructions {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px; margin-bottom: 25px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 20px;
         }
         
         .instruction-item {
             background: linear-gradient(135deg, rgba(30, 58, 138, 0.05), rgba(220, 38, 38, 0.05));
-            padding: 30px; border-radius: 20px; border: 3px solid transparent;
-            background-clip: padding-box; transition: all 0.5s ease; position: relative; overflow: hidden;
+            padding: 25px; border-radius: 16px; border: 2px solid rgba(30, 58, 138, 0.1);
+            transition: all 0.3s ease;
         }
         
-        .instruction-item::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 20px; padding: 3px;
-            background: linear-gradient(135deg, #1e3a8a, #dc2626, #fbbf24, #dc2626, #1e3a8a);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: exclude; mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask-composite: exclude;
-        }
-        
-        .instruction-item:hover {
-            transform: translateY(-8px) scale(1.03); 
-            box-shadow: 0 20px 50px rgba(30, 58, 138, 0.2);
-        }
+        .instruction-item:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(30, 58, 138, 0.2); }
         
         .instruction-number {
             background: linear-gradient(135deg, #dc2626, #ef4444); color: white;
-            width: 50px; height: 50px; border-radius: 50%; display: flex;
-            align-items: center; justify-content: center; font-weight: 900;
-            font-size: 1.3em; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(220, 38, 38, 0.4);
-            border: 3px solid rgba(255, 255, 255, 0.2); animation: numberPulse 3s ease-in-out infinite;
+            width: 40px; height: 40px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-weight: 800;
+            font-size: 1.1em; margin-bottom: 15px; box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
         }
         
-        @keyframes numberPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
+        .instruction-text { color: #475569; line-height: 1.6; font-weight: 500; }
+        .instruction-text strong { color: #1e3a8a; font-weight: 600; }
         
-        .instruction-text { color: #475569; line-height: 1.7; font-weight: 500; }
-        .instruction-text strong { color: #1e3a8a; font-weight: 700; }
-        
-        /* TIPS ESPECIAIS */
+        /* Dicas especiais com emojis */
         .study-tips .instruction-number {
-            background: linear-gradient(135deg, #1e3a8a, #dc2626); font-size: 2em;
-            animation: emojiDance 4s ease-in-out infinite;
+            background: linear-gradient(135deg, #1e3a8a, #dc2626); font-size: 1.5em;
         }
         
-        @keyframes emojiDance {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            25% { transform: scale(1.15) rotate(-8deg); }
-            75% { transform: scale(1.15) rotate(8deg); }
-        }
-        
-        /* FOOTER */
+        /* Footer */
         .footer {
-            background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(25px);
-            border-radius: 25px; padding: 35px; text-align: center;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
+            border-radius: 20px; padding: 30px; text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        .footer-text { color: #64748b; margin-bottom: 15px; font-weight: 500; }
-        .contact-info { color: #1e3a8a; font-weight: 700; font-size: 1.1em; }
+        .footer h3 { margin-bottom: 15px; font-size: 1.3em; color: #1e3a8a; }
+        .footer p { margin-bottom: 10px; opacity: 0.9; color: #64748b; }
+        .contact-link { color: #dc2626; text-decoration: none; font-weight: 600; transition: color 0.3s ease; }
+        .contact-link:hover { color: #ef4444; text-decoration: underline; }
         
-        /* ANIMAÇÕES */
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        /* User Info */
+        .user-info {
+            position: fixed; top: 20px; right: 20px; z-index: 1000;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            border-radius: 15px; padding: 12px 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 2px solid rgba(220, 38, 38, 0.2); display: flex; align-items: center; gap: 12px;
+        }
         
-        /* RESPONSIVO */
+        .user-avatar {
+            width: 40px; height: 40px; background: linear-gradient(135deg, #1e3a8a, #dc2626);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: bold; font-size: 1.2em;
+        }
+        
+        .user-name { color: #1e3a8a; font-weight: 700; font-size: 0.9em; }
+        
+        .logout-btn {
+            background: #dc2626; color: white; border: none; padding: 6px 12px;
+            border-radius: 8px; cursor: pointer; font-size: 0.8em; font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-btn:hover { background: #ef4444; transform: scale(1.05); }
+        
+        /* Responsivo */
         @media (max-width: 768px) {
             .container { padding: 15px; }
             .logo { font-size: 2.2em; }
-            .tagline { font-size: 1.3em; }
-            .activities-grid { grid-template-columns: 1fr; }
-            .activity-card { padding: 30px; }
-            .instructions { grid-template-columns: 1fr; }
+            .dashboard-grid { grid-template-columns: 1fr; gap: 20px; }
+            .activity-card { padding: 25px; }
+            .user-info { position: relative; top: auto; right: auto; margin-bottom: 20px; justify-content: center; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .info-title { font-size: 2em; }
-        }
-        
-        @media (max-width: 480px) {
-            .logo { font-size: 1.8em; }
-            .stats-grid { grid-template-columns: 1fr; }
-            .stat-number { font-size: 2em; }
+            .instructions { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
+    <div class="user-info">
+        <div class="user-avatar" id="userAvatar">A</div>
+        <div class="user-name" id="userName">Aluno</div>
+        <button class="logout-btn" onclick="logout()">Sair</button>
+    </div>
+    
     <div class="container">
-        <!-- HEADER COM LOGO GENIAL -->
         <div class="header">
-            <div class="logo-container">
-                <div class="logo">
-                    <span class="logo-teacher">TEACHER</span>
-                    <span class="logo-alex">ALEX</span>
-                    <span class="logo-divider">—</span>
-                    <span class="logo-academy">ENGLISH ACADEMY</span>
-                </div>
+            <div class="logo">
+                Teacher Alex <span class="logo-highlight">English Academy</span>
             </div>
             <div class="welcome-message" id="welcomeMessage">Bem-vindo de volta!</div>
-            <div class="tagline">Sua Plataforma Personalizada de Inglês</div>
-            <div class="description">
-                Pratique suas habilidades em inglês a qualquer hora, em qualquer lugar! Acesse exercícios interativos de listening e atividades de leitura graduadas para melhorar sua compreensão e gramática.
-            </div>
+            <div class="subtitle">Escolha sua atividade e continue aprendendo inglês</div>
         </div>
         
-        <!-- SEÇÃO DE PROGRESSO -->
-        <div class="progress-overview">
-            <div class="progress-title">📊 Seu Progresso</div>
+        <div class="stats-section">
+            <div class="stats-title">📊 Seu Progresso</div>
             <div class="stats-grid">
                 <div class="stat-item">
                     <div class="stat-number" id="lessonsCompleted">0</div>
@@ -439,51 +257,41 @@
             </div>
         </div>
         
-        <!-- CARDS DE ATIVIDADES -->
-        <div class="activities-grid">
-            <div class="activity-card">
-                <div class="new-badge">NOVO!</div>
+        <div class="dashboard-grid">
+            <a href="listening.html" class="activity-card">
                 <div class="activity-icon">🎧</div>
-                <div class="activity-title">Listening Lessons</div>
-                <div class="activity-subtitle">Prática Interativa de Áudio</div>
-                <div class="activity-description">
-                    Melhore suas habilidades de listening com conversas reais e exercícios. Cada lição inclui áudio, perguntas e feedback instantâneo com recompensas gamificadas!
-                </div>
-                <div class="features">
-                    <span class="feature-tag">5 Lições</span>
-                    <span class="feature-tag">Áudio + Perguntas</span>
-                    <span class="feature-tag">Feedback Instantâneo</span>
-                    <span class="feature-tag">Progresso</span>
-                </div>
-                <a href="listening.html" class="btn-activity">🎯 Iniciar Prática de Listening</a>
-            </div>
+                <div class="activity-title">Listening Practice</div>
+                <div class="activity-description">Melhore sua compreensão auditiva com diálogos autênticos</div>
+                <ul class="activity-features">
+                    <li>5 lições interativas</li>
+                    <li>Áudios nativos de qualidade</li>
+                    <li>Quiz de compreensão</li>
+                    <li>Sistema de badges</li>
+                </ul>
+                <button class="start-button">Começar Listening</button>
+            </a>
             
-            <div class="activity-card">
-                <div class="new-badge">NOVO!</div>
+            <a href="reader.html" class="activity-card">
                 <div class="activity-icon">📚</div>
                 <div class="activity-title">Graded Reader</div>
-                <div class="activity-subtitle">"The Secret in the Old House"</div>
-                <div class="activity-description">
-                    Leia uma história de mistério envolvente com narração em áudio. Teste sua compreensão e habilidades gramaticais com perguntas interativas para cada capítulo.
-                </div>
-                <div class="features">
-                    <span class="feature-tag">Nível A2</span>
-                    <span class="feature-tag">4 Capítulos</span>
-                    <span class="feature-tag">Áudio + Texto</span>
-                    <span class="feature-tag">Foco Gramatical</span>
-                </div>
-                <a href="reader.html" class="btn-activity">📖 Iniciar Aventura de Leitura</a>
-            </div>
+                <div class="activity-description">Pratique leitura com história envolvente em nível A2</div>
+                <ul class="activity-features">
+                    <li>História: "The Secret in the Old House"</li>
+                    <li>4 capítulos progressivos</li>
+                    <li>Questões de interpretação</li>
+                    <li>Exercícios de gramática</li>
+                </ul>
+                <button class="start-button">Começar Leitura</button>
+            </a>
         </div>
         
-        <!-- COMO USAR -->
         <div class="info-section">
             <div class="info-title">📋 Como Usar Esta Plataforma</div>
             <div class="instructions">
                 <div class="instruction-item">
                     <div class="instruction-number">1</div>
                     <div class="instruction-text">
-                        <strong>Escolha uma Atividade:</strong> Selecione entre Listening Lessons ou Graded Reader baseado no que você quer praticar hoje.
+                        <strong>Escolha uma Atividade:</strong> Selecione entre Listening ou Reading baseado no que você quer praticar hoje.
                     </div>
                 </div>
                 <div class="instruction-item">
@@ -507,38 +315,6 @@
             </div>
         </div>
         
-        <!-- O QUE VOCÊ VAI APRENDER -->
-        <div class="info-section">
-            <div class="info-title">🎯 O Que Você Vai Aprender</div>
-            <div class="instructions">
-                <div class="instruction-item">
-                    <div class="instruction-number">🎧</div>
-                    <div class="instruction-text">
-                        <strong>Listening Skills:</strong> 5 tópicos essenciais incluindo introduções pessoais, rotina diária, hobbies, clima e compras com áudios nativos.
-                    </div>
-                </div>
-                <div class="instruction-item">
-                    <div class="instruction-number">📖</div>
-                    <div class="instruction-text">
-                        <strong>Reading Comprehension:</strong> História completa de mistério dividida em 4 capítulos progressivos com foco em interpretação.
-                    </div>
-                </div>
-                <div class="instruction-item">
-                    <div class="instruction-number">🧠</div>
-                    <div class="instruction-text">
-                        <strong>Grammar Practice:</strong> Exercícios específicos de gramática integrados às atividades para reforço contextual.
-                    </div>
-                </div>
-                <div class="instruction-item">
-                    <div class="instruction-number">🏆</div>
-                    <div class="instruction-text">
-                        <strong>Progress Tracking:</strong> Sistema de badges, pontuações e acompanhamento detalhado do seu desenvolvimento.
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- DICAS DE ESTUDO */
         <div class="info-section study-tips">
             <div class="info-title">💡 Dicas de Estudo para o Sucesso</div>
             <div class="instructions">
@@ -569,17 +345,10 @@
             </div>
         </div>
         
-        <!-- FOOTER -->
         <div class="footer">
-            <div class="footer-text">
-                Dúvidas sobre as lições? Precisa de ajuda com seus estudos de inglês?
-            </div>
-            <div class="contact-info">
-                📧 Contato Professor Alex: alexmg@gmail.com
-            </div>
-            <div class="footer-text" style="margin-top: 20px; font-size: 0.95em;">
-                🌟 Continue praticando, continue melhorando! Sua jornada no inglês começa aqui. 🌟
-            </div>
+            <h3>🎓 Teacher Alex English Academy</h3>
+            <p>Sua jornada para dominar o inglês começa aqui!</p>
+            <p>Dúvidas? Entre em contato: <a href="mailto:alexmg@gmail.com" class="contact-link">alexmg@gmail.com</a></p>
         </div>
     </div>
     
@@ -603,7 +372,10 @@
             return sessionStorage.getItem('studentUsername') || 'Student';
         }
 
-        if (!checkLogin()) throw new Error('Not logged in');
+        // Verificar login ao carregar a página
+        if (!checkLogin()) {
+            throw new Error('Not logged in');
+        }
 
         // ===== SISTEMA DE PROGRESSO =====
         class ProgressTracker {
@@ -619,9 +391,22 @@
                     this.data = JSON.parse(saved);
                 } else {
                     this.data = {
-                        listening: { lessonsCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                        reading: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                        globalBadges: [], lastActivity: null, joinDate: new Date().toISOString(), totalStudyTime: 0
+                        listening: {
+                            lessonsCompleted: [],
+                            bestScores: {},
+                            totalAttempts: 0,
+                            badges: []
+                        },
+                        reading: {
+                            chaptersCompleted: [],
+                            bestScores: {},
+                            totalAttempts: 0,
+                            badges: []
+                        },
+                        globalBadges: [],
+                        lastActivity: null,
+                        joinDate: new Date().toISOString(),
+                        totalStudyTime: 0
                     };
                 }
             }
@@ -636,9 +421,7 @@
                     lessonsCompleted: listeningLessons,
                     chaptersRead: readingChapters,
                     totalBadges: totalBadges,
-                    studyTime: studyTimeHours,
-                    hasListeningProgress: listeningLessons > 0,
-                    hasReadingProgress: readingChapters > 0
+                    studyTime: studyTimeHours
                 };
             }
         }
@@ -650,26 +433,28 @@
             const stats = progressTracker.getStats();
             
             // Atualizar informações do usuário
+            document.getElementById('userName').textContent = studentName;
+            document.getElementById('userAvatar').textContent = studentName.charAt(0).toUpperCase();
             document.getElementById('welcomeMessage').textContent = `Bem-vindo de volta, ${studentName}!`;
             
-            // Atualizar estatísticas REAIS
+            // Atualizar estatísticas
             document.getElementById('lessonsCompleted').textContent = stats.lessonsCompleted;
             document.getElementById('chaptersRead').textContent = stats.chaptersRead;
             document.getElementById('totalBadges').textContent = stats.totalBadges;
             document.getElementById('studyTime').textContent = stats.studyTime + 'h';
             
-            // Adicionar badges de progresso nos cards
-            const listeningCard = document.querySelector('.activity-card:first-child');
-            const readingCard = document.querySelector('.activity-card:last-child');
+            // Adicionar badges de progresso
+            const listeningCard = document.querySelector('.activity-card[href="listening.html"]');
+            const readingCard = document.querySelector('.activity-card[href="reader.html"]');
             
-            if (stats.hasListeningProgress) {
+            if (stats.lessonsCompleted > 0) {
                 const badge = document.createElement('div');
                 badge.className = 'progress-badge';
                 badge.textContent = `${stats.lessonsCompleted}/5 ✓`;
                 listeningCard.appendChild(badge);
             }
             
-            if (stats.hasReadingProgress) {
+            if (stats.chaptersRead > 0) {
                 const badge = document.createElement('div');
                 badge.className = 'progress-badge';
                 badge.textContent = `${stats.chaptersRead}/4 ✓`;
@@ -678,12 +463,6 @@
             
             // Animação de contadores
             animateCounters();
-            
-            // Criar botão de logout
-            createLogoutButton();
-            
-            // Adicionar efeitos interativos
-            addInteractiveEffects();
         });
 
         function animateCounters() {
@@ -694,7 +473,7 @@
                     if (entry.isIntersecting) {
                         const target = parseInt(entry.target.textContent.replace('h', ''));
                         let current = 0;
-                        const increment = target / 30;
+                        const increment = target / 20;
                         const timer = setInterval(() => {
                             current += increment;
                             if (current >= target) {
@@ -712,58 +491,22 @@
             counters.forEach(counter => observer.observe(counter));
         }
 
-        function createLogoutButton() {
-            const logoutBtn = document.createElement('div');
-            logoutBtn.innerHTML = `
-                <div style="position: fixed; top: 15px; right: 15px; z-index: 1000;">
-                    <div style="background: rgba(255,255,255,0.98); border-radius: 15px; padding: 10px 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 2px solid #dc2626; backdrop-filter: blur(15px);">
-                        <span style="color: #1e3a8a; font-weight: 800; margin-right: 10px; font-size: 0.85em;">👋 ${getStudentName()}</span>
-                        <button onclick="logout()" style="background: linear-gradient(135deg, #dc2626, #ef4444); color: white; border: none; padding: 8px 12px; border-radius: 10px; cursor: pointer; font-size: 0.8em; font-weight: 700; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">🚪 Sair</button>
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(logoutBtn);
-        }
-
-        function addInteractiveEffects() {
-            // Efeito parallax no header
-            window.addEventListener('scroll', () => {
-                const scrolled = window.pageYOffset;
-                const header = document.querySelector('.header');
-                if (header) {
-                    header.style.transform = `translateY(${scrolled * 0.1}px)`;
-                }
-            });
-
-            // Efeitos nos cards de atividade
-            const activityCards = document.querySelectorAll('.activity-card');
-            activityCards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-12px) scale(1.02)';
-                });
+        // ===== NAVEGAÇÃO =====
+        document.querySelectorAll('.activity-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Efeito de loading
+                const button = this.querySelector('.start-button');
+                const originalText = button.textContent;
+                button.textContent = 'Carregando...';
+                button.style.background = '#6b7280';
                 
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) scale(1)';
-                });
+                setTimeout(() => {
+                    window.location.href = this.getAttribute('href');
+                }, 800);
+                
+                e.preventDefault();
             });
-
-            // Efeito de brilho nos botões
-            const buttons = document.querySelectorAll('.btn-activity');
-            buttons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    // Efeito de loading
-                    const originalText = this.textContent;
-                    this.textContent = '⏳ Carregando...';
-                    this.style.background = '#6b7280';
-                    
-                    setTimeout(() => {
-                        window.location.href = this.getAttribute('href');
-                    }, 800);
-                    
-                    e.preventDefault();
-                });
-            });
-        }
+        });
     </script>
 </body>
 </html>
