@@ -74,7 +74,7 @@
         
         /* Cards de Atividades */
         .dashboard-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-bottom: 40px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-bottom: 40px;
         }
         
         .activity-card {
@@ -296,6 +296,19 @@
                 </ul>
                 <button class="start-button">Começar Leitura A1</button>
             </a>
+            
+            <a href="neighbor.html" class="activity-card">
+                <div class="activity-icon">📺</div>
+                <div class="activity-title">Pure Reading A2</div>
+                <div class="activity-description">História envolvente focada 100% na leitura e interpretação</div>
+                <ul class="activity-features">
+                    <li>História: "The Perfect Neighbor"</li>
+                    <li>5 capítulos thriller</li>
+                    <li>Leitura pura (sem áudio)</li>
+                    <li>Foco na interpretação</li>
+                </ul>
+                <button class="start-button">Começar Leitura Pura</button>
+            </a>
         </div>
         
         <div class="info-section">
@@ -304,19 +317,19 @@
                 <div class="instruction-item">
                     <div class="instruction-number">1</div>
                     <div class="instruction-text">
-                        <strong>Escolha uma Atividade:</strong> Selecione entre Listening ou Reading baseado no que você quer praticar hoje.
+                        <strong>Escolha uma Atividade:</strong> Selecione entre Listening, Reading com áudio ou Pure Reading baseado no que você quer praticar hoje.
                     </div>
                 </div>
                 <div class="instruction-item">
                     <div class="instruction-number">2</div>
                     <div class="instruction-text">
-                        <strong>Escute e Leia:</strong> Use fones de ouvido para a melhor experiência de áudio. Acompanhe com o texto quando disponível.
+                        <strong>Escute e Leia:</strong> Use fones de ouvido para atividades com áudio. Para Pure Reading, foque 100% na leitura e interpretação.
                     </div>
                 </div>
                 <div class="instruction-item">
                     <div class="instruction-number">3</div>
                     <div class="instruction-text">
-                        <strong>Responda as Perguntas:</strong> Teste sua compreensão com perguntas de interpretação e gramática após cada áudio/capítulo.
+                        <strong>Responda as Perguntas:</strong> Teste sua compreensão com perguntas de interpretação e gramática após cada capítulo.
                     </div>
                 </div>
                 <div class="instruction-item">
@@ -334,13 +347,13 @@
                 <div class="instruction-item">
                     <div class="instruction-number">🎧</div>
                     <div class="instruction-text">
-                        <strong>Escute Várias Vezes:</strong> Não se preocupe se não entender tudo na primeira vez. Escute novamente e foque em detalhes diferentes a cada vez.
+                        <strong>Listening:</strong> Não se preocupe se não entender tudo na primeira vez. Escute novamente e foque em detalhes diferentes a cada vez.
                     </div>
                 </div>
                 <div class="instruction-item">
-                    <div class="instruction-number">📝</div>
+                    <div class="instruction-number">📖</div>
                     <div class="instruction-text">
-                        <strong>Faça Anotações:</strong> Anote palavras ou frases novas que você ouvir. Procure depois para expandir seu vocabulário.
+                        <strong>Pure Reading:</strong> Leia devagar e com atenção. Se não entender uma palavra, tente entender pelo contexto antes de buscar o significado.
                     </div>
                 </div>
                 <div class="instruction-item">
@@ -422,15 +435,29 @@
                             totalAttempts: 0,
                             badges: []
                         },
+                        neighbor: {
+                            chaptersCompleted: [],
+                            bestScores: {},
+                            totalAttempts: 0,
+                            badges: []
+                        },
                         globalBadges: [],
                         lastActivity: null,
                         joinDate: new Date().toISOString(),
                         totalStudyTime: 0
                     };
                 }
-                // Adicionar roommate se não existir (compatibilidade)
+                // Adicionar categorias se não existirem (compatibilidade)
                 if (!this.data.roommate) {
                     this.data.roommate = {
+                        chaptersCompleted: [],
+                        bestScores: {},
+                        totalAttempts: 0,
+                        badges: []
+                    };
+                }
+                if (!this.data.neighbor) {
+                    this.data.neighbor = {
                         chaptersCompleted: [],
                         bestScores: {},
                         totalAttempts: 0,
@@ -443,8 +470,13 @@
                 const listeningLessons = this.data.listening.lessonsCompleted.length;
                 const readingChapters = this.data.reading.chaptersCompleted.length;
                 const roommateChapters = this.data.roommate ? this.data.roommate.chaptersCompleted.length : 0;
-                const totalChapters = readingChapters + roommateChapters;
-                const totalBadges = this.data.listening.badges.length + this.data.reading.badges.length + (this.data.roommate ? this.data.roommate.badges.length : 0) + this.data.globalBadges.length;
+                const neighborChapters = this.data.neighbor ? this.data.neighbor.chaptersCompleted.length : 0;
+                const totalChapters = readingChapters + roommateChapters + neighborChapters;
+                const totalBadges = this.data.listening.badges.length + 
+                                  this.data.reading.badges.length + 
+                                  (this.data.roommate ? this.data.roommate.badges.length : 0) +
+                                  (this.data.neighbor ? this.data.neighbor.badges.length : 0) +
+                                  this.data.globalBadges.length;
                 const studyTimeHours = Math.floor(this.data.totalStudyTime / (1000 * 60 * 60));
 
                 return {
@@ -477,6 +509,7 @@
             const listeningCard = document.querySelector('.activity-card[href="listening.html"]');
             const readingCard = document.querySelector('.activity-card[href="reader.html"]');
             const roommateCard = document.querySelector('.activity-card[href="roommate.html"]');
+            const neighborCard = document.querySelector('.activity-card[href="neighbor.html"]');
             
             if (stats.lessonsCompleted > 0) {
                 const badge = document.createElement('div');
@@ -499,6 +532,14 @@
                 badge.className = 'progress-badge';
                 badge.textContent = `${roommateCompleted}/3 ✓`;
                 roommateCard.appendChild(badge);
+            }
+            
+            const neighborCompleted = progressTracker.data.neighbor ? progressTracker.data.neighbor.chaptersCompleted.length : 0;
+            if (neighborCompleted > 0) {
+                const badge = document.createElement('div');
+                badge.className = 'progress-badge';
+                badge.textContent = `${neighborCompleted}/5 ✓`;
+                neighborCard.appendChild(badge);
             }
             
             // Animação de contadores
