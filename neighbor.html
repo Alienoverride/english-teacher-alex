@@ -265,11 +265,27 @@
         
         .story-text {
             background: rgba(255, 255, 255, 0.9);
-            padding: 30px; border-radius: 12px;
+            padding: 35px; border-radius: 12px;
             border: 2px solid #e5e7eb;
-            font-size: 1.1em; line-height: 1.8;
+            font-size: 1.15em; line-height: 1.8;
             color: #374151; margin-bottom: 25px;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+            text-align: justify;
+        }
+        
+        .story-text p {
+            margin-bottom: 1.2em;
+            text-indent: 1.5em;
+        }
+        
+        .story-text p:first-child {
+            text-indent: 0;
+        }
+        
+        /* Destacar diálogos */
+        .story-text p:has-text('"') {
+            font-style: italic;
+            color: #1e3a8a;
         }
         
         .reading-controls { 
@@ -1152,7 +1168,16 @@ Because sometimes, the perfect neighbor is perfectly dangerous.`,
             document.getElementById('chapterTitle').textContent = chapter.title;
             document.getElementById('chapterNumber').textContent = `Capítulo ${chapterNumber}`;
             document.getElementById('readingTitle').textContent = `📖 Leia o Capítulo: ${chapter.title}`;
-            document.getElementById('storyText').textContent = chapter.story;
+            
+            // Formatar o texto em parágrafos
+            const formattedStory = chapter.story
+                .split('\n\n')
+                .map(paragraph => paragraph.trim())
+                .filter(paragraph => paragraph.length > 0)
+                .map(paragraph => `<p>${paragraph}</p>`)
+                .join('');
+            
+            document.getElementById('storyText').innerHTML = formattedStory;
             loadQuestions(chapter.questions);
             resetQuiz();
         }
