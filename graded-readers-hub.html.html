@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graded Readers Hub - Teacher Alex English Academy BETA</title>
+    
+    <!-- CSS EXTERNO - SEU GARAGE CENTRAL! -->
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="theme-patriot.css">
+    
+    <!-- ESTILOS ESPECÍFICOS DO HUB -->
+    <style>
+        /* Level Sections */
+        .level-section {
+            background: var(--white-95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-medium);
+            border: 3px solid rgba(30, 58, 138, 0.15);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .level-section:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .level-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px;
+        }
+
+        .level-a1::before {
+            background: linear-gradient(90deg, #22c55e, #16a34a);
+        }
+
+        .level-a2::before {
+            background: linear-gradient(90deg, var(--primary-blue), #1d4ed8);
+        }
+
+        .level-b1::before {
+            background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+        }
+
+        .level-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+
+        .level-badge {
+            padding: 15px 30px;
+            border-radius: var(--border-radius-small);
+            font-weight: 800;
+            font-size: 1.2em;
+            color: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .level-a1 .level-badge {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+        }
+
+        .level-a2 .level-badge {
+            background: linear-gradient(135deg, var(--primary-blue), #1d4ed8);
+        }
+
+        .level-b1 .level-badge {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+
+        .level-title {
+            font-size: 2em;
+            font-weight: 800;
+            color: var(--gray-700);
+        }
+
+        .level-description {
+            color: var(--gray-600);
+            font-size: 1.2em;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+        /* Hub Title */
+        .hub-title {
+            font-size: 2.5em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .hub-subtitle {
+            font-size: 1.4em;
+            color: var(--gray-600);
+            font-weight: 600;
+        }
+
+        /* Back Button */
+        .back-button {
+            background: linear-gradient(135deg, var(--gray-600), var(--gray-700));
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--border-radius-small);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            margin-bottom: 30px;
+            font-size: 1em;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, var(--gray-700), var(--gray-600));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Stories Grid */
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+
+        /* Story Cards */
+        .story-card {
+            background: var(--white-90);
+            border: 3px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            padding: 35px;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 420px;
+        }
+
+        .story-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s;
+            z-index: 1;
+        }
+
+        .story-card:hover::before {
+            left: 100%;
+        }
+
+        .story-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-heavy);
+            border-color: var(--primary-blue);
+            background: white;
+        }
+
+        .story-icon {
+            font-size: 4.5em;
+            margin-bottom: 20px;
+            text-align: center;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-title {
+            font-size: 1.7em;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-description {
+            color: var(--gray-600);
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 500;
+            flex-grow: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-features {
+            list-style: none;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-features li {
+            color: var(--gray-600);
+            margin-bottom: 10px;
+            font-weight: 500;
+            position: relative;
+            padding-left: 30px;
+            font-size: 1.05em;
+        }
+
+        .story-features li::before {
+            content: '🎧';
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+
+        .story-button {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: var(--border-radius-small);
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: var(--transition-smooth);
+            text-align: center;
+            margin-top: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-button:hover {
+            background: linear-gradient(135deg, var(--secondary-blue), var(--secondary-red));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 58, 138, 0.4);
+        }
+
+        /* Coming Soon Cards */
+        .coming-soon {
+            opacity: 0.75;
+            border-style: dashed !important;
+            cursor: default !important;
+        }
+
+        .coming-soon:hover {
+            transform: translateY(-4px) !important;
+            opacity: 1;
+        }
+
+        .coming-soon-button {
+            background: linear-gradient(135deg, var(--warning-yellow), #f59e0b) !important;
+            cursor: not-allowed !important;
+            opacity: 0.8;
+        }
+
+        /* Progress Badges */
+        .progress-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--success-green);
+            color: white;
+            padding: 8px 15px;
+            border-radius: var(--border-radius-small);
+            font-size: 0.9em;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+            z-index: 3;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hub-title {
+                font-size: 2em;
+            }
+
+            .hub-subtitle {
+                font-size: 1.2em;
+            }
+
+            .level-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .level-title {
+                font-size: 1.6em;
+            }
+
+            .level-description {
+                font-size: 1.1em;
+            }
+
+            .stories-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .story-card {
+                padding: 25px;
+                min-height: 380px;
+            }
+
+            .story-icon {
+                font-size: 3.5em;
+            }
+
+            .story-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- User Info -->
+    <div style="position: fixed; top: 15px; right: 15px; z-index: 1000;">
+        <div style="background: rgba(255,255,255,0.95); border-radius: 15px; padding: 8px 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #dc2626; backdrop-filter: blur(10px);">
+            <span style="color: #1e3a8a; font-weight: 700; margin-right: 8px; font-size: 0.8em;">👋 <span id="userName">Aluno</span></span>
+            <button onclick="logout()" style="background: #dc2626; color: white; border: none; padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 0.75em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='#ef4444'" onmouseout="this.style.background='#dc2626'">🚪 Sair</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <button class="back-button" onclick="goBack()">← Voltar ao Portal</button>
+        
+        <div class="header">
+            <div class="logo">
+                Teacher Alex <span class="logo-highlight">English Academy</span> BETA
+            </div>
+            <div class="hub-title">📚 Graded Readers Hub</div>
+            <div class="hub-subtitle">🥩 A carne do negócio - Histórias com áudio IA para absorção massiva de vocabulário</div>
+        </div>
+
+        <!-- A1 Level -->
+        <div class="level-section level-a1">
+            <div class="level-header">
+                <div class="level-badge">A1 - Beginner</div>
+                <div>
+                    <div class="level-title">Nível Iniciante</div>
+                    <div class="level-description">Vocabulário básico e gramática simples para começar sua jornada no inglês</div>
+                </div>
+            </div>
+            
+            <div class="stories-grid">
+                <a href="roommate.html" class="story-card">
+                    <div class="story-icon">🏠</div>
+                    <div class="story-title">The Roommate Problem</div>
+                    <div class="story-description">Sarah e Emma enfrentam problemas de convivência que testam sua amizade e ensinam lições valiosas</div>
+                    <ul class="story-features">
+                        <li>3 capítulos progressivos</li>
+                        <li>Vocabulário do dia a dia</li>
+                        <li>Gramática básica essencial</li>
+                        <li>Áudio IA de alta qualidade</li>
+                        <li>Sistema de badges motivador</li>
+                    </ul>
+                    <button class="story-button">Começar História A1</button>
+                    <div class="progress-badge" id="roommateProgress">✅ Disponível</div>
+                </a>
+
+                <div class="story-card coming-soon">
+                    <div class="story-icon">🌟</div>
+                    <div class="story-title">New Friends at School</div>
+                    <div class="story-description">Uma história tocante sobre fazer novos amigos e superar a timidez no ambiente escolar</div>
+                    <ul class="story-features">
+                        <li>4 capítulos envolventes</li>
+                        <li>Vocabulário escolar básico</li>
+                        <li>Expressões de amizade</li>
+                        <li>Áudio IA naturalizado</li>
+                        <li>Situações do cotidiano</li>
+                    </ul>
+                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                </div>
+
+                <div class="story-card coming-soon">
+                    <div class="story-icon">🍕</div>
+                    <div class="story-title">The Pizza Restaurant</div>
+                    <div class="story-description">Aventuras e confusões divertidas em um restaurante familiar italiano</div>
+                    <ul class="story-features">
+                        <li>3 capítulos cheios de humor</li>
+                        <li>Vocabulário de comida e restaurante</li>
+                        <li>Situações práticas do dia a dia</li>
+                        <li>Áudio IA expressivo</li>
+                        <li>Cultura italiana básica</li>
+                    </ul>
+                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- A2 Level -->
+        <div class="level-section level-a2">
+            <div class="level-header">
+                <div class="level-badge">A2 - Elementary</div>
+                <div>
+                    <div class="level-title">Nível Elementar</div>
+                    <div class="level-description">Expansão vocabular e estruturas mais complexas para consolidar o aprendizado</div>
+                </div>
+            </div>
+            
+            <div class="stories-grid">
+                <a href="reader.html" class="story-card">
+                    <div class="story-icon">🏚️</div>
+                    <div class="story-title">The Secret in the Old House</div>
+                    <div class="story-description">Emma descobre mistérios fascinantes escondidos na casa antiga de sua nova vizinha Mrs. Peterson</div>
+                    <ul class="story-features">
+                        <li>4 capítulos de mistério envolvente</li>
+                        <li>Vocabulário intermediário rico</li>
+                        <li>Gramática A2 estruturada</li>
+                        <li>Áudio IA dramatizado</li>
+                        <li>Narrativa cativante</li>
+                    </ul>
+                    <button class="story-button">Começar História A2</button>
+                    <div class="progress-badge" id="readerProgress">✅ Disponível</div>
+                </a>
+
+                <div class="story-card coming-soon">
+                    <div class="story-icon">🎭</div>
+                    <div class="story-title">The School Play</div>
+                    <div class="story-description">Drama e comédia nos bastidores de uma peça teatral escolar cheia de emoções</div>
+                    <ul class="story-features">
+                        <li>5 capítulos dramáticos</li>
+                        <li>Vocabulário artístico e teatral</li>
+                        <li>Expressões emotivas avançadas</li>
+                        <li>Áudio IA dramatizado</li>
+                        <li>Cultura teatral básica</li>
+                    </ul>
+                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                </div>
+
+                <div class="story-card coming-soon">
+                    <div class="story-icon">🌊</div>
+                    <div class="story-title">Summer Beach Adventure</div>
+                    <div class="story-description">Férias de verão cheias de aventura, descobertas e amizades na costa californiana</div>
+                    <ul class="story-features">
+                        <li>4 capítulos de aventura</li>
+                        <li>Vocabulário de viagem e praia</li>
+                        <li>Tempos verbais variados</li>
+                        <li>Áudio IA relaxante</li>
+                        <li>Cultura americana costeira</li>
+                    </ul>
+                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                </div>
+
+                <div class="story-card coming-soon">
+                    <div class="story-icon">🔬</div>
+                    <div class="story-title">The Science Competition</div>
+                    <div class="story-description">Rivalidade saudável e parceria inesperada em uma competição científica estudantil</div>
+                    <ul class="story-features">
+                        <li>4 capítulos educativos</li>
+                        <li>Vocabulário científico básico</li>
+                        <li>Estruturas comparativas</li>
+                        <li>Áudio IA educativo</li>
+                        <li>Método científico simplificado</li>
+                    </ul>
+                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- B1 Level -->
+        <div class="level-section level-b1">
+            <div class="level-header">
+                <div class="level-badge">B1 - Intermediate</div>
+                <div>
+                    <div class="level-title">Nível Intermediário</div>
+                    <div class="level-description">Para seus poucos alunos avançados - preparação séria para fluência</div>
+                </div>
+            </div>
+            
+            <div class="stories-grid">
+                <div class="story-card coming-soon">
+                    <div class="story-icon">💼</div>
+                    <div class="story-title">The Job Interview</div>
+                    <div class="story-description">Preparação profissional intensa e desafios reais do mundo corporativo moderno</div>
+                    <ul class="story-features">
+                        <li>5 capítulos profissionais</li>
+                        <li>Vocabulário corporativo avançado</li>
+                        <li>Gramática B1 complexa</li>
+                        <li>Áudio IA profissional</li>
+                        <li>Situações de trabalho reais</li>
+                    </ul>
+                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                </div>
+
+                <div class="story-card coming-soon">
+                    <div class="story-icon">🌍</div>
+                    <div class="story-title">Around the World</div>
+                    <div class="story-description">Viagem cultural fascinante pelos continentes e suas tradições únicas</div>
+                    <ul class="story-features">
+                        <li>6 capítulos globais</li>
+                        <li>Vocabulário cultural diversificado</li>
+                        <li>Estruturas linguísticas complexas</li>
+                        <li>Áudio IA multicultural</li>
+                        <li>Geografia e história mundial</li>
+                    </ul>
+                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== SISTEMA DE PROTEÇÃO DE LOGIN =====
+        function checkLogin() {
+            if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+
+        function logout() {
+            sessionStorage.removeItem('studentLoggedIn');
+            sessionStorage.removeItem('studentUsername');
+            window.location.href = 'login.html';
+        }
+
+        function getStudentName() {
+            return sessionStorage.getItem('studentUsername') || 'Student';
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+
+        // Verificar login ao carregar a página
+        if (!checkLogin()) {
+            throw new Error('Not logged in');
+        }
+
+        // ===== SISTEMA DE PROGRESSO =====
+        class ProgressTracker {
+            constructor() {
+                this.studentId = sessionStorage.getItem('studentUsername') || 'student';
+                this.progressKey = `progress_${this.studentId}`;
+                this.loadProgress();
+            }
+
+            loadProgress() {
+                const saved = localStorage.getItem(this.progressKey);
+                if (saved) {
+                    this.data = JSON.parse(saved);
+                } else {
+                    this.data = {
+                        listening: { lessonsCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        reading: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        roommate: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        neighbor: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        globalBadges: [], lastActivity: null, joinDate: new Date().toISOString(), totalStudyTime: 0
+                    };
+                }
+                // Adicionar categorias se não existirem (compatibilidade)
+                if (!this.data.roommate) {
+                    this.data.roommate = { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] };
+                }
+                if (!this.data.neighbor) {
+                    this.data.neighbor = { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] };
+                }
+            }
+
+            getProgressBadge(category, totalChapters) {
+                const completed = this.data[category] ? this.data[category].chaptersCompleted.length : 0;
+                if (completed === 0) return '✅ Disponível';
+                if (completed === totalChapters) return '🏆 Completo';
+                return `${completed}/${totalChapters} ✓`;
+            }
+        }
+
+        // ===== INICIALIZAÇÃO =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const studentName = getStudentName();
+            const progressTracker = new ProgressTracker();
+            
+            // Atualizar informações do usuário
+            document.getElementById('userName').textContent = studentName;
+            
+            // Atualizar badges de progresso
+            const roommateProgress = document.getElementById('roommateProgress');
+            const readerProgress = document.getElementById('readerProgress');
+            
+            if (roommateProgress) {
+                roommateProgress.textContent = progressTracker.getProgressBadge('roommate', 3);
+                if (progressTracker.data.roommate && progressTracker.data.roommate.chaptersCompleted.length > 0) {
+                    roommateProgress.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                }
+            }
+            
+            if (readerProgress) {
+                readerProgress.textContent = progressTracker.getProgressBadge('reading', 4);
+                if (progressTracker.data.reading && progressTracker.data.reading.chaptersCompleted.length > 0) {
+                    readerProgress.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                }
+            }
+        });
+
+        // ===== NAVEGAÇÃO COM LOADING =====
+        document.querySelectorAll('.story-card[href]').forEach(card => {
+            card.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Efeito de loading
+                const button = this.querySelector('.story-button');
+                const originalText = button.textContent;
+                button.textContent = 'Carregando...';
+                button.style.background = '#6b7280';
+                
+                // Feedback visual
+                this.style.opacity = '0.7';
+                
+                setTimeout(() => {
+                    window.location.href = this.getAttribute('href');
+                }, 800);
+            });
+        });
+    </script>
+</body>
+</html>
