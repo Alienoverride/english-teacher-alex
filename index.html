@@ -294,6 +294,242 @@
                 font-size: 1.1em !important;
             }
         }
+
+        /* ===== NOVOS CARDS ESPECIAIS ===== */
+
+        /* Coming Soon Card */
+        .coming-soon {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.1)) !important;
+            border: 3px solid rgba(251, 191, 36, 0.3) !important;
+            opacity: 0.8;
+            cursor: default !important;
+        }
+
+        .coming-soon:hover {
+            transform: translateY(-4px) !important;
+            opacity: 1;
+        }
+
+        .coming-soon-button {
+            background: linear-gradient(135deg, var(--warning-yellow), #f59e0b) !important;
+            color: white !important;
+            padding: 16px 32px !important;
+            border: none !important;
+            border-radius: var(--border-radius-small) !important;
+            font-weight: 700 !important;
+            cursor: not-allowed !important;
+            font-size: 1.05em !important;
+            opacity: 0.7;
+        }
+
+        /* Secret Area Card */
+        .secret-area {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(79, 70, 229, 0.1)) !important;
+            border: 3px solid rgba(139, 92, 246, 0.3) !important;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer !important;
+        }
+
+        .secret-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.2), transparent);
+            animation: mysteryShine 3s infinite;
+        }
+
+        @keyframes mysteryShine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .secret-area:hover {
+            border-color: #8b5cf6 !important;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(79, 70, 229, 0.2)) !important;
+            box-shadow: 0 25px 60px rgba(139, 92, 246, 0.3) !important;
+        }
+
+        .mystery-icon {
+            font-size: 4em !important;
+            animation: mysteryPulse 2s infinite;
+        }
+
+        @keyframes mysteryPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .mystery-features li {
+            color: #8b5cf6 !important;
+            font-style: italic;
+        }
+
+        .mystery-button {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1) !important;
+            color: white !important;
+            padding: 16px 32px !important;
+            border: none !important;
+            border-radius: var(--border-radius-small) !important;
+            font-weight: 700 !important;
+            cursor: pointer !important;
+            font-size: 1.05em !important;
+            transition: var(--transition-smooth) !important;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mystery-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .mystery-button:hover::before {
+            left: 100%;
+        }
+
+        .mystery-button:hover {
+            background: linear-gradient(135deg, #7c3aed, #4f46e5) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4) !important;
+        }
+
+        /* Grid ajustado para 6 cards */
+        .dashboard-grid {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
+            gap: 30px !important;
+            margin-bottom: 40px !important;
+        }
+
+        /* Responsivo para os novos cards */
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+            }
+            
+            .mystery-icon {
+                font-size: 3em !important;
+            }
+        }
+
+        /* Activity Cards - Melhorias gerais */
+        .activity-card {
+            background: var(--white-90) !important;
+            border: 3px solid var(--gray-200) !important;
+            border-radius: var(--border-radius) !important;
+            padding: 30px !important;
+            text-align: center !important;
+            cursor: pointer !important;
+            transition: var(--transition-smooth) !important;
+            position: relative !important;
+            overflow: hidden !important;
+            text-decoration: none !important;
+            color: inherit !important;
+            display: flex !important;
+            flex-direction: column !important;
+            min-height: 420px !important;
+        }
+
+        .activity-icon {
+            font-size: 4.5em !important;
+            margin-bottom: 20px !important;
+            display: block !important;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1)) !important;
+        }
+
+        .activity-title {
+            font-size: 1.8em !important;
+            font-weight: 800 !important;
+            color: var(--primary-blue) !important;
+            margin-bottom: 15px !important;
+        }
+
+        .activity-description {
+            color: var(--gray-500) !important;
+            font-size: 1.1em !important;
+            margin-bottom: 20px !important;
+            font-weight: 500 !important;
+            flex-grow: 1 !important;
+        }
+
+        .activity-features {
+            list-style: none !important;
+            margin-bottom: 25px !important;
+            text-align: left !important;
+        }
+
+        .activity-features li {
+            color: var(--gray-600) !important;
+            margin-bottom: 8px !important;
+            font-weight: 500 !important;
+            position: relative !important;
+            padding-left: 25px !important;
+        }
+
+        .activity-features li::before {
+            content: '✓' !important;
+            position: absolute !important;
+            left: 0 !important;
+            color: var(--success-green) !important;
+            font-weight: bold !important;
+            font-size: 1.1em !important;
+        }
+
+        /* Progress badges nos cards */
+        .progress-badge {
+            position: absolute !important;
+            top: 15px !important;
+            right: 15px !important;
+            background: var(--success-green) !important;
+            color: white !important;
+            padding: 6px 12px !important;
+            border-radius: var(--border-radius-small) !important;
+            font-size: 0.8em !important;
+            font-weight: 700 !important;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4) !important;
+            z-index: 2 !important;
+        }
+
+        /* Hover effects para activity cards */
+        .activity-card:hover {
+            transform: translateY(-8px) !important;
+            box-shadow: var(--shadow-heavy) !important;
+            border-color: var(--primary-blue) !important;
+            background: white !important;
+        }
+
+        .activity-card::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: -100% !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent) !important;
+            transition: left 0.6s !important;
+            z-index: 1 !important;
+        }
+
+        .activity-card:hover::before {
+            left: 100% !important;
+        }
+
+        .start-button:hover {
+            background: linear-gradient(135deg, var(--secondary-blue), var(--error-red)) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 25px rgba(30, 58, 138, 0.4) !important;
+        }
     </style>
 </head>
 <body>
@@ -386,6 +622,32 @@
                 </ul>
                 <button class="start-button">Começar Leitura Pura</button>
             </a>
+            
+            <div class="activity-card coming-soon">
+                <div class="activity-icon">📖</div>
+                <div class="activity-title">Apostilas Em Breve</div>
+                <div class="activity-description">Materiais didáticos exclusivos em desenvolvimento</div>
+                <ul class="activity-features">
+                    <li>Gramática estruturada</li>
+                    <li>Exercícios práticos</li>
+                    <li>Vocabulário essencial</li>
+                    <li>Guias de conversação</li>
+                </ul>
+                <button class="coming-soon-button" disabled>🚀 Em Desenvolvimento</button>
+            </div>
+            
+            <div class="activity-card secret-area" onclick="showSecretMessage()">
+                <div class="activity-icon mystery-icon">🔒</div>
+                <div class="activity-title">Secret Area</div>
+                <div class="activity-description">Algo especial está chegando... apenas para alunos dedicados</div>
+                <ul class="activity-features mystery-features">
+                    <li>??? Conteúdo exclusivo</li>
+                    <li>??? Desafios especiais</li>
+                    <li>??? Recompensas únicas</li>
+                    <li>??? Mistério aguarda...</li>
+                </ul>
+                <button class="mystery-button">🔓 Investigar</button>
+            </div>
         </div>
         
         <div class="info-section">
@@ -652,6 +914,11 @@
         // ===== NAVEGAÇÃO =====
         document.querySelectorAll('.activity-card').forEach(card => {
             card.addEventListener('click', function(e) {
+                // Não aplicar loading aos cards especiais
+                if (this.classList.contains('coming-soon') || this.classList.contains('secret-area')) {
+                    return;
+                }
+                
                 // Efeito de loading
                 const button = this.querySelector('.start-button');
                 const originalText = button.textContent;
@@ -665,6 +932,86 @@
                 e.preventDefault();
             });
         });
+
+        // ===== SECRET AREA =====
+        function showSecretMessage() {
+            const secretMessages = [
+                "🔮 O segredo será revelado quando você completar todas as histórias...",
+                "🗝️ Alunos dedicados descobrem tesouros escondidos...",
+                "⭐ Continue praticando... algo especial está sendo preparado para você!",
+                "🎯 Apenas os mais persistentes descobrirão o que aguarda aqui...",
+                "🏆 Teacher Alex está preparando uma surpresa exclusiva!"
+            ];
+            
+            const randomMessage = secretMessages[Math.floor(Math.random() * secretMessages.length)];
+            
+            // Criar overlay misterioso
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0, 0, 0, 0.8); z-index: 10000;
+                display: flex; align-items: center; justify-content: center;
+                backdrop-filter: blur(5px);
+            `;
+            
+            // Criar caixa de mensagem misteriosa
+            const messageBox = document.createElement('div');
+            messageBox.style.cssText = `
+                background: linear-gradient(135deg, #1e1b4b, #312e81);
+                color: white; padding: 40px; border-radius: 20px;
+                text-align: center; max-width: 500px; margin: 20px;
+                box-shadow: 0 25px 60px rgba(139, 92, 246, 0.4);
+                border: 2px solid #8b5cf6;
+                animation: mysteryAppear 0.6s ease-out;
+            `;
+            
+            messageBox.innerHTML = `
+                <div style="font-size: 3em; margin-bottom: 20px;">🔮</div>
+                <div style="font-size: 1.4em; font-weight: 700; margin-bottom: 20px; color: #c4b5fd;">Secret Area</div>
+                <div style="font-size: 1.1em; line-height: 1.6; margin-bottom: 30px;">${randomMessage}</div>
+                <button onclick="closeSecretMessage()" style="
+                    background: linear-gradient(135deg, #8b5cf6, #6366f1);
+                    color: white; border: none; padding: 12px 30px;
+                    border-radius: 25px; font-weight: 700; cursor: pointer;
+                    font-size: 1em; transition: all 0.3s ease;
+                " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    🔓 Entendi...
+                </button>
+            `;
+            
+            // Adicionar CSS da animação
+            if (!document.getElementById('mysteryStyles')) {
+                const style = document.createElement('style');
+                style.id = 'mysteryStyles';
+                style.textContent = `
+                    @keyframes mysteryAppear {
+                        0% { opacity: 0; transform: scale(0.8) rotate(-5deg); }
+                        100% { opacity: 1; transform: scale(1) rotate(0deg); }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            overlay.appendChild(messageBox);
+            document.body.appendChild(overlay);
+            
+            // Fechar ao clicar no overlay
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    closeSecretMessage();
+                }
+            });
+            
+            // Salvar referência para fechar
+            window.currentSecretOverlay = overlay;
+        }
+
+        function closeSecretMessage() {
+            if (window.currentSecretOverlay) {
+                document.body.removeChild(window.currentSecretOverlay);
+                window.currentSecretOverlay = null;
+            }
+        }
     </script>
 </body>
 </html>
