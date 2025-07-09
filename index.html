@@ -584,17 +584,17 @@
                 <button class="start-button">Começar Listening</button>
             </a>
             
-            <a href="reader.html" class="activity-card">
+            <a href="graded-readers-hub.html" class="activity-card">
                 <div class="activity-icon">📚</div>
-                <div class="activity-title">Graded Reader A2</div>
-                <div class="activity-description">Pratique leitura com história envolvente em nível A2</div>
+                <div class="activity-title">Graded Readers Hub</div>
+                <div class="activity-description">🥩 A carne do negócio - Hub organizado com histórias por nível para absorção massiva de vocabulário</div>
                 <ul class="activity-features">
-                    <li>História: "The Secret in the Old House"</li>
-                    <li>4 capítulos progressivos</li>
-                    <li>Questões de interpretação</li>
-                    <li>Exercícios de gramática</li>
+                    <li>Nível A1: Histórias para iniciantes</li>
+                    <li>Nível A2: Vocabulário intermediário</li>
+                    <li>Nível B1: Para alunos avançados</li>
+                    <li>Todas com áudio IA de qualidade</li>
                 </ul>
-                <button class="start-button">Começar Leitura A2</button>
+                <button class="start-button">Explorar Hub de Leitura</button>
             </a>
             
             <a href="roommate.html" class="activity-card">
@@ -846,7 +846,7 @@
             
             // Adicionar badges de progresso
             const listeningCard = document.querySelector('.activity-card[href="listening.html"]');
-            const readingCard = document.querySelector('.activity-card[href="reader.html"]');
+            const gradedReadersCard = document.querySelector('.activity-card[href="graded-readers-hub.html"]');
             const roommateCard = document.querySelector('.activity-card[href="roommate.html"]');
             const neighborCard = document.querySelector('.activity-card[href="neighbor.html"]');
             
@@ -857,16 +857,19 @@
                 listeningCard.appendChild(badge);
             }
             
+            // Badge para o hub (soma A1 + A2)
             const readingCompleted = progressTracker.data.reading.chaptersCompleted.length;
-            if (readingCompleted > 0) {
+            const roommateCompleted = progressTracker.data.roommate ? progressTracker.data.roommate.chaptersCompleted.length : 0;
+            const totalGradedReaders = readingCompleted + roommateCompleted;
+            if (totalGradedReaders > 0) {
                 const badge = document.createElement('div');
                 badge.className = 'progress-badge';
-                badge.textContent = `${readingCompleted}/4 ✓`;
-                readingCard.appendChild(badge);
+                badge.textContent = `${totalGradedReaders}/7 ✓`;
+                gradedReadersCard.appendChild(badge);
             }
             
-            const roommateCompleted = progressTracker.data.roommate ? progressTracker.data.roommate.chaptersCompleted.length : 0;
-            if (roommateCompleted > 0) {
+            // Badge individual do roommate (se ainda quiser manter o acesso direto)
+            if (roommateCard && roommateCompleted > 0) {
                 const badge = document.createElement('div');
                 badge.className = 'progress-badge';
                 badge.textContent = `${roommateCompleted}/3 ✓`;
