@@ -9,6 +9,292 @@
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="layout.css">
     <link rel="stylesheet" href="theme-patriot.css">
+    
+    <!-- MELHORIAS VISUAIS ESPECÍFICAS -->
+    <style>
+        /* ===== MELHORIAS VISUAIS - SEÇÕES DE INFORMAÇÕES ===== */
+
+        /* Info Section - Layout Geral Melhorado */
+        .info-section {
+            background: var(--white-95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--border-radius);
+            padding: 45px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-heavy);
+            border: 3px solid rgba(30, 58, 138, 0.15);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .info-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.15);
+        }
+
+        .info-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-red), var(--warning-yellow), var(--success-green), var(--primary-blue));
+        }
+
+        /* Títulos das Seções - Mais Impactantes */
+        .info-title {
+            font-size: 2.5em !important;
+            font-weight: 900 !important;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 40px !important;
+            text-align: center;
+            position: relative;
+            padding-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .info-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-red), var(--warning-yellow), var(--success-green));
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+        }
+
+        /* Instructions Grid - Layout Melhorado */
+        .instructions {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
+            gap: 25px !important;
+            margin-bottom: 30px !important;
+        }
+
+        /* Instruction Items - Visual Premium */
+        .instruction-item {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.08), rgba(220, 38, 38, 0.06)) !important;
+            padding: 35px 30px !important;
+            border-radius: var(--border-radius) !important;
+            border: 3px solid rgba(30, 58, 138, 0.15) !important;
+            transition: var(--transition-smooth) !important;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .instruction-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .instruction-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-heavy);
+            border-color: var(--primary-red) !important;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.12), rgba(220, 38, 38, 0.10)) !important;
+        }
+
+        .instruction-item:hover::before {
+            left: 100%;
+        }
+
+        /* Números das Instruções - Maior e Mais Chamativo */
+        .instruction-number {
+            background: linear-gradient(135deg, var(--primary-red), var(--secondary-red)) !important;
+            color: white !important;
+            width: 60px !important;
+            height: 60px !important;
+            border-radius: 50% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-weight: 900 !important;
+            font-size: 1.8em !important;
+            margin-bottom: 20px !important;
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.4) !important;
+            position: relative;
+            transition: var(--transition-fast);
+        }
+
+        .instruction-number::after {
+            content: '';
+            position: absolute;
+            top: -3px; left: -3px; right: -3px; bottom: -3px;
+            background: linear-gradient(45deg, var(--primary-blue), var(--primary-red), var(--warning-yellow));
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition-fast);
+        }
+
+        .instruction-item:hover .instruction-number {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .instruction-item:hover .instruction-number::after {
+            opacity: 1;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Study Tips - Ícones Especiais (Sem Fundo) */
+        .study-tips .instruction-number {
+            background: none !important;
+            border: none !important;
+            box-shadow: none !important;
+            font-size: 4em !important;
+            width: auto !important;
+            height: auto !important;
+            margin-bottom: 25px !important;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+            position: static;
+        }
+
+        .study-tips .instruction-number::after {
+            display: none;
+        }
+
+        /* Remover hover dos Study Tips (mobile-friendly) */
+        .study-tips .instruction-item:hover .instruction-number {
+            transform: none;
+        }
+
+        .study-tips .instruction-item:hover .instruction-number::after {
+            opacity: 0;
+            animation: none;
+        }
+
+        /* Texto das Instruções - Maior e Mais Legível */
+        .instruction-text {
+            color: var(--gray-700) !important;
+            line-height: 1.7 !important;
+            font-weight: 500 !important;
+            font-size: 1.15em !important;
+        }
+
+        .instruction-text strong {
+            color: var(--primary-blue) !important;
+            font-weight: 700 !important;
+            font-size: 1.1em !important;
+        }
+
+        /* Footer - Centralizado e Estilizado */
+        .footer {
+            background: var(--white-95) !important;
+            backdrop-filter: blur(20px) !important;
+            border-radius: var(--border-radius) !important;
+            padding: 40px !important;
+            text-align: center !important;
+            box-shadow: var(--shadow-medium) !important;
+            border: 2px solid rgba(30, 58, 138, 0.1) !important;
+            position: relative;
+            overflow: hidden;
+            margin-top: 40px !important;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-red), var(--primary-blue));
+        }
+
+        .footer h3 {
+            font-size: 2em !important;
+            font-weight: 800 !important;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px !important;
+        }
+
+        .footer p {
+            font-size: 1.2em !important;
+            color: var(--gray-600) !important;
+            margin-bottom: 15px !important;
+            font-weight: 500 !important;
+        }
+
+        .contact-link {
+            color: var(--primary-red) !important;
+            text-decoration: none !important;
+            font-weight: 700 !important;
+            font-size: 1.1em !important;
+            transition: var(--transition-fast) !important;
+            padding: 8px 16px !important;
+            border-radius: 8px !important;
+            border: 2px solid transparent !important;
+        }
+
+        .contact-link:hover {
+            background: var(--primary-red) !important;
+            color: white !important;
+            border-color: var(--primary-red) !important;
+            transform: scale(1.05) !important;
+            box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3) !important;
+        }
+
+        /* Responsivo - Mobile */
+        @media (max-width: 768px) {
+            .info-title {
+                font-size: 2em !important;
+            }
+            
+            .instructions {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+            }
+            
+            .instruction-item {
+                padding: 25px 20px !important;
+            }
+            
+            .instruction-number {
+                width: 50px !important;
+                height: 50px !important;
+                font-size: 1.5em !important;
+            }
+            
+            .study-tips .instruction-number {
+                font-size: 3.5em !important;
+            }
+            
+            .instruction-text {
+                font-size: 1.05em !important;
+            }
+            
+            .footer h3 {
+                font-size: 1.7em !important;
+            }
+            
+            .footer p {
+                font-size: 1.1em !important;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="user-info">
