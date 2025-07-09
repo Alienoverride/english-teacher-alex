@@ -587,7 +587,7 @@
             <a href="graded-readers-hub.html" class="activity-card">
                 <div class="activity-icon">📚</div>
                 <div class="activity-title">Graded Readers Hub</div>
-                <div class="activity-description">Hub organizado com histórias por nível para absorção massiva de vocabulário</div>
+                <div class="activity-description">🥩 A carne do negócio - Hub organizado com histórias por nível para absorção massiva de vocabulário</div>
                 <ul class="activity-features">
                     <li>Nível A1: Histórias para iniciantes</li>
                     <li>Nível A2: Vocabulário intermediário</li>
@@ -847,7 +847,6 @@
             // Adicionar badges de progresso
             const listeningCard = document.querySelector('.activity-card[href="listening.html"]');
             const gradedReadersCard = document.querySelector('.activity-card[href="graded-readers-hub.html"]');
-            const roommateCard = document.querySelector('.activity-card[href="roommate.html"]');
             const neighborCard = document.querySelector('.activity-card[href="neighbor.html"]');
             
             if (stats.lessonsCompleted > 0) {
@@ -866,14 +865,6 @@
                 badge.className = 'progress-badge';
                 badge.textContent = `${totalGradedReaders}/7 ✓`;
                 gradedReadersCard.appendChild(badge);
-            }
-            
-            // Badge individual do roommate (se ainda quiser manter o acesso direto)
-            if (roommateCard && roommateCompleted > 0) {
-                const badge = document.createElement('div');
-                badge.className = 'progress-badge';
-                badge.textContent = `${roommateCompleted}/3 ✓`;
-                roommateCard.appendChild(badge);
             }
             
             const neighborCompleted = progressTracker.data.neighbor ? progressTracker.data.neighbor.chaptersCompleted.length : 0;
