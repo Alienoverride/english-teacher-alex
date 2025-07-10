@@ -41,13 +41,28 @@
             background: linear-gradient(90deg, #5850ec, #3730a3, #6366f1, #8b5cf6);
         }
 
-        /* Lesson Cards Grid - Responsivo */
+        /* Lesson Cards Grid - Responsivo para 11 lições */
         .lesson-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
             max-width: 1200px;
             margin: 0 auto;
+        }
+
+        /* Desktop: forçar 4-5 colunas para 11 lições */
+        @media (min-width: 1024px) {
+            .lesson-cards {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1023px) {
+            .lesson-cards {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 18px;
+            }
         }
 
         /* Lesson Card - Design Premium */
@@ -188,38 +203,53 @@
         /* Responsive Design */
         @media (max-width: 768px) {
             .lesson-cards {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
                 gap: 15px;
             }
             
             .lesson-card {
-                padding: 20px 15px;
-                min-height: 160px;
+                padding: 15px 10px;
+                min-height: 140px;
             }
             
             .lesson-card .lesson-number {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2em;
+                width: 35px;
+                height: 35px;
+                font-size: 1.1em;
             }
             
             .lesson-card .lesson-icon {
-                font-size: 1.8em;
+                font-size: 1.6em;
             }
             
             .lesson-card .lesson-name {
-                font-size: 0.9em;
+                font-size: 0.8em;
             }
         }
 
         @media (max-width: 480px) {
             .lesson-cards {
-                grid-template-columns: 1fr;
-                gap: 15px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
             }
             
             .lesson-card {
-                min-height: 140px;
+                min-height: 120px;
+                padding: 12px 8px;
+            }
+            
+            .lesson-card .lesson-number {
+                width: 30px;
+                height: 30px;
+                font-size: 1em;
+            }
+            
+            .lesson-card .lesson-icon {
+                font-size: 1.4em;
+            }
+            
+            .lesson-card .lesson-name {
+                font-size: 0.75em;
             }
         }
 
@@ -257,7 +287,7 @@
         <div class="header">
             <a href="index.html" style="text-decoration: none;"><div class="logo">Teacher Alex English Academy</div></a>
             <div class="listening-hub-title">🎧 Listening Practice Hub</div>
-            <div class="listening-hub-subtitle">Melhore sua compreensão auditiva com diálogos autênticos</div>
+            <div class="listening-hub-subtitle">11 lições completas para dominar a compreensão auditiva</div>
         </div>
         
         <!-- NAVEGAÇÃO DE LIÇÕES PREMIUM -->
@@ -385,13 +415,17 @@
                     badges.push('perfect_score');
                     this.showBadgeNotification('⭐ Pontuação Perfeita!', 'Você acertou todas as perguntas!');
                 }
-                if (this.data.listening.lessonsCompleted.length >= 5 && !badges.includes('listening_master')) {
-                    badges.push('listening_master');
-                    this.showBadgeNotification('🏆 Mestre do Listening!', 'Você completou 5 lições!');
+                if (this.data.listening.lessonsCompleted.length >= 5 && !badges.includes('listening_explorer')) {
+                    badges.push('listening_explorer');
+                    this.showBadgeNotification('🎧 Explorador do Listening!', 'Você completou 5 lições!');
                 }
-                if (this.data.listening.lessonsCompleted.length >= 7 && !badges.includes('listening_champion')) {
+                if (this.data.listening.lessonsCompleted.length >= 8 && !badges.includes('listening_master')) {
+                    badges.push('listening_master');
+                    this.showBadgeNotification('🏆 Mestre do Listening!', 'Você completou 8 lições!');
+                }
+                if (this.data.listening.lessonsCompleted.length >= 11 && !badges.includes('listening_champion')) {
                     badges.push('listening_champion');
-                    this.showBadgeNotification('🔥 Campeão do Listening!', 'Todas as 7 lições completadas!');
+                    this.showBadgeNotification('🔥 Campeão do Listening!', 'Todas as 11 lições completadas!');
                 }
             }
 
@@ -422,17 +456,21 @@
             4: { title: "Weather and Seasons", shortTitle: "Weather", icon: "🌤️", audioUrl: "audios/audio4.mp3", questions: { q1: { text: "Which country does she live in?", options: ["Scotland", "Ireland", "England", "Wales"], correct: "c" }, q2: { text: "What is her favorite season?", options: ["Spring", "Summer", "Autumn", "Winter"], correct: "a" }, q3: { text: "What is summer like where she lives?", options: ["Cold and rainy", "Warm and sunny", "Very hot", "Windy and cloudy"], correct: "b" }, q4: { text: "What colors do the autumn leaves turn?", options: ["Green and blue", "Red, yellow, and orange", "Purple and pink", "Brown and black"], correct: "b" }, q5: { text: "Why doesn't she like winter?", options: ["It's too expensive", "It's too busy", "The days are short and dark", "There's too much snow"], correct: "c" } } },
             5: { title: "Shopping at the Store", shortTitle: "Shopping", icon: "🛒", audioUrl: "audios/audio5.mp3", questions: { q1: { text: "Who did she go shopping with?", options: ["Her father", "Her mother", "Her sister", "Her friend"], correct: "b" }, q2: { text: "Which fruits did they buy?", options: ["Grapes, pears, and peaches", "Apples, bananas, and oranges", "Strawberries and kiwi", "Pineapple and mango"], correct: "b" }, q3: { text: "What meat did they buy for dinner?", options: ["Beef", "Pork", "Chicken", "Fish"], correct: "c" }, q4: { text: "How long did the shopping take?", options: ["30 minutes", "45 minutes", "One hour", "Two hours"], correct: "c" }, q5: { text: "How much did the shopping cost?", options: ["Twenty-five pounds", "Thirty pounds", "Thirty-five pounds", "Forty pounds"], correct: "c" } } },
             6: { title: "Family and Relationships", shortTitle: "Family", icon: "👨‍👩‍👧‍👦", audioUrl: "audios/audio6.mp3", questions: { q1: { text: "How many people are in Maria's family?", options: ["Four people", "Five people", "Six people", "Seven people"], correct: "c" }, q2: { text: "What does Maria's father do for work?", options: ["He's a doctor", "He's an engineer", "He's a teacher", "He's a lawyer"], correct: "b" }, q3: { text: "How old is Maria's youngest brother?", options: ["12 years old", "14 years old", "16 years old", "18 years old"], correct: "b" }, q4: { text: "What does the family like to do together on weekends?", options: ["Go shopping", "Watch movies", "Have barbecues in the backyard", "Visit museums"], correct: "c" }, q5: { text: "How often does Maria call her grandmother?", options: ["Every day", "Every week", "Every month", "Every year"], correct: "b" } } },
-            7: { title: "Health and Body", shortTitle: "Health", icon: "🩺", audioUrl: "audios/audio7.mp3", questions: { q1: { text: "What problem does John have?", options: ["A headache", "A stomachache", "A sore throat", "A fever"], correct: "c" }, q2: { text: "How long has John been feeling sick?", options: ["One day", "Two days", "Three days", "One week"], correct: "c" }, q3: { text: "What does the doctor recommend?", options: ["Take antibiotics", "Rest and drink warm tea", "Go to the hospital", "Take pain medication"], correct: "b" }, q4: { text: "How often should John take the medicine?", options: ["Once a day", "Twice a day", "Three times a day", "Four times a day"], correct: "c" }, q5: { text: "When should John return to the doctor?", options: ["Tomorrow", "In three days", "In one week", "Two weeks"], correct: "c" } } }
+            7: { title: "Health and Body", shortTitle: "Health", icon: "🩺", audioUrl: "audios/audio7.mp3", questions: { q1: { text: "What problem does John have?", options: ["A headache", "A stomachache", "A sore throat", "A fever"], correct: "c" }, q2: { text: "How long has John been feeling sick?", options: ["One day", "Two days", "Three days", "One week"], correct: "c" }, q3: { text: "What does the doctor recommend?", options: ["Take antibiotics", "Rest and drink warm tea", "Go to the hospital", "Take pain medication"], correct: "b" }, q4: { text: "How often should John take the medicine?", options: ["Once a day", "Twice a day", "Three times a day", "Four times a day"], correct: "c" }, q5: { text: "When should John return to the doctor?", options: ["Tomorrow", "In three days", "In one week", "Two weeks"], correct: "c" } } },
+            8: { title: "Transportation and Travel", shortTitle: "Travel", icon: "✈️", audioUrl: "audios/audio8.mp3", questions: { q1: { text: "How does Lisa usually go to work?", options: ["By car", "By bus", "By subway", "By bicycle"], correct: "c" }, q2: { text: "How long does her journey to work take?", options: ["15 minutes", "30 minutes", "45 minutes", "One hour"], correct: "b" }, q3: { text: "Where is Lisa planning to travel next month?", options: ["London", "Paris", "New York", "Tokyo"], correct: "b" }, q4: { text: "How will she travel there?", options: ["By car", "By train", "By plane", "By ship"], correct: "c" }, q5: { text: "How long will she stay there?", options: ["Three days", "One week", "Ten days", "Two weeks"], correct: "c" } } },
+            9: { title: "Work and Career", shortTitle: "Career", icon: "💼", audioUrl: "audios/audio9.mp3", questions: { q1: { text: "What is Michael's current job?", options: ["Marketing manager", "Sales representative", "Software developer", "Graphic designer"], correct: "a" }, q2: { text: "How long has he been working at his company?", options: ["Six months", "One year", "Two years", "Three years"], correct: "d" }, q3: { text: "What time does he usually start work?", options: ["8:00 AM", "8:30 AM", "9:00 AM", "9:30 AM"], correct: "c" }, q4: { text: "What is Michael's biggest challenge at work?", options: ["Managing his team", "Meeting deadlines", "Learning new software", "Dealing with clients"], correct: "a" }, q5: { text: "What are his career goals?", options: ["Change companies", "Start his own business", "Get promoted to director", "Work from home"], correct: "c" } } },
+            10: { title: "Future Plans and Dreams", shortTitle: "Dreams", icon: "🌟", audioUrl: "audios/audio10.mp3", questions: { q1: { text: "What does Emma want to study at university?", options: ["Medicine", "Engineering", "Psychology", "Business"], correct: "c" }, q2: { text: "Which country does she dream of living in?", options: ["Australia", "Canada", "England", "France"], correct: "b" }, q3: { text: "How much money does she save weekly?", options: ["Thirty dollars", "Forty dollars", "Fifty dollars", "Sixty dollars"], correct: "c" }, q4: { text: "Where does she work part-time?", options: ["At a bookstore", "At a coffee shop", "At a restaurant", "At a library"], correct: "b" }, q5: { text: "What does she want to see in Iceland?", options: ["Volcanoes", "Glaciers", "The Northern Lights", "Hot springs"], correct: "c" } } },
+            11: { title: "Food and Cooking Adventures", shortTitle: "Cooking", icon: "🍕", audioUrl: "audios/audio11.mp3", questions: { q1: { text: "How long ago couldn't Carlos cook eggs?", options: ["One year ago", "Two years ago", "Three years ago", "Five years ago"], correct: "b" }, q2: { text: "What is his specialty cuisine?", options: ["Chinese food", "Mexican food", "Italian food", "Japanese food"], correct: "c" }, q3: { text: "How long did it take him to make fresh pasta?", options: ["One hour", "Two hours", "Three hours", "Four hours"], correct: "c" }, q4: { text: "What is he learning to make this month?", options: ["Pizza", "Sushi", "Tacos", "Bread"], correct: "b" }, q5: { text: "How many people will he cook for next Saturday?", options: ["Six people", "Seven people", "Eight people", "Ten people"], correct: "c" } } }
         };
         
         let currentLesson = 1, attempts = 0, lessonStartTime = Date.now(), studentProgress = new StudentProgress();
         
-        // ===== NAVEGAÇÃO DE LIÇÕES PREMIUM - 7 LIÇÕES =====
+        // ===== NAVEGAÇÃO DE LIÇÕES PREMIUM - 11 LIÇÕES =====
         function createLessonCards() {
             const cardsContainer = document.getElementById('lessonCards');
             cardsContainer.innerHTML = '';
             
-            for (let i = 1; i <= 7; i++) {
+            for (let i = 1; i <= 11; i++) {
                 const lesson = lessons[i];
                 const isCompleted = studentProgress.data.listening.lessonsCompleted.includes(`lesson_${i}`);
                 const bestScore = studentProgress.data.listening.bestScores[`lesson_${i}`] || 0;
@@ -730,10 +768,10 @@
         }
         
         function nextLesson() {
-            if (currentLesson < 7) {
+            if (currentLesson < 11) {
                 switchToLesson(currentLesson + 1);
             } else {
-                alert('🎉 Parabéns! Você completou todas as 7 lições de Listening! 🏆🎧');
+                alert('🎉 Parabéns! Você completou todas as 11 lições de Listening! 🏆🎧');
             }
         }
         
