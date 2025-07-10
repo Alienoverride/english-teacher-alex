@@ -9,11 +9,10 @@
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="layout.css">
     <link rel="stylesheet" href="theme-patriot.css">
-
-        <!-- 🔥 ADICIONE ESTAS 3 LINHAS AQUI: -->
+    
+    <!-- 🔥 FIREBASE SCRIPTS - PRODUÇÃO! -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="firebase-integration.js"></script>
     
     <!-- MELHORIAS VISUAIS ESPECÍFICAS -->
     <style>
@@ -469,6 +468,26 @@
             z-index: 2 !important;
         }
 
+        /* 🔥 Firebase Badge para usuários especiais */
+        .firebase-badge {
+            position: absolute !important;
+            top: 15px !important;
+            left: 15px !important;
+            background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+            color: white !important;
+            padding: 4px 8px !important;
+            border-radius: 6px !important;
+            font-size: 0.7em !important;
+            font-weight: 700 !important;
+            z-index: 3 !important;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
         /* Hover effects para activity cards */
         .activity-card:hover {
             transform: translateY(-8px) !important;
@@ -720,6 +739,96 @@
     </div>
     
     <script>
+        // ===== 🔥 FIREBASE INTEGRATION - PRODUÇÃO SELETIVA =====
+        
+        // 🎯 USUÁRIOS COM FIREBASE ATIVO (PILOT PROGRAM)
+        const FIREBASE_USERS = ['testy', 'nicolete'];
+        
+        // Configuração Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyA24XdemfJ-rqVCJRUkRJLyW0xkGQ2vFOw",
+            authDomain: "teacher-alex-test.firebaseapp.com",
+            databaseURL: "https://teacher-alex-test-default-rtdb.firebaseio.com",
+            projectId: "teacher-alex-test",
+            storageBucket: "teacher-alex-test.firebasestorage.app",
+            messagingSenderId: "295683510906",
+            appId: "1:295683510906:web:14ae9edbdb69f02645a1c3"
+        };
+
+        // Inicializar Firebase
+        let app, database;
+        try {
+            if (typeof firebase !== 'undefined') {
+                if (!firebase.apps.length) {
+                    app = firebase.initializeApp(firebaseConfig);
+                } else {
+                    app = firebase.app();
+                }
+                database = firebase.database();
+                console.log('🔥 Firebase carregado no index');
+            }
+        } catch (error) {
+            console.log('📡 Firebase offline:', error.message);
+        }
+
+        // Verificar se usuário tem Firebase ativo
+        function isFirebaseUser(username) {
+            return FIREBASE_USERS.includes(username.toLowerCase());
+        }
+
+        // Carregar dados do Firebase (só para usuários Firebase)
+        async function loadFromFirebase(username) {
+            try {
+                if (typeof database !== 'undefined' && database && isFirebaseUser(username)) {
+                    const userRef = database.ref(`users/${username}/progress`);
+                    const snapshot = await userRef.once('value');
+                    if (snapshot.exists()) {
+                        const data = snapshot.val();
+                        console.log(`📥 Dados carregados do Firebase para ${username}`);
+                        return data;
+                    }
+                }
+            } catch (error) {
+                console.log('📡 Erro ao carregar Firebase:', error.message);
+            }
+            return null;
+        }
+
+        // Função para mostrar notificações
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            const bgColor = type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6';
+            
+            notification.style.cssText = `
+                position: fixed; top: 80px; right: 20px; z-index: 10001;
+                background: ${bgColor}; color: white; padding: 15px 25px;
+                border-radius: 10px; font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                animation: slideInRight 0.5s ease-out;
+            `;
+            
+            // Adicionar CSS da animação se não existir
+            if (!document.getElementById('notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideInRight {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    document.body.removeChild(notification);
+                }
+            }, 3000);
+        }
+
         // ===== SISTEMA DE PROTEÇÃO DE LOGIN =====
         function checkLogin() {
             if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
@@ -744,67 +853,63 @@
             throw new Error('Not logged in');
         }
 
-        // ===== SISTEMA DE PROGRESSO =====
+        // ===== SISTEMA DE PROGRESSO HÍBRIDO =====
         class ProgressTracker {
             constructor() {
                 this.studentId = sessionStorage.getItem('studentUsername') || 'student';
                 this.progressKey = `progress_${this.studentId}`;
-                this.loadProgress();
+                this.data = null;
             }
 
-            loadProgress() {
+            // 🔥 CARREGAMENTO HÍBRIDO: Firebase primeiro, depois localStorage
+            async loadProgress() {
+                console.log(`📊 Carregando progresso para ${this.studentId}...`);
+                
+                // 1. Tentar carregar do Firebase (se for usuário Firebase)
+                if (isFirebaseUser(this.studentId)) {
+                    const firebaseData = await loadFromFirebase(this.studentId);
+                    if (firebaseData) {
+                        this.data = firebaseData;
+                        console.log(`☁️ Progresso carregado do Firebase para ${this.studentId}`);
+                        showNotification('☁️ Progresso sincronizado da nuvem!', 'success');
+                        
+                        // Salvar também no localStorage como backup
+                        localStorage.setItem(this.progressKey, JSON.stringify(this.data));
+                        return;
+                    }
+                }
+                
+                // 2. Carregar do localStorage (fallback ou usuários não-Firebase)
                 const saved = localStorage.getItem(this.progressKey);
                 if (saved) {
                     this.data = JSON.parse(saved);
+                    console.log(`💾 Progresso carregado do localStorage para ${this.studentId}`);
                 } else {
+                    // 3. Criar dados padrão
                     this.data = {
-                        listening: {
-                            lessonsCompleted: [],
-                            bestScores: {},
-                            totalAttempts: 0,
-                            badges: []
-                        },
-                        reading: {
-                            chaptersCompleted: [],
-                            bestScores: {},
-                            totalAttempts: 0,
-                            badges: []
-                        },
-                        roommate: {
-                            chaptersCompleted: [],
-                            bestScores: {},
-                            totalAttempts: 0,
-                            badges: []
-                        },
-                        neighbor: {
-                            chaptersCompleted: [],
-                            bestScores: {},
-                            totalAttempts: 0,
-                            badges: []
-                        },
-                        globalBadges: [],
-                        lastActivity: null,
-                        joinDate: new Date().toISOString(),
-                        totalStudyTime: 0
+                        listening: { lessonsCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        reading: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        roommate: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        neighbor: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        globalBadges: [], lastActivity: null, joinDate: new Date().toISOString(), totalStudyTime: 0
                     };
+                    console.log(`🆕 Dados padrão criados para ${this.studentId}`);
                 }
-                // Adicionar categorias se não existirem (compatibilidade)
+                
+                // Garantir compatibilidade
                 if (!this.data.roommate) {
-                    this.data.roommate = {
-                        chaptersCompleted: [],
-                        bestScores: {},
-                        totalAttempts: 0,
-                        badges: []
-                    };
+                    this.data.roommate = { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] };
                 }
                 if (!this.data.neighbor) {
-                    this.data.neighbor = {
-                        chaptersCompleted: [],
-                        bestScores: {},
-                        totalAttempts: 0,
-                        badges: []
-                    };
+                    this.data.neighbor = { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] };
                 }
+            }
+
+            getProgressBadge(category, totalChapters) {
+                const completed = this.data[category] ? this.data[category].chaptersCompleted.length : 0;
+                if (completed === 0) return '✅ Disponível';
+                if (completed === totalChapters) return '🏆 Completo';
+                return `${completed}/${totalChapters} ✓`;
             }
 
             getStats() {
@@ -829,10 +934,14 @@
             }
         }
 
-        // ===== INICIALIZAÇÃO =====
-        document.addEventListener('DOMContentLoaded', function() {
+        // ===== INICIALIZAÇÃO ASYNC =====
+        async function initializePage() {
             const studentName = getStudentName();
             const progressTracker = new ProgressTracker();
+            
+            // 🔥 CARREGAR PROGRESSO (Firebase primeiro)
+            await progressTracker.loadProgress();
+            
             const stats = progressTracker.getStats();
             
             // Atualizar informações do usuário
@@ -862,6 +971,14 @@
                 listeningCard.appendChild(badge);
             }
             
+            // 🔥 Badge Firebase para usuários especiais
+            if (isFirebaseUser(studentName)) {
+                const firebaseBadge = document.createElement('div');
+                firebaseBadge.className = 'firebase-badge';
+                firebaseBadge.textContent = '☁️';
+                listeningCard.appendChild(firebaseBadge);
+            }
+            
             // Badge para Graded Readers Hub (soma A1 + A2)
             const readingCompleted = progressTracker.data.reading.chaptersCompleted.length;
             const roommateCompleted = progressTracker.data.roommate ? progressTracker.data.roommate.chaptersCompleted.length : 0;
@@ -876,7 +993,7 @@
                 gradedReadersCard.appendChild(badge);
             }
             
-            // ✅ Badge para Pure Reading Hub (neighbor = Perfect Neighbor)
+            // Badge para Pure Reading Hub (neighbor = Perfect Neighbor)
             const neighborCompleted = progressTracker.data.neighbor ? progressTracker.data.neighbor.chaptersCompleted.length : 0;
             if (neighborCompleted > 0) {
                 const badge = document.createElement('div');
@@ -890,7 +1007,7 @@
             
             // Animação de contadores
             animateCounters();
-        });
+        }
 
         function animateCounters() {
             const counters = document.querySelectorAll('.stat-number');
@@ -1022,6 +1139,11 @@
                 window.currentSecretOverlay = null;
             }
         }
+
+        // ===== INICIALIZAÇÃO DA PÁGINA =====
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePage();
+        });
     </script>
 </body>
 </html>
