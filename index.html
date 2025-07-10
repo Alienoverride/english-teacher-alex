@@ -365,7 +365,7 @@
             box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4) !important;
         }
 
-        /* Grid ajustado para 5 cards */
+        /* Grid ajustado para 6 cards */
         .dashboard-grid {
             display: grid !important;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
@@ -610,7 +610,7 @@
             <a href="pure-reading-hub.html" class="activity-card">
                 <div class="activity-icon">📺</div>
                 <div class="activity-title">Pure Reading Hub</div>
-                <div class="activity-description">Hub organizado focado 100% na leitura e interpretação textual</div>
+                <div class="activity-description">Hub focado 100% na leitura e interpretação textual</div>
                 <ul class="activity-features">
                     <li>A2 Low: Perfect Neighbor + mais histórias</li>
                     <li>A2 Mid: Histórias mais complexas</li>
@@ -653,7 +653,7 @@
                 <div class="instruction-item">
                     <div class="instruction-number">1</div>
                     <div class="instruction-text">
-                        <strong>Escolha uma Atividade:</strong> Selecione entre Listening, Reading com áudio ou Pure Reading baseado no que você quer praticar hoje.
+                        <strong>Escolha uma Atividade:</strong> Selecione entre Listening, Graded Readers com áudio ou Pure Reading baseado no que você quer praticar hoje.
                     </div>
                 </div>
                 <div class="instruction-item">
@@ -844,16 +844,20 @@
             // Adicionar badges de progresso
             const listeningCard = document.querySelector('.activity-card[href="listening.html"]');
             const gradedReadersCard = document.querySelector('.activity-card[href="graded-readers-hub.html"]');
-            const neighborCard = document.querySelector('.activity-card[href="neighbor.html"]');
+            const pureReadingCard = document.querySelector('.activity-card[href="pure-reading-hub.html"]');
             
+            // Badge para Listening (11 lições)
             if (stats.lessonsCompleted > 0) {
                 const badge = document.createElement('div');
                 badge.className = 'progress-badge';
                 badge.textContent = `${stats.lessonsCompleted}/11 ✓`;
+                if (stats.lessonsCompleted === 11) {
+                    badge.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                }
                 listeningCard.appendChild(badge);
             }
             
-            // Badge para o hub (soma A1 + A2)
+            // Badge para Graded Readers Hub (soma A1 + A2)
             const readingCompleted = progressTracker.data.reading.chaptersCompleted.length;
             const roommateCompleted = progressTracker.data.roommate ? progressTracker.data.roommate.chaptersCompleted.length : 0;
             const totalGradedReaders = readingCompleted + roommateCompleted;
@@ -861,15 +865,22 @@
                 const badge = document.createElement('div');
                 badge.className = 'progress-badge';
                 badge.textContent = `${totalGradedReaders}/7 ✓`;
+                if (totalGradedReaders === 7) {
+                    badge.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                }
                 gradedReadersCard.appendChild(badge);
             }
             
+            // ✅ Badge para Pure Reading Hub (neighbor = Perfect Neighbor)
             const neighborCompleted = progressTracker.data.neighbor ? progressTracker.data.neighbor.chaptersCompleted.length : 0;
             if (neighborCompleted > 0) {
                 const badge = document.createElement('div');
                 badge.className = 'progress-badge';
                 badge.textContent = `${neighborCompleted}/5 ✓`;
-                neighborCard.appendChild(badge);
+                if (neighborCompleted === 5) {
+                    badge.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                }
+                pureReadingCard.appendChild(badge);
             }
             
             // Animação de contadores
