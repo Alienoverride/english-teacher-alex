@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-    <!-- Incluir DEPOIS do Firebase original e ANTES do </head> -->
-<script src="firebase-integration.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +9,11 @@
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="layout.css">
     <link rel="stylesheet" href="theme-patriot.css">
+
+        <!-- 🔥 ADICIONE ESTAS 3 LINHAS AQUI: -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="firebase-integration.js"></script>
     
     <!-- MELHORIAS VISUAIS ESPECÍFICAS -->
     <style>
