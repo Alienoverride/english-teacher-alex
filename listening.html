@@ -9,11 +9,10 @@
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="layout.css">
     <link rel="stylesheet" href="theme-patriot.css">
-
-            <!-- 🔥 ADICIONE ESTAS 3 LINHAS AQUI: -->
+    
+    <!-- 🔥 FIREBASE SCRIPTS - PRODUÇÃO! -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="firebase-integration.js"></script>
     
     <!-- ESTILOS ESPECÍFICOS PARA LISTENING PREMIUM -->
     <style>
@@ -205,6 +204,26 @@
             z-index: 3;
         }
 
+        /* Firebase Badge (quando ativo) */
+        .firebase-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.7em;
+            font-weight: 700;
+            z-index: 3;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .lesson-cards {
@@ -354,6 +373,115 @@
     </div>
     
     <script>
+        // ===== 🔥 FIREBASE INTEGRATION - PRODUÇÃO SELETIVA =====
+        
+        // 🎯 USUÁRIOS COM FIREBASE ATIVO (PILOT PROGRAM)
+        const FIREBASE_USERS = ['testy', 'nicolete'];
+        
+        // Configuração Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyA24XdemfJ-rqVCJRUkRJLyW0xkGQ2vFOw",
+            authDomain: "teacher-alex-test.firebaseapp.com",
+            databaseURL: "https://teacher-alex-test-default-rtdb.firebaseio.com",
+            projectId: "teacher-alex-test",
+            storageBucket: "teacher-alex-test.firebasestorage.app",
+            messagingSenderId: "295683510906",
+            appId: "1:295683510906:web:14ae9edbdb69f02645a1c3"
+        };
+
+        // Inicializar Firebase
+        let app, database;
+        try {
+            if (typeof firebase !== 'undefined') {
+                if (!firebase.apps.length) {
+                    app = firebase.initializeApp(firebaseConfig);
+                } else {
+                    app = firebase.app();
+                }
+                database = firebase.database();
+                console.log('🔥 Firebase carregado (modo seletivo)');
+            }
+        } catch (error) {
+            console.log('📡 Firebase offline:', error.message);
+        }
+
+        // Verificar se usuário tem Firebase ativo
+        function isFirebaseUser(username) {
+            return FIREBASE_USERS.includes(username.toLowerCase());
+        }
+
+        // Função para sync Firebase (só para usuários selecionados)
+        async function syncToFirebase(username, progressData) {
+            try {
+                if (typeof database !== 'undefined' && database && isFirebaseUser(username)) {
+                    const userRef = database.ref(`users/${username}/progress`);
+                    await userRef.set({
+                        ...progressData,
+                        lastSync: new Date().toISOString(),
+                        syncDevice: 'web-prod'
+                    });
+                    console.log(`🔥 Backup Firebase realizado para ${username}!`);
+                    showNotification('☁️ Progresso salvo na nuvem!', 'success');
+                    return true;
+                } else if (!isFirebaseUser(username)) {
+                    console.log(`📱 ${username}: localStorage apenas (normal)`);
+                    return false;
+                }
+            } catch (error) {
+                console.log('❌ Erro Firebase:', error.message);
+                return false;
+            }
+            return false;
+        }
+
+        // Função híbrida universal
+        function saveProgressWithFirebase(progressData, username) {
+            // 1. SEMPRE salva no localStorage (PRIORITÁRIO)
+            const progressKey = `progress_${username}`;
+            localStorage.setItem(progressKey, JSON.stringify(progressData));
+            console.log(`💾 Dados salvos no localStorage para ${username}`);
+            
+            // 2. Se for usuário Firebase, salva na nuvem também
+            if (isFirebaseUser(username)) {
+                syncToFirebase(username, progressData);
+            }
+        }
+
+        // Função para mostrar notificações
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            const bgColor = type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6';
+            
+            notification.style.cssText = `
+                position: fixed; top: 80px; right: 20px; z-index: 10001;
+                background: ${bgColor}; color: white; padding: 15px 25px;
+                border-radius: 10px; font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                animation: slideInRight 0.5s ease-out;
+            `;
+            
+            // Adicionar CSS da animação se não existir
+            if (!document.getElementById('notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideInRight {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    document.body.removeChild(notification);
+                }
+            }, 3000);
+        }
+
         // ===== SISTEMA DE PROTEÇÃO DE LOGIN =====
         function checkLogin() {
             if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
@@ -375,7 +503,7 @@
 
         if (!checkLogin()) throw new Error('Not logged in');
 
-        // ===== SISTEMA DE PROGRESSO =====
+        // ===== SISTEMA DE PROGRESSO HÍBRIDO =====
         class StudentProgress {
             constructor() {
                 this.studentId = sessionStorage.getItem('studentUsername') || 'student';
@@ -396,7 +524,10 @@
                 }
             }
 
-            saveProgress() { localStorage.setItem(this.progressKey, JSON.stringify(this.data)); }
+            // 🔥 FUNÇÃO MODIFICADA - USA SISTEMA HÍBRIDO
+            saveProgress() { 
+                saveProgressWithFirebase(this.data, this.studentId); 
+            }
 
             completeListeningLesson(lessonNumber, score, timeSpent) {
                 const lesson = `lesson_${lessonNumber}`;
@@ -410,8 +541,8 @@
                 this.data.totalStudyTime += timeSpent;
                 this.data.lastActivity = new Date().toISOString();
                 this.checkListeningBadges(lessonNumber, score);
-                this.saveProgress();
-                this.updateLessonCards(); // Atualizar cards
+                this.saveProgress(); // Agora usa sistema híbrido
+                this.updateLessonCards();
             }
 
             checkListeningBadges(lessonNumber, score) {
@@ -452,12 +583,11 @@
             }
 
             updateLessonCards() {
-                // Atualizar visual dos cards após progresso
                 createLessonCards();
             }
         }
 
-        // ===== SISTEMA DE LIÇÕES ATUALIZADO - 7 LIÇÕES! =====
+        // ===== SISTEMA DE LIÇÕES ATUALIZADO - 11 LIÇÕES! =====
         const lessons = {
             1: { title: "Personal Introduction", shortTitle: "Introduction", icon: "👋", audioUrl: "audios/audio1.mp3", questions: { q1: { text: "How old is Sarah?", options: ["23 years old", "25 years old", "27 years old", "30 years old"], correct: "b" }, q2: { text: "Where does Sarah live?", options: ["In London city center", "In a small town near London", "In Manchester", "In Birmingham"], correct: "b" }, q3: { text: "What is Sarah's job?", options: ["She's a nurse", "She's a doctor", "She's a teacher", "She's a student"], correct: "c" }, q4: { text: "How many siblings does Sarah have?", options: ["No siblings", "One brother and one sister", "Two brothers", "Three sisters"], correct: "b" }, q5: { text: "What is Sarah's favorite food?", options: ["Hamburger", "Pasta", "Pizza", "Sushi"], correct: "c" } } },
             2: { title: "Daily Routine", shortTitle: "Daily Routine", icon: "⏰", audioUrl: "audios/audio2.mp3", questions: { q1: { text: "What time does she wake up?", options: ["6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM"], correct: "b" }, q2: { text: "What does she have for breakfast?", options: ["Cereal and milk", "Toast and coffee", "Eggs and bacon", "Fruit and yogurt"], correct: "b" }, q3: { text: "What time does she start working?", options: ["8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM"], correct: "b" }, q4: { text: "What time is lunch?", options: ["12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM"], correct: "b" }, q5: { text: "What does she do after work?", options: ["Go shopping", "Visit family", "Go to the gym or meet friends", "Study English"], correct: "c" } } },
@@ -494,6 +624,7 @@
                     <div class="lesson-number">${i}</div>
                     <div class="lesson-name">${lesson.shortTitle}</div>
                     ${isCompleted ? `<div class="completion-badge">${bestScore}</div>` : ''}
+                    ${isFirebaseUser(studentProgress.studentId) ? '<div class="firebase-badge">☁️</div>' : ''}
                 `;
                 
                 cardsContainer.appendChild(card);
@@ -501,16 +632,15 @@
         }
         
         function switchToLesson(lessonNumber) {
-            if (lessonNumber === currentLesson) return; // Já está na lição
+            if (lessonNumber === currentLesson) return;
             
             currentLesson = lessonNumber;
             loadLesson(currentLesson);
-            createLessonCards(); // Atualizar cards
+            createLessonCards();
             
-            // Animação suave
             const container = document.getElementById('lessonContainer');
             container.style.animation = 'none';
-            container.offsetHeight; // Trigger reflow
+            container.offsetHeight;
             container.style.animation = 'slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
         }
         
@@ -570,12 +700,10 @@
         
         // ===== ANIMAÇÕES DE CELEBRAÇÃO =====
         function createCelebration(score) {
-            // Overlay
             const overlay = document.createElement('div');
             overlay.className = 'celebration-overlay';
             document.body.appendChild(overlay);
             
-            // Texto de celebração
             const celebrationText = document.createElement('div');
             celebrationText.className = 'celebration-text';
             
@@ -589,7 +717,6 @@
             
             document.body.appendChild(celebrationText);
             
-            // Remover após animação
             setTimeout(() => {
                 if (document.body.contains(overlay)) document.body.removeChild(overlay);
                 if (document.body.contains(celebrationText)) document.body.removeChild(celebrationText);
@@ -635,7 +762,7 @@
             }
         }
         
-        // ===== VERIFICAR RESPOSTAS - NOVO SISTEMA =====
+        // ===== VERIFICAR RESPOSTAS =====
         function checkAnswers() {
             const lesson = lessons[currentLesson];
             const questions = Object.keys(lesson.questions);
@@ -643,27 +770,22 @@
             let detailedResults = [];
             attempts++;
             
-            // Primeiro, marcar visualmente as respostas
             questions.forEach((key, index) => {
                 const selected = document.querySelector(`input[name="${key}"]:checked`);
                 const correct = lesson.questions[key].correct;
                 const allOptions = document.querySelectorAll(`input[name="${key}"]`);
                 
-                // Limpar classes anteriores
                 allOptions.forEach(opt => {
                     opt.closest('.option').classList.remove('correct-answer', 'wrong-answer');
                 });
                 
-                // Marcar resposta correta
                 const correctOption = document.querySelector(`input[name="${key}"][value="${correct}"]`);
                 correctOption.closest('.option').classList.add('correct-answer');
                 
-                // Se respondeu errado, marcar em vermelho
                 if (selected && selected.value !== correct) {
                     selected.closest('.option').classList.add('wrong-answer');
                 }
                 
-                // Calcular pontuação e preparar feedback
                 const correctOptionText = lesson.questions[key].options[correct.charCodeAt(0) - 97];
                 const selectedOptionText = selected ? lesson.questions[key].options[selected.value.charCodeAt(0) - 97] : "Não respondida";
                 
@@ -701,25 +823,21 @@
                 detailedResults.push(resultHTML);
             });
             
-            // Salvar progresso
+            // 🔥 SALVAR PROGRESSO (sistema híbrido)
             studentProgress.completeListeningLesson(currentLesson, score, Date.now() - lessonStartTime);
             
-            // Atualizar barra de progresso
             document.getElementById('progressBar').style.width = (score / 5) * 100 + '%';
             document.getElementById('scoreValue').textContent = score;
             document.getElementById('scoreSection').style.display = 'block';
             
-            // Badges
             if (attempts === 1) document.getElementById('badge1').classList.add('earned');
             if (score >= 4) document.getElementById('badge2').classList.add('earned');
             if (score === 5) document.getElementById('badge3').classList.add('earned');
             
-            // CELEBRAÇÃO
             if (score === 5 || score === 4) {
                 setTimeout(() => createCelebration(score), 500);
             }
             
-            // FEEDBACK PREMIUM
             const feedback = document.getElementById('feedback');
             
             let feedbackHeader = '';
@@ -786,7 +904,14 @@
         
         // ===== INICIALIZAÇÃO =====
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('userName').textContent = getStudentName();
+            const studentName = getStudentName();
+            document.getElementById('userName').textContent = studentName;
+            
+            // Mostrar status Firebase para usuário
+            if (isFirebaseUser(studentName)) {
+                showNotification('☁️ Backup na nuvem ativo!', 'success');
+            }
+            
             createLessonCards();
             loadLesson(currentLesson);
         });
