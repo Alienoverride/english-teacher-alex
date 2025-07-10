@@ -165,7 +165,7 @@ async function showRecoveryOption(username) {
     }
 }
 
-// Função para recuperar do Firebase
+// ✅ FUNÇÃO CORRIGIDA - Não perde login mais!
 async function recoverFromCloud(username) {
     try {
         const recoveryData = window.pendingRecoveryData;
@@ -181,8 +181,16 @@ async function recoverFromCloud(username) {
             // Mostrar sucesso
             showNotification('✅ Progresso recuperado com sucesso!', 'success');
             
-            // Recarregar página para aplicar mudanças
+            // ✅ CORRIGIDO: Atualizar página preservando login
             setTimeout(() => {
+                // Salvar dados de sessão
+                const currentUsername = sessionStorage.getItem('studentUsername');
+                const currentLogin = sessionStorage.getItem('studentLoggedIn');
+                
+                // Recarregar e restaurar login
+                sessionStorage.setItem('studentUsername', currentUsername);
+                sessionStorage.setItem('studentLoggedIn', currentLogin);
+                
                 window.location.reload();
             }, 1500);
         }
@@ -277,7 +285,3 @@ async function testFirebaseConnection() {
 window.testFirebaseConnection = testFirebaseConnection;
 
 console.log('🔥 Firebase Integration carregado! Use testFirebaseConnection() para testar.');
-
-// ========== ATENÇÃO TEACHER ALEX ==========
-// Este é o arquivo firebase-integration.js que você precisa criar!
-// NÃO é o exact_modification.js que você viu!
