@@ -96,14 +96,18 @@
             // Simular um pequeno delay para melhor UX
             setTimeout(() => {
                 // Verificar credenciais
-                if (students[username] && students[username] === password) {
+                // Converter username para minúsculas (case insensitive)
+                const usernameKey = username.toLowerCase();
+                
+                // Verificar credenciais (username case insensitive, password case sensitive)
+                if (students[usernameKey] && students[usernameKey] === password) {
                     // Login bem-sucedido
                     successDiv.textContent = '✅ Bem-vindo! Redirecionando para suas aulas...';
                     successDiv.style.display = 'block';
                     
-                    // Salvar login no navegador
-                    sessionStorage.setItem('studentLoggedIn', 'true');
-                    sessionStorage.setItem('studentUsername', username);
+                // Salvar login no navegador (sempre em minúsculas para consistência)
+                sessionStorage.setItem('studentLoggedIn', 'true');
+                sessionStorage.setItem('studentUsername', usernameKey);
                     
                     // Redirecionar após 1.5 segundos
                     setTimeout(() => {
