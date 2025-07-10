@@ -9,6 +9,240 @@
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="layout.css">
     <link rel="stylesheet" href="theme-patriot.css">
+    
+    <!-- ESTILOS ESPECÍFICOS PARA LISTENING PREMIUM -->
+    <style>
+        /* ===== LISTENING CARDS PREMIUM ===== */
+        
+        /* Lesson Navigation - Premium Layout */
+        .lesson-navigation {
+            background: var(--white-95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-medium);
+            border: 3px solid rgba(88, 80, 236, 0.15);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .lesson-navigation:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .lesson-navigation::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #5850ec, #3730a3, #6366f1, #8b5cf6);
+        }
+
+        /* Lesson Cards Grid - Responsivo */
+        .lesson-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Lesson Card - Design Premium */
+        .lesson-card {
+            background: var(--white-90);
+            border: 3px solid rgba(88, 80, 236, 0.2);
+            border-radius: var(--border-radius);
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 200px;
+            justify-content: space-between;
+        }
+
+        .lesson-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(88, 80, 236, 0.1), transparent);
+            transition: left 0.6s;
+            z-index: 1;
+        }
+
+        .lesson-card:hover::before {
+            left: 100%;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-heavy);
+            border-color: #5850ec;
+            background: white;
+        }
+
+        /* Lesson Card Active State */
+        .lesson-card.active {
+            background: linear-gradient(135deg, #5850ec, #3730a3);
+            color: white;
+            border-color: #5850ec;
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(88, 80, 236, 0.4);
+        }
+
+        .lesson-card.active .lesson-number {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .lesson-card.active .lesson-name {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Lesson Card Completed State */
+        .lesson-card.completed {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border-color: #10b981;
+        }
+
+        .lesson-card.completed .lesson-number {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .lesson-card.completed .lesson-name {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Lesson Number - Ícone Premium */
+        .lesson-card .lesson-number {
+            background: linear-gradient(135deg, #5850ec, #3730a3);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.4em;
+            margin: 0 auto 15px auto;
+            box-shadow: 0 8px 20px rgba(88, 80, 236, 0.3);
+            position: relative;
+            z-index: 2;
+            transition: var(--transition-fast);
+        }
+
+        .lesson-card:hover .lesson-number {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Lesson Name - Typography */
+        .lesson-card .lesson-name {
+            font-size: 1em;
+            font-weight: 700;
+            color: #3730a3;
+            line-height: 1.3;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Lesson Topic Icons */
+        .lesson-card .lesson-icon {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            display: block;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Completion Badge - Premium */
+        .lesson-card .completion-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 32px;
+            height: 32px;
+            background: var(--success-green);
+            border-radius: 50%;
+            color: white;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            border: 3px solid white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+            z-index: 3;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .lesson-cards {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .lesson-card {
+                padding: 20px 15px;
+                min-height: 160px;
+            }
+            
+            .lesson-card .lesson-number {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2em;
+            }
+            
+            .lesson-card .lesson-icon {
+                font-size: 1.8em;
+            }
+            
+            .lesson-card .lesson-name {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .lesson-cards {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .lesson-card {
+                min-height: 140px;
+            }
+        }
+
+        /* Hub Title - Listening Específico */
+        .listening-hub-title {
+            font-size: 2.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #5850ec, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .listening-hub-subtitle {
+            font-size: 1.2em;
+            color: #5b21b6;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body class="listening-page">
     <!-- User Info -->
@@ -22,12 +256,13 @@
     <div class="container listening-page">
         <div class="header">
             <a href="index.html" style="text-decoration: none;"><div class="logo">Teacher Alex English Academy</div></a>
-            <div class="tagline">🎧 Domine o Inglês Através do Listening</div>
+            <div class="listening-hub-title">🎧 Listening Practice Hub</div>
+            <div class="listening-hub-subtitle">Melhore sua compreensão auditiva com diálogos autênticos</div>
         </div>
         
-        <!-- NOVA NAVEGAÇÃO DE LIÇÕES -->
+        <!-- NAVEGAÇÃO DE LIÇÕES PREMIUM -->
         <div class="lesson-navigation">
-            <div class="nav-title">📚 Escolha sua Lição</div>
+            <div class="nav-title">🎵 Escolha sua Lição de Listening</div>
             <div class="lesson-cards" id="lessonCards">
                 <!-- Cards serão gerados dinamicamente -->
             </div>
@@ -150,13 +385,21 @@
                     badges.push('perfect_score');
                     this.showBadgeNotification('⭐ Pontuação Perfeita!', 'Você acertou todas as perguntas!');
                 }
+                if (this.data.listening.lessonsCompleted.length >= 5 && !badges.includes('listening_master')) {
+                    badges.push('listening_master');
+                    this.showBadgeNotification('🏆 Mestre do Listening!', 'Você completou 5 lições!');
+                }
+                if (this.data.listening.lessonsCompleted.length >= 7 && !badges.includes('listening_champion')) {
+                    badges.push('listening_champion');
+                    this.showBadgeNotification('🔥 Campeão do Listening!', 'Todas as 7 lições completadas!');
+                }
             }
 
             showBadgeNotification(title, message) {
                 const notification = document.createElement('div');
                 notification.style.cssText = `
                     position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-                    background: linear-gradient(135deg, #1e3a8a, #dc2626); color: white;
+                    background: linear-gradient(135deg, #5850ec, #8b5cf6); color: white;
                     padding: 25px 35px; border-radius: 20px; z-index: 10000; text-align: center;
                     box-shadow: 0 15px 40px rgba(0,0,0,0.3); backdrop-filter: blur(10px);
                 `;
@@ -171,23 +414,25 @@
             }
         }
 
-        // ===== SISTEMA DE LIÇÕES =====
+        // ===== SISTEMA DE LIÇÕES ATUALIZADO - 7 LIÇÕES! =====
         const lessons = {
-            1: { title: "Personal Introduction", shortTitle: "Introduction", audioUrl: "audios/audio1.mp3", questions: { q1: { text: "How old is Sarah?", options: ["23 years old", "25 years old", "27 years old", "30 years old"], correct: "b" }, q2: { text: "Where does Sarah live?", options: ["In London city center", "In a small town near London", "In Manchester", "In Birmingham"], correct: "b" }, q3: { text: "What is Sarah's job?", options: ["She's a nurse", "She's a doctor", "She's a teacher", "She's a student"], correct: "c" }, q4: { text: "How many siblings does Sarah have?", options: ["No siblings", "One brother and one sister", "Two brothers", "Three sisters"], correct: "b" }, q5: { text: "What is Sarah's favorite food?", options: ["Hamburger", "Pasta", "Pizza", "Sushi"], correct: "c" } } },
-            2: { title: "Daily Routine", shortTitle: "Daily Routine", audioUrl: "audios/audio2.mp3", questions: { q1: { text: "What time does she wake up?", options: ["6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM"], correct: "b" }, q2: { text: "What does she have for breakfast?", options: ["Cereal and milk", "Toast and coffee", "Eggs and bacon", "Fruit and yogurt"], correct: "b" }, q3: { text: "What time does she start working?", options: ["8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM"], correct: "b" }, q4: { text: "What time is lunch?", options: ["12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM"], correct: "b" }, q5: { text: "What does she do after work?", options: ["Go shopping", "Visit family", "Go to the gym or meet friends", "Study English"], correct: "c" } } },
-            3: { title: "Hobbies and Free Time", shortTitle: "Hobbies", audioUrl: "audios/audio3.mp3", questions: { q1: { text: "How long has she been learning guitar?", options: ["Two years", "Three years", "Four years", "Five years"], correct: "b" }, q2: { text: "When does she have guitar lessons?", options: ["Monday and Wednesday", "Tuesday and Thursday", "Wednesday and Friday", "Saturday and Sunday"], correct: "b" }, q3: { text: "What type of food does she like to cook?", options: ["Chinese food", "Mexican food", "Italian food", "Indian food"], correct: "c" }, q4: { text: "What is her dog's name?", options: ["Rex", "Max", "Sam", "Jack"], correct: "b" }, q5: { text: "How many books does she read per month?", options: ["One book", "Two books", "Three books", "Four books"], correct: "b" } } },
-            4: { title: "Weather and Seasons", shortTitle: "Weather", audioUrl: "audios/audio4.mp3", questions: { q1: { text: "Which country does she live in?", options: ["Scotland", "Ireland", "England", "Wales"], correct: "c" }, q2: { text: "What is her favorite season?", options: ["Spring", "Summer", "Autumn", "Winter"], correct: "a" }, q3: { text: "What is summer like where she lives?", options: ["Cold and rainy", "Warm and sunny", "Very hot", "Windy and cloudy"], correct: "b" }, q4: { text: "What colors do the autumn leaves turn?", options: ["Green and blue", "Red, yellow, and orange", "Purple and pink", "Brown and black"], correct: "b" }, q5: { text: "Why doesn't she like winter?", options: ["It's too expensive", "It's too busy", "The days are short and dark", "There's too much snow"], correct: "c" } } },
-            5: { title: "Shopping at the Store", shortTitle: "Shopping", audioUrl: "audios/audio5.mp3", questions: { q1: { text: "Who did she go shopping with?", options: ["Her father", "Her mother", "Her sister", "Her friend"], correct: "b" }, q2: { text: "Which fruits did they buy?", options: ["Grapes, pears, and peaches", "Apples, bananas, and oranges", "Strawberries and kiwi", "Pineapple and mango"], correct: "b" }, q3: { text: "What meat did they buy for dinner?", options: ["Beef", "Pork", "Chicken", "Fish"], correct: "c" }, q4: { text: "How long did the shopping take?", options: ["30 minutes", "45 minutes", "One hour", "Two hours"], correct: "c" }, q5: { text: "How much did the shopping cost?", options: ["Twenty-five pounds", "Thirty pounds", "Thirty-five pounds", "Forty pounds"], correct: "c" } } }
+            1: { title: "Personal Introduction", shortTitle: "Introduction", icon: "👋", audioUrl: "audios/audio1.mp3", questions: { q1: { text: "How old is Sarah?", options: ["23 years old", "25 years old", "27 years old", "30 years old"], correct: "b" }, q2: { text: "Where does Sarah live?", options: ["In London city center", "In a small town near London", "In Manchester", "In Birmingham"], correct: "b" }, q3: { text: "What is Sarah's job?", options: ["She's a nurse", "She's a doctor", "She's a teacher", "She's a student"], correct: "c" }, q4: { text: "How many siblings does Sarah have?", options: ["No siblings", "One brother and one sister", "Two brothers", "Three sisters"], correct: "b" }, q5: { text: "What is Sarah's favorite food?", options: ["Hamburger", "Pasta", "Pizza", "Sushi"], correct: "c" } } },
+            2: { title: "Daily Routine", shortTitle: "Daily Routine", icon: "⏰", audioUrl: "audios/audio2.mp3", questions: { q1: { text: "What time does she wake up?", options: ["6:30 AM", "7:00 AM", "7:30 AM", "8:00 AM"], correct: "b" }, q2: { text: "What does she have for breakfast?", options: ["Cereal and milk", "Toast and coffee", "Eggs and bacon", "Fruit and yogurt"], correct: "b" }, q3: { text: "What time does she start working?", options: ["8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM"], correct: "b" }, q4: { text: "What time is lunch?", options: ["12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM"], correct: "b" }, q5: { text: "What does she do after work?", options: ["Go shopping", "Visit family", "Go to the gym or meet friends", "Study English"], correct: "c" } } },
+            3: { title: "Hobbies and Free Time", shortTitle: "Hobbies", icon: "🎸", audioUrl: "audios/audio3.mp3", questions: { q1: { text: "How long has she been learning guitar?", options: ["Two years", "Three years", "Four years", "Five years"], correct: "b" }, q2: { text: "When does she have guitar lessons?", options: ["Monday and Wednesday", "Tuesday and Thursday", "Wednesday and Friday", "Saturday and Sunday"], correct: "b" }, q3: { text: "What type of food does she like to cook?", options: ["Chinese food", "Mexican food", "Italian food", "Indian food"], correct: "c" }, q4: { text: "What is her dog's name?", options: ["Rex", "Max", "Sam", "Jack"], correct: "b" }, q5: { text: "How many books does she read per month?", options: ["One book", "Two books", "Three books", "Four books"], correct: "b" } } },
+            4: { title: "Weather and Seasons", shortTitle: "Weather", icon: "🌤️", audioUrl: "audios/audio4.mp3", questions: { q1: { text: "Which country does she live in?", options: ["Scotland", "Ireland", "England", "Wales"], correct: "c" }, q2: { text: "What is her favorite season?", options: ["Spring", "Summer", "Autumn", "Winter"], correct: "a" }, q3: { text: "What is summer like where she lives?", options: ["Cold and rainy", "Warm and sunny", "Very hot", "Windy and cloudy"], correct: "b" }, q4: { text: "What colors do the autumn leaves turn?", options: ["Green and blue", "Red, yellow, and orange", "Purple and pink", "Brown and black"], correct: "b" }, q5: { text: "Why doesn't she like winter?", options: ["It's too expensive", "It's too busy", "The days are short and dark", "There's too much snow"], correct: "c" } } },
+            5: { title: "Shopping at the Store", shortTitle: "Shopping", icon: "🛒", audioUrl: "audios/audio5.mp3", questions: { q1: { text: "Who did she go shopping with?", options: ["Her father", "Her mother", "Her sister", "Her friend"], correct: "b" }, q2: { text: "Which fruits did they buy?", options: ["Grapes, pears, and peaches", "Apples, bananas, and oranges", "Strawberries and kiwi", "Pineapple and mango"], correct: "b" }, q3: { text: "What meat did they buy for dinner?", options: ["Beef", "Pork", "Chicken", "Fish"], correct: "c" }, q4: { text: "How long did the shopping take?", options: ["30 minutes", "45 minutes", "One hour", "Two hours"], correct: "c" }, q5: { text: "How much did the shopping cost?", options: ["Twenty-five pounds", "Thirty pounds", "Thirty-five pounds", "Forty pounds"], correct: "c" } } },
+            6: { title: "Family and Relationships", shortTitle: "Family", icon: "👨‍👩‍👧‍👦", audioUrl: "audios/audio6.mp3", questions: { q1: { text: "How many people are in Maria's family?", options: ["Four people", "Five people", "Six people", "Seven people"], correct: "c" }, q2: { text: "What does Maria's father do for work?", options: ["He's a doctor", "He's an engineer", "He's a teacher", "He's a lawyer"], correct: "b" }, q3: { text: "How old is Maria's youngest brother?", options: ["12 years old", "14 years old", "16 years old", "18 years old"], correct: "b" }, q4: { text: "What does the family like to do together on weekends?", options: ["Go shopping", "Watch movies", "Have barbecues in the backyard", "Visit museums"], correct: "c" }, q5: { text: "How often does Maria call her grandmother?", options: ["Every day", "Every week", "Every month", "Every year"], correct: "b" } } },
+            7: { title: "Health and Body", shortTitle: "Health", icon: "🩺", audioUrl: "audios/audio7.mp3", questions: { q1: { text: "What problem does John have?", options: ["A headache", "A stomachache", "A sore throat", "A fever"], correct: "c" }, q2: { text: "How long has John been feeling sick?", options: ["One day", "Two days", "Three days", "One week"], correct: "c" }, q3: { text: "What does the doctor recommend?", options: ["Take antibiotics", "Rest and drink warm tea", "Go to the hospital", "Take pain medication"], correct: "b" }, q4: { text: "How often should John take the medicine?", options: ["Once a day", "Twice a day", "Three times a day", "Four times a day"], correct: "c" }, q5: { text: "When should John return to the doctor?", options: ["Tomorrow", "In three days", "In one week", "Two weeks"], correct: "c" } } }
         };
         
         let currentLesson = 1, attempts = 0, lessonStartTime = Date.now(), studentProgress = new StudentProgress();
         
-        // ===== NAVEGAÇÃO DE LIÇÕES - NOVA =====
+        // ===== NAVEGAÇÃO DE LIÇÕES PREMIUM - 7 LIÇÕES =====
         function createLessonCards() {
             const cardsContainer = document.getElementById('lessonCards');
             cardsContainer.innerHTML = '';
             
-            for (let i = 1; i <= 5; i++) {
+            for (let i = 1; i <= 7; i++) {
                 const lesson = lessons[i];
                 const isCompleted = studentProgress.data.listening.lessonsCompleted.includes(`lesson_${i}`);
                 const bestScore = studentProgress.data.listening.bestScores[`lesson_${i}`] || 0;
@@ -198,6 +443,7 @@
                 card.onclick = () => switchToLesson(i);
                 
                 card.innerHTML = `
+                    <div class="lesson-icon">${lesson.icon}</div>
                     <div class="lesson-number">${i}</div>
                     <div class="lesson-name">${lesson.shortTitle}</div>
                     ${isCompleted ? `<div class="completion-badge">${bestScore}</div>` : ''}
@@ -304,7 +550,7 @@
         }
         
         function createConfetti() {
-            const colors = ['#1e3a8a', '#dc2626', '#fbbf24', '#10b981', '#8b5cf6'];
+            const colors = ['#5850ec', '#8b5cf6', '#fbbf24', '#10b981', '#3730a3'];
             for (let i = 0; i < 50; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
@@ -324,7 +570,7 @@
         }
         
         function createFireworks() {
-            const colors = ['#fbbf24', '#ef4444', '#10b981', '#3b82f6'];
+            const colors = ['#5850ec', '#8b5cf6', '#10b981', '#3730a3'];
             for (let i = 0; i < 15; i++) {
                 setTimeout(() => {
                     const firework = document.createElement('div');
@@ -484,10 +730,10 @@
         }
         
         function nextLesson() {
-            if (currentLesson < 5) {
+            if (currentLesson < 7) {
                 switchToLesson(currentLesson + 1);
             } else {
-                alert('🎉 Parabéns! Você completou todas as lições!');
+                alert('🎉 Parabéns! Você completou todas as 7 lições de Listening! 🏆🎧');
             }
         }
         
