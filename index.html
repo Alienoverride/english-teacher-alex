@@ -13,6 +13,7 @@
     <!-- 🔥 FIREBASE SCRIPTS - PRODUÇÃO! -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="firebase-integration.js"></script> <!-- ✅ ADICIONE ESTA LINHA! -->
     
     <!-- MELHORIAS VISUAIS ESPECÍFICAS -->
     <style>
@@ -898,15 +899,9 @@
         if (!checkLogin()) {
             throw new Error('Not logged in');
         }
-
-        // ===== SISTEMA DE PROGRESSO HÍBRIDO =====
-        class ProgressTracker {
-            constructor() {
-                this.studentId = sessionStorage.getItem('studentUsername') || 'student';
-                this.progressKey = `progress_${this.studentId}`;
-                this.data = null;
-            }
-
+// ✅ USE A CLASSE DO firebase-integration.js:
+const progressTracker = new ProgressTrackerFixed(); // Note: Fixed!
+       
             // ✅ CORREÇÃO 3: CARREGAMENTO ASYNC COM LOGS DETALHADOS
             async loadProgress() {
                 console.log(`📊 Carregando progresso para ${this.studentId}...`);
