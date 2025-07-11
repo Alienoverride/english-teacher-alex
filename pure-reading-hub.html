@@ -44,6 +44,24 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
+        .reading-level-section {
+            background: var(--white-95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-medium);
+            border: 3px solid rgba(107, 114, 128, 0.15);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .reading-level-section:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-heavy);
+        }
+
         .reading-level-section::before {
             content: '';
             position: absolute;
