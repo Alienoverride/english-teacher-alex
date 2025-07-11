@@ -518,6 +518,28 @@
             box-shadow: 0 8px 25px rgba(30, 58, 138, 0.4) !important;
         }
 
+        /* Debug Button */
+        .debug-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10000;
+            background: #6b7280;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .debug-btn:hover {
+            background: #4b5563;
+            transform: translateY(-2px);
+        }
+
         /* Responsivo - Mobile */
         @media (max-width: 768px) {
             .info-title {
@@ -569,7 +591,7 @@
 <body>
     <div class="user-info">
         <div class="user-avatar" id="userAvatar">A</div>
-        <div class="user-name" id="userName">Aluno</div>
+        <div class="user-name" id="userName">Carregando...</div>
         <button class="logout-btn" onclick="logout()">Sair</button>
     </div>
     
@@ -578,7 +600,7 @@
             <div class="logo">
                 Teacher Alex <span class="logo-highlight">English Academy</span> BETA
             </div>
-            <div class="welcome-message" id="welcomeMessage">Bem-vindo de volta!</div>
+            <div class="welcome-message" id="welcomeMessage">Preparando seus dados...</div>
             <div class="subtitle">Escolha sua atividade e continue aprendendo inglês</div>
         </div>
         
@@ -741,8 +763,8 @@
     <script>
         // ===== 🔥 FIREBASE INTEGRATION - PRODUÇÃO SELETIVA =====
         
-        // 🎯 USUÁRIOS COM FIREBASE ATIVO (PILOT PROGRAM)
-        const FIREBASE_USERS = ['testy', 'nicolete'];
+        // ✅ CORREÇÃO 1: LISTA ATUALIZADA COM OS 3 USUÁRIOS FIREBASE
+        const FIREBASE_USERS = ['testy', 'nicolete', 'teacheralex'];
         
         // Configuração Firebase
         const firebaseConfig = {
@@ -776,22 +798,46 @@
             return FIREBASE_USERS.includes(username.toLowerCase());
         }
 
-        // Carregar dados do Firebase (só para usuários Firebase)
+        // ✅ CORREÇÃO 2: Carregar dados do Firebase ASYNC
         async function loadFromFirebase(username) {
             try {
                 if (typeof database !== 'undefined' && database && isFirebaseUser(username)) {
+                    console.log(`☁️ Tentando carregar dados do Firebase para ${username}...`);
                     const userRef = database.ref(`users/${username}/progress`);
                     const snapshot = await userRef.once('value');
                     if (snapshot.exists()) {
                         const data = snapshot.val();
-                        console.log(`📥 Dados carregados do Firebase para ${username}`);
+                        console.log(`✅ Dados carregados do Firebase para ${username}:`, data);
                         return data;
+                    } else {
+                        console.log(`📭 Nenhum dado encontrado no Firebase para ${username}`);
                     }
                 }
             } catch (error) {
                 console.log('📡 Erro ao carregar Firebase:', error.message);
             }
             return null;
+        }
+
+        // Sync to Firebase
+        async function syncToFirebase(username, progressData) {
+            try {
+                if (typeof database !== 'undefined' && database && isFirebaseUser(username)) {
+                    const userRef = database.ref(`users/${username}/progress`);
+                    await userRef.set({
+                        ...progressData,
+                        lastSync: new Date().toISOString(),
+                        syncDevice: 'web-prod'
+                    });
+                    console.log(`🔥 Backup Firebase realizado para ${username}!`);
+                    showNotification('☁️ Progresso salvo na nuvem!', 'success');
+                    return true;
+                }
+            } catch (error) {
+                console.log('❌ Erro Firebase:', error.message);
+                return false;
+            }
+            return false;
         }
 
         // Função para mostrar notificações
@@ -861,48 +907,55 @@
                 this.data = null;
             }
 
-            // 🔥 CARREGAMENTO HÍBRIDO: Firebase primeiro, depois localStorage
+            // ✅ CORREÇÃO 3: CARREGAMENTO ASYNC COM LOGS DETALHADOS
             async loadProgress() {
                 console.log(`📊 Carregando progresso para ${this.studentId}...`);
                 
-                // 1. Tentar carregar do Firebase (se for usuário Firebase)
-                if (isFirebaseUser(this.studentId)) {
-                    const firebaseData = await loadFromFirebase(this.studentId);
-                    if (firebaseData) {
-                        this.data = firebaseData;
-                        console.log(`☁️ Progresso carregado do Firebase para ${this.studentId}`);
-                        showNotification('☁️ Progresso sincronizado da nuvem!', 'success');
-                        
-                        // Salvar também no localStorage como backup
-                        localStorage.setItem(this.progressKey, JSON.stringify(this.data));
-                        return;
+                try {
+                    // 1. Tentar Firebase primeiro (para os 3 usuários)
+                    if (isFirebaseUser(this.studentId)) {
+                        console.log(`☁️ Usuário Firebase detectado: ${this.studentId}`);
+                        const firebaseData = await loadFromFirebase(this.studentId);
+                        if (firebaseData) {
+                            this.data = firebaseData;
+                            console.log(`✅ Dados carregados do Firebase:`, firebaseData);
+                            // Salvar também no localStorage como backup
+                            localStorage.setItem(this.progressKey, JSON.stringify(this.data));
+                            showNotification('☁️ Progresso sincronizado!', 'success');
+                            return;
+                        } else {
+                            console.log(`📭 Nenhum backup encontrado no Firebase para ${this.studentId}`);
+                        }
                     }
+                    
+                    // 2. Fallback para localStorage
+                    const saved = localStorage.getItem(this.progressKey);
+                    if (saved) {
+                        this.data = JSON.parse(saved);
+                        console.log(`💾 Dados carregados do localStorage:`, this.data);
+                    } else {
+                        // 3. Dados padrão
+                        console.log(`🆕 Criando dados padrão para ${this.studentId}`);
+                        this.createDefaultData();
+                    }
+                } catch (error) {
+                    console.error('❌ Erro ao carregar progresso:', error);
+                    this.createDefaultData();
                 }
-                
-                // 2. Carregar do localStorage (fallback ou usuários não-Firebase)
-                const saved = localStorage.getItem(this.progressKey);
-                if (saved) {
-                    this.data = JSON.parse(saved);
-                    console.log(`💾 Progresso carregado do localStorage para ${this.studentId}`);
-                } else {
-                    // 3. Criar dados padrão
-                    this.data = {
-                        listening: { lessonsCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                        reading: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                        roommate: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                        neighbor: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                        globalBadges: [], lastActivity: null, joinDate: new Date().toISOString(), totalStudyTime: 0
-                    };
-                    console.log(`🆕 Dados padrão criados para ${this.studentId}`);
-                }
-                
-                // Garantir compatibilidade
-                if (!this.data.roommate) {
-                    this.data.roommate = { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] };
-                }
-                if (!this.data.neighbor) {
-                    this.data.neighbor = { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] };
-                }
+            }
+
+            createDefaultData() {
+                this.data = {
+                    listening: { lessonsCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                    reading: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                    roommate: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                    neighbor: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                    globalBadges: [], 
+                    lastActivity: null, 
+                    joinDate: new Date().toISOString(), 
+                    totalStudyTime: 0
+                };
+                console.log(`✨ Dados padrão criados para ${this.studentId}:`, this.data);
             }
 
             getProgressBadge(category, totalChapters) {
@@ -934,15 +987,23 @@
             }
         }
 
-        // ===== INICIALIZAÇÃO ASYNC =====
+        // ===== INICIALIZAÇÃO ASYNC COM DELAY =====
         async function initializePage() {
             const studentName = getStudentName();
             const progressTracker = new ProgressTracker();
             
-            // 🔥 CARREGAR PROGRESSO (Firebase primeiro)
+            // Mostrar loading
+            document.getElementById('userName').textContent = 'Carregando...';
+            document.getElementById('welcomeMessage').textContent = 'Preparando seus dados...';
+            
+            // ✅ CORREÇÃO 4: Carregar com delay para garantir Firebase
+            console.log('🔄 Iniciando carregamento do progresso...');
             await progressTracker.loadProgress();
+            console.log('⏳ Aguardando 1 segundo para garantir sincronização...');
+            await new Promise(resolve => setTimeout(resolve, 1000)); // ← Delay de 1 segundo
             
             const stats = progressTracker.getStats();
+            console.log('📈 Estatísticas calculadas:', stats);
             
             // Atualizar informações do usuário
             document.getElementById('userName').textContent = studentName;
@@ -971,12 +1032,14 @@
                 listeningCard.appendChild(badge);
             }
             
-            // 🔥 Badge Firebase para usuários especiais
+            // ✅ Badge Firebase para os 3 usuários especiais
             if (isFirebaseUser(studentName)) {
                 const firebaseBadge = document.createElement('div');
                 firebaseBadge.className = 'firebase-badge';
                 firebaseBadge.textContent = '☁️';
                 listeningCard.appendChild(firebaseBadge);
+                
+                console.log(`☁️ Badge Firebase adicionado para ${studentName}`);
             }
             
             // Badge para Graded Readers Hub (soma A1 + A2)
@@ -1005,8 +1068,50 @@
                 pureReadingCard.appendChild(badge);
             }
             
+            // ✅ CORREÇÃO 5: Botão debug para os 3 usuários Firebase
+            if (['nicolete', 'testy', 'teacheralex'].includes(studentName.toLowerCase())) {
+                createDebugButton(progressTracker);
+            }
+            
             // Animação de contadores
             animateCounters();
+            
+            console.log('✅ Inicialização da página completa!');
+        }
+
+        // ✅ CORREÇÃO 6: Função de Debug para os 3 usuários
+        function createDebugButton(progressTracker) {
+            const debugBtn = document.createElement('button');
+            debugBtn.textContent = '🔧 Debug Firebase';
+            debugBtn.className = 'debug-btn';
+            debugBtn.onclick = async function() {
+                console.log('🔍 Iniciando debug completo...');
+                
+                // Recarregar dados
+                await progressTracker.loadProgress();
+                
+                console.log('🔍 DEBUG COMPLETO:');
+                console.table({
+                    'Usuário': getStudentName(),
+                    'É Firebase?': isFirebaseUser(getStudentName()),
+                    'Listening': progressTracker.data.listening.lessonsCompleted.length + ' lições',
+                    'Reading': progressTracker.data.reading.chaptersCompleted.length + ' capítulos',
+                    'Roommate': progressTracker.data.roommate.chaptersCompleted.length + ' capítulos',
+                    'Neighbor': progressTracker.data.neighbor.chaptersCompleted.length + ' capítulos'
+                });
+                
+                console.log('📊 Dados completos:', progressTracker.data);
+                
+                if (confirm('Forçar sincronização com Firebase?')) {
+                    console.log('🔄 Forçando sincronização...');
+                    await syncToFirebase(getStudentName(), progressTracker.data);
+                    alert('✅ Sincronização forçada!');
+                    location.reload();
+                }
+            };
+            document.body.appendChild(debugBtn);
+            
+            console.log(`🔧 Botão debug adicionado para ${getStudentName()}`);
         }
 
         function animateCounters() {
@@ -1142,6 +1247,7 @@
 
         // ===== INICIALIZAÇÃO DA PÁGINA =====
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Iniciando aplicação...');
             initializePage();
         });
     </script>
