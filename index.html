@@ -234,9 +234,19 @@
         /* Secret Area */
         .secret-area {
                 background: rgba(255, 255, 255, 0.8) !important;
-                border: 3px dashed rgba(107, 114, 128, 0.4) !important;
+                border: 3px solid rgba(107, 114, 128, 0.4) !important;
                 opacity: 0.75;
-        }
+            }
+            
+            .secret-area:hover {
+                border-style: dashed !important;
+                transform: translateY(-2px);
+            }
+            
+            .secret-area:active {
+                border-style: dashed !important;
+                transform: translateY(0px);
+            }
 
         .mystery-icon {
             animation: mysteryPulse 2s infinite;
