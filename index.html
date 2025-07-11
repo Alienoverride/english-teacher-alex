@@ -97,19 +97,19 @@
             <div class="stats-title">📊 Seu Progresso</div>
             <div class="stats-grid">
                 <div class="stat-item">
-                    <div class="stat-number">8</div>
+                    <div class="stat-number">0</div>
                     <div class="stat-label">Lições Concluídas</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">12</div>
+                    <div class="stat-number">0</div>
                     <div class="stat-label">Capítulos Lidos</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">15</div>
+                    <div class="stat-number">0</div>
                     <div class="stat-label">Badges Conquistadas</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">24h</div>
+                    <div class="stat-number">0h</div>
                     <div class="stat-label">Tempo de Estudo</div>
                 </div>
             </div>
@@ -306,13 +306,16 @@
             document.getElementById('welcomeMessage').textContent = `Bem-vindo de volta, ${studentName}!`;
             
             console.log(`✅ Carregado direto do localStorage - usuário: ${studentName}`);
+            console.log(`📊 Stats reais:`, stats);
             
-            // Atualizar estatísticas
+            // Atualizar estatísticas COM DADOS REAIS
             const statNumbers = document.querySelectorAll('.stat-number');
             statNumbers[0].textContent = stats.lessonsCompleted;
             statNumbers[1].textContent = stats.chaptersRead;
             statNumbers[2].textContent = stats.totalBadges;
             statNumbers[3].textContent = stats.studyTime + 'h';
+            
+            console.log(`📈 Estatísticas atualizadas: ${stats.lessonsCompleted} lições, ${stats.chaptersRead} capítulos, ${stats.totalBadges} badges, ${stats.studyTime}h`);
             
             // Adicionar badges de progresso nos cards
             addProgressBadges(progressTracker);
