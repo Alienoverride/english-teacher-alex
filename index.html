@@ -89,7 +89,7 @@
             <div class="logo">
                 Teacher Alex <span class="logo-highlight">English Academy</span> BETA
             </div>
-            <div class="welcome-message" id="welcomeMessage">Preparando seus dados...</div>
+            <div class="welcome-message" id="welcomeMessage">Bem-vindo de volta, teacheralex!</div>
             <div class="subtitle">Escolha sua atividade e continue aprendendo inglês</div>
         </div>
         
@@ -294,16 +294,18 @@
             }
         }
 
-        // ===== INICIALIZAÇÃO =====
+        // ===== INICIALIZAÇÃO SEM FIREBASE =====
         function initializePage() {
             const studentName = getStudentName();
             const progressTracker = new SimpleProgress();
             const stats = progressTracker.getStats();
             
-            // Atualizar informações do usuário
+            // Atualizar informações do usuário DIRETO - sem sync
             document.getElementById('userName').textContent = studentName;
             document.getElementById('userAvatar').textContent = studentName.charAt(0).toUpperCase();
             document.getElementById('welcomeMessage').textContent = `Bem-vindo de volta, ${studentName}!`;
+            
+            console.log(`✅ Carregado direto do localStorage - usuário: ${studentName}`);
             
             // Atualizar estatísticas
             const statNumbers = document.querySelectorAll('.stat-number');
@@ -426,11 +428,12 @@
             });
         });
 
-        // ===== CARREGAMENTO DA PÁGINA =====
+        // ===== CARREGAMENTO DA PÁGINA SEM FIREBASE =====
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 Teacher Alex Academy carregando...');
+            console.log('🚀 Teacher Alex Academy carregando - 100% localStorage...');
             initializePage();
-            console.log('✅ Versão enxuta carregada! CSS+JS: ~8KB total');
+            console.log('✅ Carregado! CSS+JS: ~8KB total - ZERO Firebase');
+            console.log('💾 Todos os dados vêm do localStorage puro');
             console.log('💡 Para resetar progresso: localStorage.clear()');
         });
 
