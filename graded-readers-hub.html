@@ -127,11 +127,133 @@
             gap: 30px;
         }
 
+        .story-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 3px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 35px;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 420px;
+        }
+
+        .story-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s;
+            z-index: 1;
+        }
+
+        .story-card:hover::before {
+            left: 100%;
+        }
+
+        .story-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+            border-color: #1e3a8a;
+            background: white;
+        }
+
+        .story-icon {
+            font-size: 4.5em;
+            margin-bottom: 20px;
+            text-align: center;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-title {
+            font-size: 1.7em;
+            font-weight: 800;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-description {
+            color: #64748b;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 500;
+            flex-grow: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-features {
+            list-style: none;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-features li {
+            color: #64748b;
+            margin-bottom: 10px;
+            font-weight: 500;
+            position: relative;
+            padding-left: 30px;
+            font-size: 1.05em;
+        }
+
         .story-features li::before {
             content: '🎧';
             position: absolute;
             left: 0;
             font-size: 1.2em;
+        }
+
+        .story-button {
+            background: linear-gradient(135deg, #1e3a8a, #dc2626);
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.4s ease;
+            text-align: center;
+            margin-top: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-button:hover {
+            background: linear-gradient(135deg, #1e40af, #b91c1c);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 58, 138, 0.4);
+        }
+
+        .coming-soon {
+            opacity: 0.75;
+            border-style: dashed !important;
+            cursor: default !important;
+        }
+
+        .coming-soon:hover {
+            transform: translateY(-4px) !important;
+            opacity: 1;
+        }
+
+        .coming-soon-button {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
+            cursor: not-allowed !important;
+            opacity: 0.8;
         }
 
         @media (max-width: 768px) {
@@ -160,6 +282,19 @@
             .stories-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
+            }
+
+            .story-card {
+                padding: 25px;
+                min-height: 380px;
+            }
+
+            .story-icon {
+                font-size: 3.5em;
+            }
+
+            .story-title {
+                font-size: 1.5em;
             }
         }
     </style>
