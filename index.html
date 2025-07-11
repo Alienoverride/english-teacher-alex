@@ -13,7 +13,7 @@
     <!-- 🔥 FIREBASE SCRIPTS - PRODUÇÃO! -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    
+    <script src="firebase-integration.js"></script>
     <!-- MELHORIAS VISUAIS ESPECÍFICAS -->
     <style>
         /* ===== MELHORIAS VISUAIS - SEÇÕES DE INFORMAÇÕES ===== */
@@ -1145,5 +1145,57 @@
             initializePage();
         });
     </script>
+    <script>
+  // --- Verifica login e logout (mantém sua lógica existente) ---
+  function checkLogin() {
+    const logged = sessionStorage.getItem("studentLoggedIn");
+    const user = sessionStorage.getItem("studentUsername");
+    if (logged !== "true" || !user) {
+      window.location.href = "login.html";
+      return false;
+    }
+    return true;
+  }
+  function logout() {
+    sessionStorage.removeItem("studentLoggedIn");
+    sessionStorage.removeItem("studentUsername");
+    window.location.href = "login.html";
+  }
+
+  // --- Carrega e exibe seu progresso na dashboard ---
+  async function loadDashboard() {
+    const user = sessionStorage.getItem("studentUsername");
+    if (!user) return;
+    document.getElementById("userName").textContent = user;
+
+    // Tenta localStorage primeiro, senão busca do Firebase
+    let data =
+      JSON.parse(localStorage.getItem(`progress_${user}`)) ||
+      (await loadFromFirebase(user));
+
+    if (!data) {
+      document.getElementById("totalBadges").textContent = "Nenhum dado encontrado.";
+      return;
+    }
+
+    const listenCount = data.listening?.lessonsCompleted?.length || 0;
+    const readCount   = data.reading?.chaptersCompleted?.length || 0;
+    const roomCount   = data.roommate?.chaptersCompleted?.length || 0;
+    const badgesTotal =
+      (data.listening?.badges?.length || 0) +
+      (data.reading?.badges?.length || 0) +
+      (data.roommate?.badges?.length || 0) +
+      (data.globalBadges?.length || 0);
+
+    document.getElementById("totalBadges").textContent      = `🏅 Total de Badges: ${badgesTotal}`;
+    document.getElementById("progressListening").textContent = `🎧 Listening: ${listenCount} lições concluídas`;
+    document.getElementById("progressReading").textContent   = `📖 Reading: ${readCount} capítulos concluídos`;
+    document.getElementById("progressRoommate").textContent  = `🏠 Roommate: ${roomCount} capítulos concluídos`;
+  }
+
+  // Executa ao carregar a página
+  if (checkLogin()) loadDashboard();
+</script>
+
 </body>
 </html>
