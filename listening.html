@@ -224,6 +224,28 @@
             50% { opacity: 1; }
         }
 
+        /* Debug Button */
+        .debug-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10000;
+            background: #6b7280;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .debug-btn:hover {
+            background: #4b5563;
+            transform: translateY(-2px);
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .lesson-cards {
@@ -375,8 +397,8 @@
     <script>
         // ===== 🔥 FIREBASE INTEGRATION - PRODUÇÃO SELETIVA =====
         
-        // 🎯 USUÁRIOS COM FIREBASE ATIVO (PILOT PROGRAM)
-        const FIREBASE_USERS = ['testy', 'nicolete'];
+        // ✅ CORREÇÃO: LISTA ATUALIZADA COM OS 3 USUÁRIOS FIREBASE
+        const FIREBASE_USERS = ['testy', 'nicolete', 'teacheralex'];
         
         // Configuração Firebase
         const firebaseConfig = {
@@ -901,6 +923,43 @@
                 alert('🎉 Parabéns! Você completou todas as 11 lições de Listening! 🏆🎧');
             }
         }
+
+        // ✅ Função de Debug para os 3 usuários Firebase
+        function createDebugButton() {
+            const studentName = getStudentName();
+            if (['nicolete', 'testy', 'teacheralex'].includes(studentName.toLowerCase())) {
+                const debugBtn = document.createElement('button');
+                debugBtn.textContent = '🔧 Debug Firebase';
+                debugBtn.className = 'debug-btn';
+                debugBtn.onclick = async function() {
+                    console.log('🔍 Iniciando debug completo...');
+                    
+                    // Recarregar dados
+                    studentProgress.loadProgress();
+                    
+                    console.log('🔍 DEBUG COMPLETO:');
+                    console.table({
+                        'Usuário': getStudentName(),
+                        'É Firebase?': isFirebaseUser(getStudentName()),
+                        'Listening': studentProgress.data.listening.lessonsCompleted.length + ' lições',
+                        'Best Scores': Object.keys(studentProgress.data.listening.bestScores).length + ' notas',
+                        'Total Badges': studentProgress.data.listening.badges.length + ' badges'
+                    });
+                    
+                    console.log('📊 Dados completos:', studentProgress.data);
+                    
+                    if (confirm('Forçar sincronização com Firebase?')) {
+                        console.log('🔄 Forçando sincronização...');
+                        await syncToFirebase(getStudentName(), studentProgress.data);
+                        alert('✅ Sincronização forçada!');
+                        location.reload();
+                    }
+                };
+                document.body.appendChild(debugBtn);
+                
+                console.log(`🔧 Botão debug adicionado para ${studentName}`);
+            }
+        }
         
         // ===== INICIALIZAÇÃO =====
         document.addEventListener('DOMContentLoaded', function() {
@@ -910,10 +969,14 @@
             // Mostrar status Firebase para usuário
             if (isFirebaseUser(studentName)) {
                 showNotification('☁️ Backup na nuvem ativo!', 'success');
+                console.log(`☁️ Firebase ativo para ${studentName}`);
+            } else {
+                console.log(`📱 localStorage apenas para ${studentName}`);
             }
             
             createLessonCards();
             loadLesson(currentLesson);
+            createDebugButton(); // Adicionar botão debug se for usuário Firebase
         });
     </script>
 </body>
