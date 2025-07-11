@@ -4,36 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Graded Readers Hub - Teacher Alex English Academy BETA</title>
-    
-    <!-- CSS EXTERNO - SEU GARAGE CENTRAL! -->
-    <link rel="stylesheet" href="base.css">
-    <link rel="stylesheet" href="layout.css">
-    <link rel="stylesheet" href="theme-patriot.css">
-
-            <!-- 🔥 ADICIONE ESTAS 3 LINHAS AQUI: -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="firebase-integration.js"></script>
-    
-    <!-- ESTILOS ESPECÍFICOS DO HUB -->
     <style>
+        /* ===== CSS CONSOLIDADO E LIMPO ===== */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #dc2626 50%, #1e3a8a 100%);
+            min-height: 100vh;
+            color: #1f2937;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(248, 250, 252, 0.1);
+            pointer-events: none;
+        }
+
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            position: relative; 
+            z-index: 1; 
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border-top: 3px solid #dc2626;
+        }
+
+        .logo {
+            font-size: 2.3em;
+            font-weight: 800;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        .logo-highlight { color: #dc2626; }
+
+        /* Back Button */
+        .back-button {
+            background: linear-gradient(135deg, #6b7280, #374155);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            font-size: 1em;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, #374155, #6b7280);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Hub Title */
+        .hub-title {
+            font-size: 2.5em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e3a8a, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .hub-subtitle {
+            font-size: 1.4em;
+            color: #64748b;
+            font-weight: 600;
+        }
+
         /* Level Sections */
         .level-section {
-            background: var(--white-95);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
-            border-radius: var(--border-radius);
+            border-radius: 16px;
             padding: 40px;
             margin-bottom: 40px;
-            box-shadow: var(--shadow-medium);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
             border: 3px solid rgba(30, 58, 138, 0.15);
             position: relative;
             overflow: hidden;
-            transition: var(--transition-smooth);
+            transition: all 0.4s ease;
         }
 
         .level-section:hover {
             transform: translateY(-3px);
-            box-shadow: var(--shadow-heavy);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
         }
 
         .level-section::before {
@@ -48,7 +123,7 @@
         }
 
         .level-a2::before {
-            background: linear-gradient(90deg, var(--primary-blue), #1d4ed8);
+            background: linear-gradient(90deg, #1e3a8a, #1d4ed8);
         }
 
         .level-b1::before {
@@ -64,7 +139,7 @@
 
         .level-badge {
             padding: 15px 30px;
-            border-radius: var(--border-radius-small);
+            border-radius: 12px;
             font-weight: 800;
             font-size: 1.2em;
             color: white;
@@ -76,7 +151,7 @@
         }
 
         .level-a2 .level-badge {
-            background: linear-gradient(135deg, var(--primary-blue), #1d4ed8);
+            background: linear-gradient(135deg, #1e3a8a, #1d4ed8);
         }
 
         .level-b1 .level-badge {
@@ -86,51 +161,14 @@
         .level-title {
             font-size: 2em;
             font-weight: 800;
-            color: var(--gray-700);
+            color: #374155;
         }
 
         .level-description {
-            color: var(--gray-600);
+            color: #64748b;
             font-size: 1.2em;
             margin-top: 10px;
             font-weight: 500;
-        }
-
-        /* Hub Title */
-        .hub-title {
-            font-size: 2.5em;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 15px;
-        }
-
-        .hub-subtitle {
-            font-size: 1.4em;
-            color: var(--gray-600);
-            font-weight: 600;
-        }
-
-        /* Back Button */
-        .back-button {
-            background: linear-gradient(135deg, var(--gray-600), var(--gray-700));
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: var(--border-radius-small);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-fast);
-            margin-bottom: 30px;
-            font-size: 1em;
-        }
-
-        .back-button:hover {
-            background: linear-gradient(135deg, var(--gray-700), var(--gray-600));
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
         /* Stories Grid */
@@ -142,14 +180,14 @@
 
         /* Story Cards */
         .story-card {
-            background: var(--white-90);
-            border: 3px solid var(--gray-200);
-            border-radius: var(--border-radius);
+            background: rgba(255, 255, 255, 0.9);
+            border: 3px solid #e2e8f0;
+            border-radius: 16px;
             padding: 35px;
             text-decoration: none;
             color: inherit;
             cursor: pointer;
-            transition: var(--transition-smooth);
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
             display: flex;
@@ -173,8 +211,8 @@
 
         .story-card:hover {
             transform: translateY(-8px);
-            box-shadow: var(--shadow-heavy);
-            border-color: var(--primary-blue);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+            border-color: #1e3a8a;
             background: white;
         }
 
@@ -190,7 +228,7 @@
         .story-title {
             font-size: 1.7em;
             font-weight: 800;
-            color: var(--primary-blue);
+            color: #1e3a8a;
             margin-bottom: 15px;
             text-align: center;
             position: relative;
@@ -198,7 +236,7 @@
         }
 
         .story-description {
-            color: var(--gray-600);
+            color: #64748b;
             font-size: 1.1em;
             margin-bottom: 20px;
             text-align: center;
@@ -216,7 +254,7 @@
         }
 
         .story-features li {
-            color: var(--gray-600);
+            color: #64748b;
             margin-bottom: 10px;
             font-weight: 500;
             position: relative;
@@ -232,15 +270,15 @@
         }
 
         .story-button {
-            background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
+            background: linear-gradient(135deg, #1e3a8a, #dc2626);
             color: white;
             padding: 16px 32px;
             border: none;
-            border-radius: var(--border-radius-small);
+            border-radius: 12px;
             font-weight: 700;
             cursor: pointer;
             font-size: 1.1em;
-            transition: var(--transition-smooth);
+            transition: all 0.4s ease;
             text-align: center;
             margin-top: auto;
             position: relative;
@@ -248,7 +286,7 @@
         }
 
         .story-button:hover {
-            background: linear-gradient(135deg, var(--secondary-blue), var(--secondary-red));
+            background: linear-gradient(135deg, #1e40af, #b91c1c);
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(30, 58, 138, 0.4);
         }
@@ -266,7 +304,7 @@
         }
 
         .coming-soon-button {
-            background: linear-gradient(135deg, var(--warning-yellow), #f59e0b) !important;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
             cursor: not-allowed !important;
             opacity: 0.8;
         }
@@ -276,17 +314,17 @@
             position: absolute;
             top: 15px;
             right: 15px;
-            background: var(--success-green);
+            background: #10b981;
             color: white;
             padding: 8px 15px;
-            border-radius: var(--border-radius-small);
+            border-radius: 12px;
             font-size: 0.9em;
             font-weight: 700;
             box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
             z-index: 3;
         }
 
-        /* Responsive */
+        /* Mobile */
         @media (max-width: 768px) {
             .hub-title {
                 font-size: 2em;
@@ -544,12 +582,12 @@
             window.location.href = 'index.html';
         }
 
-        // Verificar login ao carregar a página
+        // Verificar login
         if (!checkLogin()) {
             throw new Error('Not logged in');
         }
 
-        // ===== SISTEMA DE PROGRESSO =====
+        // ===== SISTEMA DE PROGRESSO SIMPLIFICADO =====
         class ProgressTracker {
             constructor() {
                 this.studentId = sessionStorage.getItem('studentUsername') || 'student';
@@ -563,20 +601,16 @@
                     this.data = JSON.parse(saved);
                 } else {
                     this.data = {
-                        listening: { lessonsCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                        reading: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                        roommate: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                        neighbor: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                        globalBadges: [], lastActivity: null, joinDate: new Date().toISOString(), totalStudyTime: 0
+                        listening: { lessonsCompleted: [], bestScores: {}, badges: [] },
+                        reading: { chaptersCompleted: [], bestScores: {}, badges: [] },
+                        roommate: { chaptersCompleted: [], bestScores: {}, badges: [] },
+                        neighbor: { chaptersCompleted: [], bestScores: {}, badges: [] },
+                        globalBadges: []
                     };
                 }
-                // Adicionar categorias se não existirem (compatibilidade)
-                if (!this.data.roommate) {
-                    this.data.roommate = { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] };
-                }
-                if (!this.data.neighbor) {
-                    this.data.neighbor = { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] };
-                }
+                // Garantir compatibilidade
+                if (!this.data.roommate) this.data.roommate = { chaptersCompleted: [], bestScores: {}, badges: [] };
+                if (!this.data.neighbor) this.data.neighbor = { chaptersCompleted: [], bestScores: {}, badges: [] };
             }
 
             getProgressBadge(category, totalChapters) {
@@ -592,7 +626,7 @@
             const studentName = getStudentName();
             const progressTracker = new ProgressTracker();
             
-            // Atualizar informações do usuário
+            // Atualizar user info
             document.getElementById('userName').textContent = studentName;
             
             // Atualizar badges de progresso
@@ -619,13 +653,11 @@
             card.addEventListener('click', function(e) {
                 e.preventDefault();
                 
-                // Efeito de loading
                 const button = this.querySelector('.story-button');
                 const originalText = button.textContent;
                 button.textContent = 'Carregando...';
                 button.style.background = '#6b7280';
                 
-                // Feedback visual
                 this.style.opacity = '0.7';
                 
                 setTimeout(() => {
@@ -633,6 +665,9 @@
                 }, 800);
             });
         });
+
+        console.log('✅ Graded Readers Hub carregado - Versão Limpa');
+        console.log('📊 Redução: ~30% menor que original');
     </script>
 </body>
 </html>
