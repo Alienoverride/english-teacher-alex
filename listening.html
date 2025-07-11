@@ -513,18 +513,32 @@
                 this.loadProgress();
             }
 
-            loadProgress() {
-                const saved = localStorage.getItem(this.progressKey);
-                if (saved) {
-                    this.data = JSON.parse(saved);
-                } else {
-                    this.data = {
-                        listening: { lessonsCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                        reading: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                        globalBadges: [], lastActivity: null, joinDate: new Date().toISOString(), totalStudyTime: 0
-                    };
-                }
-            }
+            // 🔥 Novo loadProgress(): tenta Firebase primeiro, depois localStorage
+async loadProgress() {
+  // 1) tenta carregar do Firebase (só para usuários pilot)
+  if (isFirebaseUser(this.studentId)) {
+    const fbData = await loadFromFirebase(this.studentId);
+    if (fbData) {
+      this.data = fbData;
+      localStorage.setItem(this.progressKey, JSON.stringify(this.data));
+      return;
+    }
+  }
+
+  // 2) fallback: localStorage
+  const saved = localStorage.getItem(this.progressKey);
+  if (saved) {
+    this.data = JSON.parse(saved);
+  } else {
+    // 3) dados padrões
+    this.data = {
+      listening: { lessonsCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+      reading:   { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+      globalBadges: [], lastActivity: null, joinDate: new Date().toISOString(), totalStudyTime: 0
+    };
+  }
+}
+
 
             // 🔥 FUNÇÃO MODIFICADA - USA SISTEMA HÍBRIDO
             saveProgress() { 
@@ -604,7 +618,18 @@
             11: { title: "Food and Cooking Adventures", shortTitle: "Cooking", icon: "🍕", audioUrl: "audios/audio11.mp3", questions: { q1: { text: "How long ago couldn't Carlos cook eggs?", options: ["One year ago", "Two years ago", "Three years ago", "Five years ago"], correct: "b" }, q2: { text: "What is his specialty cuisine?", options: ["Chinese food", "Mexican food", "Italian food", "Japanese food"], correct: "c" }, q3: { text: "How long did it take him to make fresh pasta?", options: ["One hour", "Two hours", "Three hours", "Four hours"], correct: "c" }, q4: { text: "What is he learning to make this month?", options: ["Pizza", "Sushi", "Tacos", "Bread"], correct: "b" }, q5: { text: "How many people will he cook for next Saturday?", options: ["Six people", "Seven people", "Eight people", "Ten people"], correct: "c" } } }
         };
         
-        let currentLesson = 1, attempts = 0, lessonStartTime = Date.now(), studentProgress = new StudentProgress();
+        let currentLesson = 1,
+    attempts = 0,
+    lessonStartTime = Date.now(),
+    studentProgress; // vai ser instanciado depois
+
+document.addEventListener('DOMContentLoaded', async function() {
+  studentProgress = new StudentProgress();
+  await studentProgress.loadProgress();  // espera os dados do Firebase/localStorage
+  createLessonCards();
+  loadLesson(currentLesson);
+});
+
         
         // ===== NAVEGAÇÃO DE LIÇÕES PREMIUM - 11 LIÇÕES =====
         function createLessonCards() {
