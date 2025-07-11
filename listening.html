@@ -13,7 +13,6 @@
     <!-- 🔥 FIREBASE SCRIPTS - PRODUÇÃO! -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="firebase-integration.js"></script>
     
     <!-- ESTILOS ESPECÍFICOS PARA LISTENING PREMIUM -->
     <style>
@@ -411,24 +410,6 @@
             return FIREBASE_USERS.includes(username.toLowerCase());
         }
 
-        // 🔥 FUNÇÃO LOADFROMFIREBASE - ADICIONADA PARA CORRIGIR!
-        async function loadFromFirebase(username) {
-            try {
-                if (typeof database !== 'undefined' && database && isFirebaseUser(username)) {
-                    const userRef = database.ref(`users/${username}/progress`);
-                    const snapshot = await userRef.once('value');
-                    if (snapshot.exists()) {
-                        const data = snapshot.val();
-                        console.log(`📥 Dados carregados do Firebase para ${username}`);
-                        return data;
-                    }
-                }
-            } catch (error) {
-                console.log('📡 Erro ao carregar Firebase:', error.message);
-            }
-            return null;
-        }
-
         // Função para sync Firebase (só para usuários selecionados)
         async function syncToFirebase(username, progressData) {
             try {
@@ -522,84 +503,24 @@
 
         if (!checkLogin()) throw new Error('Not logged in');
 
-        // ===== 🔥 SISTEMA DE PROGRESSO CORRIGIDO =====
+        // ===== SISTEMA DE PROGRESSO HÍBRIDO =====
         class StudentProgress {
             constructor() {
                 this.studentId = sessionStorage.getItem('studentUsername') || 'student';
                 this.progressKey = `progress_${this.studentId}`;
-                this.data = null;
+                this.loadProgress();
             }
 
-            // 🔥 LOADPROGRESS CORRIGIDO - Firebase primeiro, localStorage fallback
-            async loadProgress() {
-                console.log(`📊 Carregando progresso para ${this.studentId}...`);
-                
-                // 1. Tentar carregar do Firebase (se for usuário Firebase)
-                if (isFirebaseUser(this.studentId)) {
-                    console.log(`☁️ Tentando carregar do Firebase para ${this.studentId}...`);
-                    const firebaseData = await loadFromFirebase(this.studentId);
-                    if (firebaseData) {
-                        this.data = firebaseData;
-                        console.log(`✅ Progresso carregado do Firebase!`);
-                        showNotification('☁️ Progresso sincronizado da nuvem!', 'success');
-                        
-                        // Salvar também no localStorage como backup
-                        localStorage.setItem(this.progressKey, JSON.stringify(this.data));
-                        return;
-                    }
-                }
-                
-                // 2. Carregar do localStorage (fallback ou usuários não-Firebase)
+            loadProgress() {
                 const saved = localStorage.getItem(this.progressKey);
                 if (saved) {
-                    try {
-                        this.data = JSON.parse(saved);
-                        console.log(`💾 Progresso carregado do localStorage`);
-                    } catch (error) {
-                        console.log('❌ Erro ao parse localStorage, criando dados padrão');
-                        this.data = this.createDefaultData();
-                    }
+                    this.data = JSON.parse(saved);
                 } else {
-                    // 3. Criar dados padrão
-                    this.data = this.createDefaultData();
-                    console.log(`🆕 Dados padrão criados`);
-                }
-                
-                // Garantir compatibilidade de estrutura
-                this.ensureDataStructure();
-            }
-
-            createDefaultData() {
-                return {
-                    listening: { lessonsCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                    reading: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                    roommate: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                    neighbor: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                    globalBadges: [], 
-                    lastActivity: null, 
-                    joinDate: new Date().toISOString(), 
-                    totalStudyTime: 0
-                };
-            }
-
-            ensureDataStructure() {
-                if (!this.data.listening) {
-                    this.data.listening = { lessonsCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] };
-                }
-                if (!this.data.reading) {
-                    this.data.reading = { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] };
-                }
-                if (!this.data.roommate) {
-                    this.data.roommate = { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] };
-                }
-                if (!this.data.neighbor) {
-                    this.data.neighbor = { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] };
-                }
-                if (!this.data.globalBadges) {
-                    this.data.globalBadges = [];
-                }
-                if (!this.data.totalStudyTime) {
-                    this.data.totalStudyTime = 0;
+                    this.data = {
+                        listening: { lessonsCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        reading: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        globalBadges: [], lastActivity: null, joinDate: new Date().toISOString(), totalStudyTime: 0
+                    };
                 }
             }
 
@@ -681,43 +602,7 @@
             11: { title: "Food and Cooking Adventures", shortTitle: "Cooking", icon: "🍕", audioUrl: "audios/audio11.mp3", questions: { q1: { text: "How long ago couldn't Carlos cook eggs?", options: ["One year ago", "Two years ago", "Three years ago", "Five years ago"], correct: "b" }, q2: { text: "What is his specialty cuisine?", options: ["Chinese food", "Mexican food", "Italian food", "Japanese food"], correct: "c" }, q3: { text: "How long did it take him to make fresh pasta?", options: ["One hour", "Two hours", "Three hours", "Four hours"], correct: "c" }, q4: { text: "What is he learning to make this month?", options: ["Pizza", "Sushi", "Tacos", "Bread"], correct: "b" }, q5: { text: "How many people will he cook for next Saturday?", options: ["Six people", "Seven people", "Eight people", "Ten people"], correct: "c" } } }
         };
         
-        let currentLesson = 1, attempts = 0, lessonStartTime = Date.now(), studentProgress;
-
-        // ===== 🔥 INICIALIZAÇÃO CORRIGIDA =====
-        document.addEventListener('DOMContentLoaded', async function() {
-            console.log('🚀 Iniciando Listening...');
-            
-            try {
-                studentProgress = new StudentProgress();
-                await studentProgress.loadProgress();  // ✅ AGORA FUNCIONA!
-                console.log('✅ Progresso carregado!');
-                
-                createLessonCards();
-                loadLesson(currentLesson);
-                
-                // Inicializar informações do usuário
-                const studentName = getStudentName();
-                document.getElementById('userName').textContent = studentName;
-                
-                // Mostrar status Firebase para usuário
-                if (isFirebaseUser(studentName)) {
-                    showNotification('☁️ Backup na nuvem ativo!', 'success');
-                }
-                
-                console.log('🎉 Listening carregado com sucesso!');
-                
-            } catch (error) {
-                console.error('❌ Erro na inicialização:', error);
-                
-                // ⚠️ FALLBACK SEGURO
-                studentProgress = new StudentProgress();
-                studentProgress.data = studentProgress.createDefaultData();
-                createLessonCards();
-                loadLesson(currentLesson);
-                
-                document.getElementById('userName').textContent = getStudentName();
-            }
-        });
+        let currentLesson = 1, attempts = 0, lessonStartTime = Date.now(), studentProgress = new StudentProgress();
         
         // ===== NAVEGAÇÃO DE LIÇÕES PREMIUM - 11 LIÇÕES =====
         function createLessonCards() {
@@ -1016,6 +901,20 @@
                 alert('🎉 Parabéns! Você completou todas as 11 lições de Listening! 🏆🎧');
             }
         }
+        
+        // ===== INICIALIZAÇÃO =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const studentName = getStudentName();
+            document.getElementById('userName').textContent = studentName;
+            
+            // Mostrar status Firebase para usuário
+            if (isFirebaseUser(studentName)) {
+                showNotification('☁️ Backup na nuvem ativo!', 'success');
+            }
+            
+            createLessonCards();
+            loadLesson(currentLesson);
+        });
     </script>
 </body>
 </html>
