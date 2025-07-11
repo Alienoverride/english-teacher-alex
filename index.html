@@ -231,15 +231,27 @@
             cursor: not-allowed !important;
         }
 
-        /* Secret Area */
-        .secret-area {
+        /* Secret Area 
+            .secret-area {
             background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(79, 70, 229, 0.5)) !important;
             border: 3px solid rgba(139, 92, 246, 0.5) !important;
-        }
+        } */
+
+        /* Secret Area como “coming-soon” */
+.secret-area.coming-soon {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 3px dashed #e2e8f0 !important;
+  opacity: 0.75 !important;
+}
+
+.secret-area.coming-soon:hover {
+  opacity: 1 !important;
+}
+
 
         .mystery-icon {
             animation: mysteryPulse 2s infinite;
-        }
+        } */
 
         @keyframes mysteryPulse {
             0%, 100% { transform: scale(1); }
@@ -478,18 +490,19 @@
                 <button class="coming-soon-button" disabled>🚀 Em Desenvolvimento</button>
             </div>
             
-            <div class="activity-card secret-area">
-                <div class="activity-icon mystery-icon">🔒</div>
-                <div class="activity-title">Secret Area</div>
-                <div class="activity-description">Algo especial está chegando... apenas para alunos dedicados</div>
-                <ul class="activity-features">
-                    <li>??? Área restrita em desenvolvimento</li>
-                    <li>??? Apenas para alunos excepcionais</li>
-                    <li>??? Conteúdo nunca visto antes</li>
-                    <li>??? Acesso mediante conquista</li>
-                </ul>
-                <button class="mystery-button">🔓 Investigar</button>
-            </div>
+                   <div class="activity-card secret-area coming-soon">
+                        <div class="activity-icon mystery-icon">🔒</div>
+                        <div class="activity-title">Secret Area</div>
+                        <div class="activity-description">Algo especial está chegando... apenas para alunos dedicados</div>
+                        <ul class="activity-features">
+                            <li>??? Área restrita em desenvolvimento</li>
+                            <li>??? Apenas para alunos excepcionais</li>
+                            <li>??? Conteúdo nunca visto antes</li>
+                            <li>??? Acesso mediante conquista</li>
+                        </ul>
+                        <button class="mystery-button">🔓 Investigar</button>
+                   </div>
+
         </div>
         
         <div class="info-section">
