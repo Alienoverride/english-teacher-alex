@@ -7,6 +7,54 @@
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="layout.css">
     <link rel="stylesheet" href="theme-patriot.css">
+    <style>
+        /* CSS específico para Coming Soon e Secret Area */
+        .coming-soon {
+            opacity: 0.75;
+            border-style: dashed !important;
+            cursor: default !important;
+        }
+
+        .coming-soon:hover { 
+            opacity: 1; 
+        }
+
+        .coming-soon-button {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
+            cursor: not-allowed !important;
+        }
+
+        .secret-area {
+            background: rgba(255, 255, 255, 0.8) !important;
+            border: 3px solid rgba(107, 114, 128, 0.4) !important;
+            opacity: 0.75;
+        }
+        
+        .secret-area:hover {
+            border: 3px dashed #1e3a8a !important;
+            background: rgba(255, 255, 255, 0.9) !important;
+            opacity: 0.9;
+        }
+        
+        .secret-area:active {
+            border: 3px dashed #1e3a8a !important;
+            background: rgba(255, 255, 255, 0.95) !important;
+            opacity: 1;
+        }
+
+        .mystery-icon {
+            animation: mysteryPulse 2s infinite;
+        }
+
+        @keyframes mysteryPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .mystery-button {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1) !important;
+        }
+    </style>
 </head>
 <body>
     <!-- User Info -->
