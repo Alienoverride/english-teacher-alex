@@ -21,45 +21,45 @@
 
         .hub-subtitle {
             font-size: 1.4em;
-            color: var(--gray-600);
+            color: #64748b;
             font-weight: 600;
         }
 
         .back-button {
-            background: linear-gradient(135deg, var(--gray-600), var(--gray-700));
+            background: linear-gradient(135deg, #6b7280, #374155);
             color: white;
             padding: 12px 24px;
             border: none;
-            border-radius: var(--border-radius-small);
+            border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: var(--transition-fast);
+            transition: all 0.3s ease;
             margin-bottom: 30px;
             font-size: 1em;
         }
 
         .back-button:hover {
-            background: linear-gradient(135deg, var(--gray-700), var(--gray-600));
+            background: linear-gradient(135deg, #374155, #6b7280);
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
         .reading-level-section {
-            background: var(--white-95);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
-            border-radius: var(--border-radius);
+            border-radius: 16px;
             padding: 40px;
             margin-bottom: 40px;
-            box-shadow: var(--shadow-medium);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
             border: 3px solid rgba(107, 114, 128, 0.15);
             position: relative;
             overflow: hidden;
-            transition: var(--transition-smooth);
+            transition: all 0.4s ease;
         }
 
         .reading-level-section:hover {
             transform: translateY(-3px);
-            box-shadow: var(--shadow-heavy);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
         }
 
         .reading-level-section::before {
@@ -90,7 +90,7 @@
 
         .reading-level-badge {
             padding: 15px 30px;
-            border-radius: var(--border-radius-small);
+            border-radius: 12px;
             font-weight: 800;
             font-size: 1.2em;
             color: white;
@@ -112,11 +112,11 @@
         .reading-level-title {
             font-size: 2em;
             font-weight: 800;
-            color: var(--gray-700);
+            color: #374155;
         }
 
         .reading-level-description {
-            color: var(--gray-600);
+            color: #64748b;
             font-size: 1.2em;
             margin-top: 10px;
             font-weight: 500;
