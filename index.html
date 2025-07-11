@@ -567,33 +567,15 @@
                 if (saved) {
                     this.data = JSON.parse(saved);
                 } else {
-                    // Dados de demonstração para mostrar o sistema funcionando
+                    // Dados limpos para novos usuários
                     this.data = {
-                        listening: { 
-                            lessonsCompleted: ['lesson_1', 'lesson_2', 'lesson_3', 'lesson_4', 'lesson_5', 'lesson_6', 'lesson_7', 'lesson_8'], 
-                            bestScores: { lesson_1: 5, lesson_2: 4, lesson_3: 5, lesson_4: 3, lesson_5: 5, lesson_6: 4, lesson_7: 5, lesson_8: 4 }, 
-                            badges: ['first_try', 'perfect_score', 'listening_explorer'] 
-                        },
-                        reading: { 
-                            chaptersCompleted: ['chapter_1', 'chapter_2', 'chapter_3', 'chapter_4'], 
-                            bestScores: { chapter_1: 5, chapter_2: 4, chapter_3: 5, chapter_4: 5 }, 
-                            badges: ['first_chapter', 'perfect_chapter', 'complete_story'] 
-                        },
-                        roommate: { 
-                            chaptersCompleted: ['chapter_1', 'chapter_2', 'chapter_3'], 
-                            bestScores: { chapter_1: 4, chapter_2: 5, chapter_3: 5 }, 
-                            badges: ['first_chapter', 'perfect_chapter', 'complete_story'] 
-                        },
-                        neighbor: { 
-                            chaptersCompleted: ['chapter_1', 'chapter_2'], 
-                            bestScores: { chapter_1: 4, chapter_2: 5 }, 
-                            badges: ['first_chapter'] 
-                        },
-                        globalBadges: ['dedicated_student', 'early_adopter'],
-                        totalStudyTime: 86400000 // 24 horas em ms
+                        listening: { lessonsCompleted: [], bestScores: {}, badges: [] },
+                        reading: { chaptersCompleted: [], bestScores: {}, badges: [] },
+                        roommate: { chaptersCompleted: [], bestScores: {}, badges: [] },
+                        neighbor: { chaptersCompleted: [], bestScores: {}, badges: [] },
+                        globalBadges: [],
+                        totalStudyTime: 0
                     };
-                    // Salvar dados de demonstração
-                    localStorage.setItem(this.progressKey, JSON.stringify(this.data));
                 }
                 // Garantir compatibilidade
                 if (!this.data.roommate) this.data.roommate = { chaptersCompleted: [], bestScores: {}, badges: [] };
