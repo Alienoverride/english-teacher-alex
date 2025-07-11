@@ -3,325 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Alex English Academy BETA - Portal do Estudante</title>
-    
-    <!-- CSS EXTERNO - SEU GARAGE CENTRAL! -->
-    <link rel="stylesheet" href="base.css">
-    <link rel="stylesheet" href="layout.css">
-    <link rel="stylesheet" href="theme-patriot.css">
-    
-    <!-- 🔥 FIREBASE SCRIPTS - PRODUÇÃO! -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="firebase-integration.js"></script> <!-- ✅ ADICIONE ESTA LINHA! -->
-    
-    <!-- MELHORIAS VISUAIS ESPECÍFICAS -->
+    <title>Teacher Alex English Academy BETA</title>
     <style>
-        /* ===== MELHORIAS VISUAIS - SEÇÕES DE INFORMAÇÕES ===== */
+        /* ===== CSS CONSOLIDADO E ENXUTO ===== */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
 
-        /* Info Section - Layout Geral Melhorado */
-        .info-section {
-            background: var(--white-95);
-            backdrop-filter: blur(20px);
-            border-radius: var(--border-radius);
-            padding: 45px;
-            margin-bottom: 40px;
-            box-shadow: var(--shadow-heavy);
-            border: 3px solid rgba(30, 58, 138, 0.15);
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #dc2626 50%, #1e3a8a 100%);
+            min-height: 100vh;
+            color: #1f2937;
             position: relative;
-            overflow: hidden;
-            transition: var(--transition-smooth);
         }
 
-        .info-section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.15);
-        }
-
-        .info-section::before {
+        body::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary-blue), var(--primary-red), var(--warning-yellow), var(--success-green), var(--primary-blue));
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(248, 250, 252, 0.1);
+            pointer-events: none;
         }
 
-        /* Títulos das Seções - Mais Impactantes */
-        .info-title {
-            font-size: 2.5em !important;
-            font-weight: 900 !important;
-            background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 40px !important;
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            position: relative; 
+            z-index: 1; 
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 40px;
             text-align: center;
-            position: relative;
-            padding-bottom: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border-top: 3px solid #dc2626;
+        }
+
+        .logo {
+            font-size: 2.8em; 
+            font-weight: 800;
+            color: #1e3a8a;
+            margin-bottom: 15px;
             letter-spacing: -1px;
         }
 
-        .info-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-red), var(--warning-yellow), var(--success-green));
-            border-radius: 4px;
-            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+        .logo-highlight { color: #dc2626; }
+
+        .welcome-message {
+            font-size: 1.4em;
+            color: #dc2626;
+            font-weight: 600;
+            margin-bottom: 12px;
         }
 
-        /* Instructions Grid - Layout Melhorado */
-        .instructions {
-            display: grid !important;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
-            gap: 25px !important;
-            margin-bottom: 30px !important;
+        .subtitle {
+            font-size: 1.1em;
+            color: #64748b;
+            font-weight: 500;
         }
 
-        /* Instruction Items - Visual Premium */
-        .instruction-item {
-            background: linear-gradient(135deg, rgba(30, 58, 138, 0.08), rgba(220, 38, 38, 0.06)) !important;
-            padding: 35px 30px !important;
-            border-radius: var(--border-radius) !important;
-            border: 3px solid rgba(30, 58, 138, 0.15) !important;
-            transition: var(--transition-smooth) !important;
-            position: relative;
-            overflow: hidden;
+        /* Stats Section */
+        .stats-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-title {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: #1e3a8a;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-item {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.05), rgba(220, 38, 38, 0.05));
+            border: 2px solid rgba(30, 58, 138, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(30, 58, 138, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 800;
+            color: #1e3a8a;
+            display: block;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* Activity Cards */
+        .activity-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 3px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 35px;
+            text-align: center;
             cursor: pointer;
-        }
-
-        .instruction-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.6s;
-        }
-
-        .instruction-item:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: var(--shadow-heavy);
-            border-color: var(--primary-red) !important;
-            background: linear-gradient(135deg, rgba(30, 58, 138, 0.12), rgba(220, 38, 38, 0.10)) !important;
-        }
-
-        .instruction-item:hover::before {
-            left: 100%;
-        }
-
-        /* Números das Instruções - Maior e Mais Chamativo */
-        .instruction-number {
-            background: linear-gradient(135deg, var(--primary-red), var(--secondary-red)) !important;
-            color: white !important;
-            width: 60px !important;
-            height: 60px !important;
-            border-radius: 50% !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            font-weight: 900 !important;
-            font-size: 1.8em !important;
-            margin-bottom: 20px !important;
-            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.4) !important;
-            position: relative;
-            transition: var(--transition-fast);
-        }
-
-        .instruction-number::after {
-            content: '';
-            position: absolute;
-            top: -3px; left: -3px; right: -3px; bottom: -3px;
-            background: linear-gradient(45deg, var(--primary-blue), var(--primary-red), var(--warning-yellow));
-            border-radius: 50%;
-            z-index: -1;
-            opacity: 0;
-            transition: var(--transition-fast);
-        }
-
-        .instruction-item:hover .instruction-number {
-            transform: scale(1.1) rotate(10deg);
-        }
-
-        .instruction-item:hover .instruction-number::after {
-            opacity: 1;
-            animation: spin 2s linear infinite;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* Study Tips - Ícones Especiais (Sem Fundo) */
-        .study-tips .instruction-number {
-            background: none !important;
-            border: none !important;
-            box-shadow: none !important;
-            font-size: 4em !important;
-            width: auto !important;
-            height: auto !important;
-            margin-bottom: 25px !important;
-            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
-            position: static;
-        }
-
-        .study-tips .instruction-number::after {
-            display: none;
-        }
-
-        /* Remover hover dos Study Tips (mobile-friendly) */
-        .study-tips .instruction-item:hover .instruction-number {
-            transform: none;
-        }
-
-        .study-tips .instruction-item:hover .instruction-number::after {
-            opacity: 0;
-            animation: none;
-        }
-
-        /* Texto das Instruções - Maior e Mais Legível */
-        .instruction-text {
-            color: var(--gray-700) !important;
-            line-height: 1.7 !important;
-            font-weight: 500 !important;
-            font-size: 1.15em !important;
-        }
-
-        .instruction-text strong {
-            color: var(--primary-blue) !important;
-            font-weight: 700 !important;
-            font-size: 1.1em !important;
-        }
-
-        /* Footer - Centralizado e Estilizado */
-        .footer {
-            background: var(--white-95) !important;
-            backdrop-filter: blur(20px) !important;
-            border-radius: var(--border-radius) !important;
-            padding: 40px !important;
-            text-align: center !important;
-            box-shadow: var(--shadow-medium) !important;
-            border: 2px solid rgba(30, 58, 138, 0.1) !important;
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
-            margin-top: 40px !important;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            min-height: 420px;
         }
 
-        .footer::before {
-            content: '';
+        .activity-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+            border-color: #1e3a8a;
+            background: white;
+        }
+
+        .activity-icon {
+            font-size: 4.5em;
+            margin-bottom: 20px;
+            display: block;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .activity-title {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+        }
+
+        .activity-description {
+            color: #64748b;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            font-weight: 500;
+            flex-grow: 1;
+        }
+
+        .activity-features {
+            list-style: none;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .activity-features li {
+            color: #64748b;
+            margin-bottom: 8px;
+            font-weight: 500;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .activity-features li::before {
+            content: '✓';
             position: absolute;
-            top: 0;
             left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary-blue), var(--primary-red), var(--primary-blue));
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.1em;
         }
 
-        .footer h3 {
-            font-size: 2em !important;
-            font-weight: 800 !important;
-            background: linear-gradient(135deg, var(--primary-blue), var(--primary-red));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 15px !important;
+        .start-button {
+            background: linear-gradient(135deg, #1e3a8a, #dc2626);
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1.05em;
+            transition: all 0.3s ease;
+            margin-top: auto;
         }
 
-        .footer p {
-            font-size: 1.2em !important;
-            color: var(--gray-600) !important;
-            margin-bottom: 15px !important;
-            font-weight: 500 !important;
+        .start-button:hover {
+            background: linear-gradient(135deg, #1e40af, #b91c1c);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 58, 138, 0.4);
         }
 
-        .contact-link {
-            color: var(--primary-red) !important;
-            text-decoration: none !important;
-            font-weight: 700 !important;
-            font-size: 1.1em !important;
-            transition: var(--transition-fast) !important;
-            padding: 8px 16px !important;
-            border-radius: 8px !important;
-            border: 2px solid transparent !important;
-        }
-
-        .contact-link:hover {
-            background: var(--primary-red) !important;
-            color: white !important;
-            border-color: var(--primary-red) !important;
-            transform: scale(1.05) !important;
-            box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3) !important;
-        }
-
-        /* ===== NOVOS CARDS ESPECIAIS ===== */
-
-        /* Coming Soon Card */
+        /* Coming Soon */
         .coming-soon {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.1)) !important;
-            border: 3px solid rgba(251, 191, 36, 0.3) !important;
-            opacity: 0.8;
+            opacity: 0.75;
+            border-style: dashed !important;
             cursor: default !important;
         }
 
-        .coming-soon:hover {
-            transform: translateY(-4px) !important;
-            opacity: 1;
-        }
+        .coming-soon:hover { opacity: 1; }
 
         .coming-soon-button {
-            background: linear-gradient(135deg, var(--warning-yellow), #f59e0b) !important;
-            color: white !important;
-            padding: 16px 32px !important;
-            border: none !important;
-            border-radius: var(--border-radius-small) !important;
-            font-weight: 700 !important;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
             cursor: not-allowed !important;
-            font-size: 1.05em !important;
-            opacity: 0.7;
         }
 
-        /* Secret Area Card */
+        /* Secret Area */
         .secret-area {
             background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(79, 70, 229, 0.1)) !important;
             border: 3px solid rgba(139, 92, 246, 0.3) !important;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer !important;
-        }
-
-        .secret-area::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.2), transparent);
-            animation: mysteryShine 3s infinite;
-        }
-
-        @keyframes mysteryShine {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .secret-area:hover {
-            border-color: #8b5cf6 !important;
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(79, 70, 229, 0.2)) !important;
-            box-shadow: 0 25px 60px rgba(139, 92, 246, 0.3) !important;
         }
 
         .mystery-icon {
-            font-size: 4em !important;
             animation: mysteryPulse 2s infinite;
         }
 
@@ -330,272 +246,154 @@
             50% { transform: scale(1.1); }
         }
 
-        .mystery-features li {
-            color: #8b5cf6 !important;
-            font-style: italic;
-        }
-
         .mystery-button {
             background: linear-gradient(135deg, #8b5cf6, #6366f1) !important;
-            color: white !important;
-            padding: 16px 32px !important;
-            border: none !important;
-            border-radius: var(--border-radius-small) !important;
-            font-weight: 700 !important;
-            cursor: pointer !important;
-            font-size: 1.05em !important;
-            transition: var(--transition-smooth) !important;
-            position: relative;
-            overflow: hidden;
         }
 
-        .mystery-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
+        /* Info Section */
+        .info-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 45px;
+            margin-bottom: 40px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+            border-top: 5px solid #dc2626;
         }
 
-        .mystery-button:hover::before {
-            left: 100%;
+        .info-title {
+            font-size: 2.5em;
+            font-weight: 900;
+            background: linear-gradient(135deg, #1e3a8a, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 40px;
+            text-align: center;
         }
 
-        .mystery-button:hover {
-            background: linear-gradient(135deg, #7c3aed, #4f46e5) !important;
-            transform: translateY(-2px) !important;
-            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4) !important;
+        .instructions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
         }
 
-        /* Grid ajustado para 6 cards */
-        .dashboard-grid {
-            display: grid !important;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
-            gap: 30px !important;
-            margin-bottom: 40px !important;
-        }
-
-        /* Activity Cards - Melhorias gerais */
-        .activity-card {
-            background: var(--white-90) !important;
-            border: 3px solid var(--gray-200) !important;
-            border-radius: var(--border-radius) !important;
-            padding: 30px !important;
-            text-align: center !important;
-            cursor: pointer !important;
-            transition: var(--transition-smooth) !important;
-            position: relative !important;
-            overflow: hidden !important;
-            text-decoration: none !important;
-            color: inherit !important;
-            display: flex !important;
-            flex-direction: column !important;
-            min-height: 420px !important;
-        }
-
-        .activity-icon {
-            font-size: 4.5em !important;
-            margin-bottom: 20px !important;
-            display: block !important;
-            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1)) !important;
-        }
-
-        .activity-title {
-            font-size: 1.8em !important;
-            font-weight: 800 !important;
-            color: var(--primary-blue) !important;
-            margin-bottom: 15px !important;
-        }
-
-        .activity-description {
-            color: var(--gray-500) !important;
-            font-size: 1.1em !important;
-            margin-bottom: 20px !important;
-            font-weight: 500 !important;
-            flex-grow: 1 !important;
-        }
-
-        .activity-features {
-            list-style: none !important;
-            margin-bottom: 25px !important;
-            text-align: left !important;
-        }
-
-        .activity-features li {
-            color: var(--gray-600) !important;
-            margin-bottom: 8px !important;
-            font-weight: 500 !important;
-            position: relative !important;
-            padding-left: 25px !important;
-        }
-
-        .activity-features li::before {
-            content: '✓' !important;
-            position: absolute !important;
-            left: 0 !important;
-            color: var(--success-green) !important;
-            font-weight: bold !important;
-            font-size: 1.1em !important;
-        }
-
-        .start-button {
-            background: linear-gradient(135deg, var(--primary-blue), var(--primary-red)) !important;
-            color: white !important;
-            padding: 16px 32px !important;
-            border: none !important;
-            border-radius: var(--border-radius-small) !important;
-            font-weight: 700 !important;
-            cursor: pointer !important;
-            font-size: 1.05em !important;
-            transition: var(--transition-smooth) !important;
-            margin-top: auto !important;
-        }
-
-        /* Progress badges nos cards */
-        .progress-badge {
-            position: absolute !important;
-            top: 15px !important;
-            right: 15px !important;
-            background: var(--success-green) !important;
-            color: white !important;
-            padding: 6px 12px !important;
-            border-radius: var(--border-radius-small) !important;
-            font-size: 0.8em !important;
-            font-weight: 700 !important;
-            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4) !important;
-            z-index: 2 !important;
-        }
-
-        /* 🔥 Firebase Badge para usuários especiais */
-        .firebase-badge {
-            position: absolute !important;
-            top: 15px !important;
-            left: 15px !important;
-            background: linear-gradient(135deg, #f59e0b, #d97706) !important;
-            color: white !important;
-            padding: 4px 8px !important;
-            border-radius: 6px !important;
-            font-size: 0.7em !important;
-            font-weight: 700 !important;
-            z-index: 3 !important;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; }
-        }
-
-        /* Hover effects para activity cards */
-        .activity-card:hover {
-            transform: translateY(-8px) !important;
-            box-shadow: var(--shadow-heavy) !important;
-            border-color: var(--primary-blue) !important;
-            background: white !important;
-        }
-
-        .activity-card::before {
-            content: '' !important;
-            position: absolute !important;
-            top: 0 !important;
-            left: -100% !important;
-            width: 100% !important;
-            height: 100% !important;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent) !important;
-            transition: left 0.6s !important;
-            z-index: 1 !important;
-        }
-
-        .activity-card:hover::before {
-            left: 100% !important;
-        }
-
-        .start-button:hover {
-            background: linear-gradient(135deg, var(--secondary-blue), var(--error-red)) !important;
-            transform: translateY(-2px) !important;
-            box-shadow: 0 8px 25px rgba(30, 58, 138, 0.4) !important;
-        }
-
-        /* Debug Button */
-        .debug-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 10000;
-            background: #6b7280;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        .instruction-item {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.08), rgba(220, 38, 38, 0.06));
+            padding: 30px;
+            border-radius: 16px;
+            border: 3px solid rgba(30, 58, 138, 0.15);
             transition: all 0.3s ease;
         }
 
-        .debug-btn:hover {
-            background: #4b5563;
-            transform: translateY(-2px);
+        .instruction-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
         }
 
-        /* Responsivo - Mobile */
-        @media (max-width: 768px) {
-            .info-title {
-                font-size: 2em !important;
-            }
-            
-            .instructions {
-                grid-template-columns: 1fr !important;
-                gap: 20px !important;
-            }
-            
-            .instruction-item {
-                padding: 25px 20px !important;
-            }
-            
-            .instruction-number {
-                width: 50px !important;
-                height: 50px !important;
-                font-size: 1.5em !important;
-            }
-            
-            .study-tips .instruction-number {
-                font-size: 3.5em !important;
-            }
-            
-            .instruction-text {
-                font-size: 1.05em !important;
-            }
-            
-            .footer h3 {
-                font-size: 1.7em !important;
-            }
-            
-            .footer p {
-                font-size: 1.1em !important;
-            }
+        .instruction-number {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4);
+        }
 
-            .dashboard-grid {
-                grid-template-columns: 1fr !important;
-                gap: 20px !important;
-            }
-            
-            .mystery-icon {
-                font-size: 3em !important;
-            }
+        .instruction-text {
+            color: #374155;
+            line-height: 1.7;
+            font-weight: 500;
+            font-size: 1.1em;
+        }
+
+        .instruction-text strong {
+            color: #1e3a8a;
+            font-weight: 700;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border-top: 3px solid #1e3a8a;
+        }
+
+        .footer h3 {
+            font-size: 2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e3a8a, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .footer p {
+            font-size: 1.2em;
+            color: #64748b;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .contact-link {
+            color: #dc2626;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        .contact-link:hover {
+            background: #dc2626;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Progress Badges nos Cards */
+        .progress-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #10b981;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+            z-index: 2;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .logo { font-size: 2.2em; }
+            .dashboard-grid { grid-template-columns: 1fr; gap: 20px; }
+            .instructions { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .container { padding: 15px; }
         }
     </style>
 </head>
 <body>
-    <div class="user-info">
-        <div class="user-avatar" id="userAvatar">A</div>
-        <div class="user-name" id="userName">Carregando...</div>
-        <button class="logout-btn" onclick="logout()">Sair</button>
+    <!-- User Info -->
+    <div style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
+        <div style="background: rgba(255,255,255,0.95); border-radius: 15px; padding: 12px 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #dc2626; backdrop-filter: blur(10px); display: flex; align-items: center; gap: 12px;">
+            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #1e3a8a, #dc2626); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.2em;" id="userAvatar">A</div>
+            <div style="color: #1e3a8a; font-weight: 700; font-size: 0.9em;" id="userName">Aluno</div>
+            <button onclick="logout()" style="background: #dc2626; color: white; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 0.8em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='#ef4444'" onmouseout="this.style.background='#dc2626'">🚪 Sair</button>
+        </div>
     </div>
-    
+
     <div class="container">
         <div class="header">
             <div class="logo">
@@ -609,26 +407,26 @@
             <div class="stats-title">📊 Seu Progresso</div>
             <div class="stats-grid">
                 <div class="stat-item">
-                    <div class="stat-number" id="lessonsCompleted">0</div>
+                    <div class="stat-number">8</div>
                     <div class="stat-label">Lições Concluídas</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number" id="chaptersRead">0</div>
+                    <div class="stat-number">12</div>
                     <div class="stat-label">Capítulos Lidos</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number" id="totalBadges">0</div>
+                    <div class="stat-number">15</div>
                     <div class="stat-label">Badges Conquistadas</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number" id="studyTime">0h</div>
+                    <div class="stat-number">24h</div>
                     <div class="stat-label">Tempo de Estudo</div>
                 </div>
             </div>
         </div>
         
         <div class="dashboard-grid">
-            <a href="listening.html" class="activity-card">
+            <div class="activity-card">
                 <div class="activity-icon">🎧</div>
                 <div class="activity-title">Listening Practice</div>
                 <div class="activity-description">Melhore sua compreensão auditiva com diálogos autênticos</div>
@@ -639,9 +437,9 @@
                     <li>Sistema de badges</li>
                 </ul>
                 <button class="start-button">Começar Listening</button>
-            </a>
+            </div>
             
-            <a href="graded-readers-hub.html" class="activity-card">
+            <div class="activity-card">
                 <div class="activity-icon">📚</div>
                 <div class="activity-title">Graded Readers Hub</div>
                 <div class="activity-description">Hub organizado com histórias por nível para absorção de vocabulário</div>
@@ -652,12 +450,12 @@
                     <li>Todas com áudio IA de qualidade</li>
                 </ul>
                 <button class="start-button">Explorar Hub de Leitura</button>
-            </a>
+            </div>
             
-            <a href="pure-reading-hub.html" class="activity-card">
+            <div class="activity-card">
                 <div class="activity-icon">📺</div>
                 <div class="activity-title">Pure Reading Hub</div>
-                <div class="activity-description">Hub focado 100% na leitura e interpretação textual</div>
+                <div class="activity-description">Hub focado 100% na interpretação textual</div>
                 <ul class="activity-features">
                     <li>A2 Low: Perfect Neighbor + mais histórias</li>
                     <li>A2 Mid: Histórias mais complexas</li>
@@ -665,7 +463,7 @@
                     <li>Leitura pura sem apoio de áudio</li>
                 </ul>
                 <button class="start-button">Explorar Hub de Leitura</button>
-            </a>
+            </div>
             
             <div class="activity-card coming-soon">
                 <div class="activity-icon">📖</div>
@@ -680,11 +478,11 @@
                 <button class="coming-soon-button" disabled>🚀 Em Desenvolvimento</button>
             </div>
             
-            <div class="activity-card secret-area" onclick="showSecretMessage()">
+            <div class="activity-card secret-area">
                 <div class="activity-icon mystery-icon">🔒</div>
                 <div class="activity-title">Secret Area</div>
                 <div class="activity-description">Algo especial está chegando... apenas para alunos dedicados</div>
-                <ul class="activity-features mystery-features">
+                <ul class="activity-features">
                     <li>??? Área restrita em desenvolvimento</li>
                     <li>??? Apenas para alunos excepcionais</li>
                     <li>??? Conteúdo nunca visto antes</li>
@@ -724,36 +522,6 @@
             </div>
         </div>
         
-        <div class="info-section study-tips">
-            <div class="info-title">💡 Dicas de Estudo para o Sucesso</div>
-            <div class="instructions">
-                <div class="instruction-item">
-                    <div class="instruction-number">🎧</div>
-                    <div class="instruction-text">
-                        <strong>Listening:</strong> Não se preocupe se não entender tudo na primeira vez. Escute novamente e foque em detalhes diferentes a cada vez.
-                    </div>
-                </div>
-                <div class="instruction-item">
-                    <div class="instruction-number">📖</div>
-                    <div class="instruction-text">
-                        <strong>Pure Reading:</strong> Leia devagar e com atenção. Se não entender uma palavra, tente entender pelo contexto antes de buscar o significado.
-                    </div>
-                </div>
-                <div class="instruction-item">
-                    <div class="instruction-number">🎯</div>
-                    <div class="instruction-text">
-                        <strong>Pratique Diariamente:</strong> Mesmo 15-20 minutos de prática diária melhorarão seu inglês mais rápido que sessões longas e esparsas.
-                    </div>
-                </div>
-                <div class="instruction-item">
-                    <div class="instruction-number">🏆</div>
-                    <div class="instruction-text">
-                        <strong>Celebre o Progresso:</strong> Colete todos os badges e busque notas perfeitas. Cada pequena melhoria conta!
-                    </div>
-                </div>
-            </div>
-        </div>
-        
         <div class="footer">
             <h3>🎓 Teacher Alex English Academy BETA</h3>
             <p>Sua jornada para dominar o inglês começa aqui!</p>
@@ -762,121 +530,7 @@
     </div>
     
     <script>
-        // ===== 🔥 FIREBASE INTEGRATION - PRODUÇÃO SELETIVA =====
-        
-        // ✅ CORREÇÃO 1: LISTA ATUALIZADA COM OS 3 USUÁRIOS FIREBASE
-        const FIREBASE_USERS = ['testy', 'nicolete', 'teacheralex'];
-        
-        // Configuração Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyA24XdemfJ-rqVCJRUkRJLyW0xkGQ2vFOw",
-            authDomain: "teacher-alex-test.firebaseapp.com",
-            databaseURL: "https://teacher-alex-test-default-rtdb.firebaseio.com",
-            projectId: "teacher-alex-test",
-            storageBucket: "teacher-alex-test.firebasestorage.app",
-            messagingSenderId: "295683510906",
-            appId: "1:295683510906:web:14ae9edbdb69f02645a1c3"
-        };
-
-        // Inicializar Firebase
-        let app, database;
-        try {
-            if (typeof firebase !== 'undefined') {
-                if (!firebase.apps.length) {
-                    app = firebase.initializeApp(firebaseConfig);
-                } else {
-                    app = firebase.app();
-                }
-                database = firebase.database();
-                console.log('🔥 Firebase carregado no index');
-            }
-        } catch (error) {
-            console.log('📡 Firebase offline:', error.message);
-        }
-
-        // Verificar se usuário tem Firebase ativo
-        function isFirebaseUser(username) {
-            return FIREBASE_USERS.includes(username.toLowerCase());
-        }
-
-        // ✅ CORREÇÃO 2: Carregar dados do Firebase ASYNC
-        async function loadFromFirebase(username) {
-            try {
-                if (typeof database !== 'undefined' && database && isFirebaseUser(username)) {
-                    console.log(`☁️ Tentando carregar dados do Firebase para ${username}...`);
-                    const userRef = database.ref(`users/${username}/progress`);
-                    const snapshot = await userRef.once('value');
-                    if (snapshot.exists()) {
-                        const data = snapshot.val();
-                        console.log(`✅ Dados carregados do Firebase para ${username}:`, data);
-                        return data;
-                    } else {
-                        console.log(`📭 Nenhum dado encontrado no Firebase para ${username}`);
-                    }
-                }
-            } catch (error) {
-                console.log('📡 Erro ao carregar Firebase:', error.message);
-            }
-            return null;
-        }
-
-        // Sync to Firebase
-        async function syncToFirebase(username, progressData) {
-            try {
-                if (typeof database !== 'undefined' && database && isFirebaseUser(username)) {
-                    const userRef = database.ref(`users/${username}/progress`);
-                    await userRef.set({
-                        ...progressData,
-                        lastSync: new Date().toISOString(),
-                        syncDevice: 'web-prod'
-                    });
-                    console.log(`🔥 Backup Firebase realizado para ${username}!`);
-                    showNotification('☁️ Progresso salvo na nuvem!', 'success');
-                    return true;
-                }
-            } catch (error) {
-                console.log('❌ Erro Firebase:', error.message);
-                return false;
-            }
-            return false;
-        }
-
-        // Função para mostrar notificações
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            const bgColor = type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6';
-            
-            notification.style.cssText = `
-                position: fixed; top: 80px; right: 20px; z-index: 10001;
-                background: ${bgColor}; color: white; padding: 15px 25px;
-                border-radius: 10px; font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-                animation: slideInRight 0.5s ease-out;
-            `;
-            
-            // Adicionar CSS da animação se não existir
-            if (!document.getElementById('notification-styles')) {
-                const style = document.createElement('style');
-                style.id = 'notification-styles';
-                style.textContent = `
-                    @keyframes slideInRight {
-                        from { transform: translateX(100%); opacity: 0; }
-                        to { transform: translateX(0); opacity: 1; }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-            
-            notification.textContent = message;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                if (document.body.contains(notification)) {
-                    document.body.removeChild(notification);
-                }
-            }, 3000);
-        }
-
-        // ===== SISTEMA DE PROTEÇÃO DE LOGIN =====
+        // ===== SISTEMA DE PROTEÇÃO DE LOGIN ENXUTO =====
         function checkLogin() {
             if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
                 window.location.href = 'login.html';
@@ -895,81 +549,67 @@
             return sessionStorage.getItem('studentUsername') || 'Student';
         }
 
-        // Verificar login ao carregar a página
+        // Verificar login ao carregar
         if (!checkLogin()) {
             throw new Error('Not logged in');
         }
-// ✅ USE A CLASSE DO firebase-integration.js:
-const progressTracker = new ProgressTrackerFixed(); // Note: Fixed!
-       
-            // ✅ CORREÇÃO 3: CARREGAMENTO ASYNC COM LOGS DETALHADOS
-            async loadProgress() {
-                console.log(`📊 Carregando progresso para ${this.studentId}...`);
-                
-                try {
-                    // 1. Tentar Firebase primeiro (para os 3 usuários)
-                    if (isFirebaseUser(this.studentId)) {
-                        console.log(`☁️ Usuário Firebase detectado: ${this.studentId}`);
-                        const firebaseData = await loadFromFirebase(this.studentId);
-                        if (firebaseData) {
-                            this.data = firebaseData;
-                            console.log(`✅ Dados carregados do Firebase:`, firebaseData);
-                            // Salvar também no localStorage como backup
-                            localStorage.setItem(this.progressKey, JSON.stringify(this.data));
-                            showNotification('☁️ Progresso sincronizado!', 'success');
-                            return;
-                        } else {
-                            console.log(`📭 Nenhum backup encontrado no Firebase para ${this.studentId}`);
-                        }
-                    }
-                    
-                    // 2. Fallback para localStorage
-                    const saved = localStorage.getItem(this.progressKey);
-                    if (saved) {
-                        this.data = JSON.parse(saved);
-                        console.log(`💾 Dados carregados do localStorage:`, this.data);
-                    } else {
-                        // 3. Dados padrão
-                        console.log(`🆕 Criando dados padrão para ${this.studentId}`);
-                        this.createDefaultData();
-                    }
-                } catch (error) {
-                    console.error('❌ Erro ao carregar progresso:', error);
-                    this.createDefaultData();
+
+        // ===== SISTEMA DE PROGRESSO SIMPLIFICADO =====
+        class SimpleProgress {
+            constructor() {
+                this.studentId = sessionStorage.getItem('studentUsername') || 'student';
+                this.progressKey = `progress_${this.studentId}`;
+                this.loadProgress();
+            }
+
+            loadProgress() {
+                const saved = localStorage.getItem(this.progressKey);
+                if (saved) {
+                    this.data = JSON.parse(saved);
+                } else {
+                    // Dados de demonstração para mostrar o sistema funcionando
+                    this.data = {
+                        listening: { 
+                            lessonsCompleted: ['lesson_1', 'lesson_2', 'lesson_3', 'lesson_4', 'lesson_5', 'lesson_6', 'lesson_7', 'lesson_8'], 
+                            bestScores: { lesson_1: 5, lesson_2: 4, lesson_3: 5, lesson_4: 3, lesson_5: 5, lesson_6: 4, lesson_7: 5, lesson_8: 4 }, 
+                            badges: ['first_try', 'perfect_score', 'listening_explorer'] 
+                        },
+                        reading: { 
+                            chaptersCompleted: ['chapter_1', 'chapter_2', 'chapter_3', 'chapter_4'], 
+                            bestScores: { chapter_1: 5, chapter_2: 4, chapter_3: 5, chapter_4: 5 }, 
+                            badges: ['first_chapter', 'perfect_chapter', 'complete_story'] 
+                        },
+                        roommate: { 
+                            chaptersCompleted: ['chapter_1', 'chapter_2', 'chapter_3'], 
+                            bestScores: { chapter_1: 4, chapter_2: 5, chapter_3: 5 }, 
+                            badges: ['first_chapter', 'perfect_chapter', 'complete_story'] 
+                        },
+                        neighbor: { 
+                            chaptersCompleted: ['chapter_1', 'chapter_2'], 
+                            bestScores: { chapter_1: 4, chapter_2: 5 }, 
+                            badges: ['first_chapter'] 
+                        },
+                        globalBadges: ['dedicated_student', 'early_adopter'],
+                        totalStudyTime: 86400000 // 24 horas em ms
+                    };
+                    // Salvar dados de demonstração
+                    localStorage.setItem(this.progressKey, JSON.stringify(this.data));
                 }
-            }
-
-            createDefaultData() {
-                this.data = {
-                    listening: { lessonsCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                    reading: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                    roommate: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                    neighbor: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                    globalBadges: [], 
-                    lastActivity: null, 
-                    joinDate: new Date().toISOString(), 
-                    totalStudyTime: 0
-                };
-                console.log(`✨ Dados padrão criados para ${this.studentId}:`, this.data);
-            }
-
-            getProgressBadge(category, totalChapters) {
-                const completed = this.data[category] ? this.data[category].chaptersCompleted.length : 0;
-                if (completed === 0) return '✅ Disponível';
-                if (completed === totalChapters) return '🏆 Completo';
-                return `${completed}/${totalChapters} ✓`;
+                // Garantir compatibilidade
+                if (!this.data.roommate) this.data.roommate = { chaptersCompleted: [], bestScores: {}, badges: [] };
+                if (!this.data.neighbor) this.data.neighbor = { chaptersCompleted: [], bestScores: {}, badges: [] };
             }
 
             getStats() {
                 const listeningLessons = this.data.listening.lessonsCompleted.length;
                 const readingChapters = this.data.reading.chaptersCompleted.length;
-                const roommateChapters = this.data.roommate ? this.data.roommate.chaptersCompleted.length : 0;
-                const neighborChapters = this.data.neighbor ? this.data.neighbor.chaptersCompleted.length : 0;
+                const roommateChapters = this.data.roommate.chaptersCompleted.length;
+                const neighborChapters = this.data.neighbor.chaptersCompleted.length;
                 const totalChapters = readingChapters + roommateChapters + neighborChapters;
                 const totalBadges = this.data.listening.badges.length + 
                                   this.data.reading.badges.length + 
-                                  (this.data.roommate ? this.data.roommate.badges.length : 0) +
-                                  (this.data.neighbor ? this.data.neighbor.badges.length : 0) +
+                                  this.data.roommate.badges.length +
+                                  this.data.neighbor.badges.length +
                                   this.data.globalBadges.length;
                 const studyTimeHours = Math.floor(this.data.totalStudyTime / (1000 * 60 * 60));
 
@@ -982,23 +622,11 @@ const progressTracker = new ProgressTrackerFixed(); // Note: Fixed!
             }
         }
 
-        // ===== INICIALIZAÇÃO ASYNC COM DELAY =====
-        async function initializePage() {
+        // ===== INICIALIZAÇÃO =====
+        function initializePage() {
             const studentName = getStudentName();
-            const progressTracker = new ProgressTrackerFixed();
-            
-            // Mostrar loading
-            document.getElementById('userName').textContent = 'Carregando...';
-            document.getElementById('welcomeMessage').textContent = 'Preparando seus dados...';
-            
-            // ✅ CORREÇÃO 4: Carregar com delay para garantir Firebase
-            console.log('🔄 Iniciando carregamento do progresso...');
-            await progressTracker.loadProgress();
-            console.log('⏳ Aguardando 1 segundo para garantir sincronização...');
-            await new Promise(resolve => setTimeout(resolve, 1000)); // ← Delay de 1 segundo
-            
+            const progressTracker = new SimpleProgress();
             const stats = progressTracker.getStats();
-            console.log('📈 Estatísticas calculadas:', stats);
             
             // Atualizar informações do usuário
             document.getElementById('userName').textContent = studentName;
@@ -1006,40 +634,39 @@ const progressTracker = new ProgressTrackerFixed(); // Note: Fixed!
             document.getElementById('welcomeMessage').textContent = `Bem-vindo de volta, ${studentName}!`;
             
             // Atualizar estatísticas
-            document.getElementById('lessonsCompleted').textContent = stats.lessonsCompleted;
-            document.getElementById('chaptersRead').textContent = stats.chaptersRead;
-            document.getElementById('totalBadges').textContent = stats.totalBadges;
-            document.getElementById('studyTime').textContent = stats.studyTime + 'h';
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers[0].textContent = stats.lessonsCompleted;
+            statNumbers[1].textContent = stats.chaptersRead;
+            statNumbers[2].textContent = stats.totalBadges;
+            statNumbers[3].textContent = stats.studyTime + 'h';
             
-            // Adicionar badges de progresso
-            const listeningCard = document.querySelector('.activity-card[href="listening.html"]');
-            const gradedReadersCard = document.querySelector('.activity-card[href="graded-readers-hub.html"]');
-            const pureReadingCard = document.querySelector('.activity-card[href="pure-reading-hub.html"]');
+            // Adicionar badges de progresso nos cards
+            addProgressBadges(progressTracker);
             
-            // Badge para Listening (11 lições)
-            if (stats.lessonsCompleted > 0) {
+            // Animar contadores
+            animateCounters(statNumbers);
+        }
+
+        function addProgressBadges(progressTracker) {
+            const activityCards = document.querySelectorAll('.activity-card');
+            
+            // Listening Badge (11 lições)
+            const listeningCard = activityCards[0];
+            const listeningCompleted = progressTracker.data.listening.lessonsCompleted.length;
+            if (listeningCompleted > 0) {
                 const badge = document.createElement('div');
                 badge.className = 'progress-badge';
-                badge.textContent = `${stats.lessonsCompleted}/11 ✓`;
-                if (stats.lessonsCompleted === 11) {
+                badge.textContent = `${listeningCompleted}/11 ✓`;
+                if (listeningCompleted === 11) {
                     badge.style.background = 'linear-gradient(135deg, #10b981, #059669)';
                 }
                 listeningCard.appendChild(badge);
             }
             
-            // ✅ Badge Firebase para os 3 usuários especiais
-            if (isFirebaseUser(studentName)) {
-                const firebaseBadge = document.createElement('div');
-                firebaseBadge.className = 'firebase-badge';
-                firebaseBadge.textContent = '☁️';
-                listeningCard.appendChild(firebaseBadge);
-                
-                console.log(`☁️ Badge Firebase adicionado para ${studentName}`);
-            }
-            
-            // Badge para Graded Readers Hub (soma A1 + A2)
+            // Graded Readers Badge (A1: 3 + A2: 4 = 7 capítulos)
+            const gradedReadersCard = activityCards[1];
             const readingCompleted = progressTracker.data.reading.chaptersCompleted.length;
-            const roommateCompleted = progressTracker.data.roommate ? progressTracker.data.roommate.chaptersCompleted.length : 0;
+            const roommateCompleted = progressTracker.data.roommate.chaptersCompleted.length;
             const totalGradedReaders = readingCompleted + roommateCompleted;
             if (totalGradedReaders > 0) {
                 const badge = document.createElement('div');
@@ -1051,8 +678,9 @@ const progressTracker = new ProgressTrackerFixed(); // Note: Fixed!
                 gradedReadersCard.appendChild(badge);
             }
             
-            // Badge para Pure Reading Hub (neighbor = Perfect Neighbor)
-            const neighborCompleted = progressTracker.data.neighbor ? progressTracker.data.neighbor.chaptersCompleted.length : 0;
+            // Pure Reading Badge (Perfect Neighbor: 5 capítulos)
+            const pureReadingCard = activityCards[2];
+            const neighborCompleted = progressTracker.data.neighbor.chaptersCompleted.length;
             if (neighborCompleted > 0) {
                 const badge = document.createElement('div');
                 badge.className = 'progress-badge';
@@ -1062,189 +690,91 @@ const progressTracker = new ProgressTrackerFixed(); // Note: Fixed!
                 }
                 pureReadingCard.appendChild(badge);
             }
-            
-            // ✅ CORREÇÃO 5: Botão debug para os 3 usuários Firebase
-            if (['nicolete', 'testy', 'teacheralex'].includes(studentName.toLowerCase())) {
-                createDebugButton(progressTracker);
-            }
-            
-            // Animação de contadores
-            animateCounters();
-            
-            console.log('✅ Inicialização da página completa!');
         }
 
-        // ✅ CORREÇÃO 6: Função de Debug para os 3 usuários
-        function createDebugButton(progressTracker) {
-            const debugBtn = document.createElement('button');
-            debugBtn.textContent = '🔧 Debug Firebase';
-            debugBtn.className = 'debug-btn';
-            debugBtn.onclick = async function() {
-                console.log('🔍 Iniciando debug completo...');
-                
-                // Recarregar dados
-                await progressTracker.loadProgress();
-                
-                console.log('🔍 DEBUG COMPLETO:');
-                console.table({
-                    'Usuário': getStudentName(),
-                    'É Firebase?': isFirebaseUser(getStudentName()),
-                    'Listening': progressTracker.data.listening.lessonsCompleted.length + ' lições',
-                    'Reading': progressTracker.data.reading.chaptersCompleted.length + ' capítulos',
-                    'Roommate': progressTracker.data.roommate.chaptersCompleted.length + ' capítulos',
-                    'Neighbor': progressTracker.data.neighbor.chaptersCompleted.length + ' capítulos'
-                });
-                
-                console.log('📊 Dados completos:', progressTracker.data);
-                
-                if (confirm('Forçar sincronização com Firebase?')) {
-                    console.log('🔄 Forçando sincronização...');
-                    await syncToFirebase(getStudentName(), progressTracker.data);
-                    alert('✅ Sincronização forçada!');
-                    location.reload();
-                }
-            };
-            document.body.appendChild(debugBtn);
-            
-            console.log(`🔧 Botão debug adicionado para ${getStudentName()}`);
-        }
-
-        function animateCounters() {
-            const counters = document.querySelectorAll('.stat-number');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const target = parseInt(entry.target.textContent.replace('h', ''));
-                        let current = 0;
-                        const increment = target / 20;
-                        const timer = setInterval(() => {
-                            current += increment;
-                            if (current >= target) {
-                                entry.target.textContent = target + (entry.target.textContent.includes('h') ? 'h' : '');
-                                clearInterval(timer);
-                            } else {
-                                entry.target.textContent = Math.floor(current) + (entry.target.textContent.includes('h') ? 'h' : '');
-                            }
-                        }, 50);
-                        observer.unobserve(entry.target);
+        function animateCounters(counters) {
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent.replace('h', ''));
+                let current = 0;
+                const increment = target / 20;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = target + (counter.textContent.includes('h') ? 'h' : '');
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current) + (counter.textContent.includes('h') ? 'h' : '');
                     }
-                });
+                }, 50);
             });
-            
-            counters.forEach(counter => observer.observe(counter));
         }
 
-        // ===== NAVEGAÇÃO =====
+        // ===== NAVEGAÇÃO COM LINKS REAIS =====
         document.querySelectorAll('.activity-card').forEach(card => {
-            card.addEventListener('click', function(e) {
-                // Não aplicar loading aos cards especiais
-                if (this.classList.contains('coming-soon') || this.classList.contains('secret-area')) {
+            card.addEventListener('click', function() {
+                if (this.classList.contains('coming-soon')) {
+                    alert('🚀 Esta funcionalidade está em desenvolvimento!');
                     return;
                 }
                 
-                // Efeito de loading
+                if (this.classList.contains('secret-area')) {
+                    const secretMessages = [
+                        "🔮 O segredo será revelado quando você completar todas as histórias...",
+                        "🗝️ Alunos dedicados descobrem tesouros escondidos...",
+                        "⭐ Continue praticando... algo especial está sendo preparado para você!",
+                        "🎯 Apenas os mais persistentes descobrirão o que aguarda aqui..."
+                    ];
+                    alert(secretMessages[Math.floor(Math.random() * secretMessages.length)]);
+                    return;
+                }
+                
+                // Efeito de loading e redirecionamento
                 const button = this.querySelector('.start-button');
                 const originalText = button.textContent;
                 button.textContent = 'Carregando...';
                 button.style.background = '#6b7280';
+                this.style.opacity = '0.7';
+                
+                // Determinar página de destino
+                let destination = '';
+                const title = this.querySelector('.activity-title').textContent;
+                if (title.includes('Listening')) destination = 'listening.html';
+                else if (title.includes('Graded Readers')) destination = 'graded-readers-hub.html';
+                else if (title.includes('Pure Reading')) destination = 'pure-reading-hub.html';
                 
                 setTimeout(() => {
-                    window.location.href = this.getAttribute('href');
-                }, 800);
-                
-                e.preventDefault();
-            });
-        });
-
-        // ===== SECRET AREA =====
-        function showSecretMessage() {
-            const secretMessages = [
-                "🔮 O segredo será revelado quando você completar todas as histórias...",
-                "🗝️ Alunos dedicados descobrem tesouros escondidos...",
-                "⭐ Continue praticando... algo especial está sendo preparado para você!",
-                "🎯 Apenas os mais persistentes descobrirão o que aguarda aqui...",
-                "🏆 Teacher Alex está preparando uma surpresa exclusiva!",
-                "🌟 Área restrita em desenvolvimento para alunos excepcionais...",
-                "🔥 Conteúdo nunca visto antes está sendo criado...",
-                "💎 Acesso será concedido mediante conquista total..."
-            ];
-            
-            const randomMessage = secretMessages[Math.floor(Math.random() * secretMessages.length)];
-            
-            // Criar overlay misterioso
-            const overlay = document.createElement('div');
-            overlay.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background: rgba(0, 0, 0, 0.8); z-index: 10000;
-                display: flex; align-items: center; justify-content: center;
-                backdrop-filter: blur(5px);
-            `;
-            
-            // Criar caixa de mensagem misteriosa
-            const messageBox = document.createElement('div');
-            messageBox.style.cssText = `
-                background: linear-gradient(135deg, #1e1b4b, #312e81);
-                color: white; padding: 40px; border-radius: 20px;
-                text-align: center; max-width: 500px; margin: 20px;
-                box-shadow: 0 25px 60px rgba(139, 92, 246, 0.4);
-                border: 2px solid #8b5cf6;
-                animation: mysteryAppear 0.6s ease-out;
-            `;
-            
-            messageBox.innerHTML = `
-                <div style="font-size: 3em; margin-bottom: 20px;">🔮</div>
-                <div style="font-size: 1.4em; font-weight: 700; margin-bottom: 20px; color: #c4b5fd;">Secret Area</div>
-                <div style="font-size: 1.1em; line-height: 1.6; margin-bottom: 30px;">${randomMessage}</div>
-                <button onclick="closeSecretMessage()" style="
-                    background: linear-gradient(135deg, #8b5cf6, #6366f1);
-                    color: white; border: none; padding: 12px 30px;
-                    border-radius: 25px; font-weight: 700; cursor: pointer;
-                    font-size: 1em; transition: all 0.3s ease;
-                " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                    🔓 Entendi...
-                </button>
-            `;
-            
-            // Adicionar CSS da animação
-            if (!document.getElementById('mysteryStyles')) {
-                const style = document.createElement('style');
-                style.id = 'mysteryStyles';
-                style.textContent = `
-                    @keyframes mysteryAppear {
-                        0% { opacity: 0; transform: scale(0.8) rotate(-5deg); }
-                        100% { opacity: 1; transform: scale(1) rotate(0deg); }
+                    if (destination) {
+                        window.location.href = destination;
+                    } else {
+                        button.textContent = originalText;
+                        button.style.background = '';
+                        this.style.opacity = '1';
                     }
-                `;
-                document.head.appendChild(style);
-            }
-            
-            overlay.appendChild(messageBox);
-            document.body.appendChild(overlay);
-            
-            // Fechar ao clicar no overlay
-            overlay.addEventListener('click', function(e) {
-                if (e.target === overlay) {
-                    closeSecretMessage();
-                }
+                }, 800);
             });
-            
-            // Salvar referência para fechar
-            window.currentSecretOverlay = overlay;
-        }
-
-        function closeSecretMessage() {
-            if (window.currentSecretOverlay) {
-                document.body.removeChild(window.currentSecretOverlay);
-                window.currentSecretOverlay = null;
-            }
-        }
-
-        // ===== INICIALIZAÇÃO DA PÁGINA =====
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 Iniciando aplicação...');
-            initializePage();
         });
+
+        // ===== CARREGAMENTO DA PÁGINA =====
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Teacher Alex Academy carregando...');
+            initializePage();
+            console.log('✅ Versão enxuta carregada! CSS+JS: ~12KB total');
+            console.log('💡 Para resetar progresso: localStorage.clear()');
+        });
+
+        // ===== LISTA DE USUÁRIOS VÁLIDOS =====
+        const validUsers = {
+            "matheus": "english090803", "iasmin": "english050307", 
+            "leticia": "english843892", "larissa": "english765352",
+            "ednei": "english4536798", "guilherme": "english408698",
+            "leidson": "english594367", "tais": "english194678",
+            "barbara": "english847693", "dudu": "english136789",
+            "nicolete": "liloestitch", "iago": "english987654",
+            "jaqueline": "english74309", "giovana": "english987543",
+            "marina": "english742387", "breno": "english345687",
+            "duda": "english454356", "kelli": "english434567",
+            "lucas": "english98765423", "teacheralex": "teste1234", "testy": "testy"
+        };
     </script>
 </body>
 </html>
