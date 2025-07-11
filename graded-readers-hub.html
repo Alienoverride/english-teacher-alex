@@ -43,6 +43,24 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
+        .level-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border: 3px solid rgba(30, 58, 138, 0.15);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .level-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+        }
+
         .level-section::before {
             content: '';
             position: absolute;
