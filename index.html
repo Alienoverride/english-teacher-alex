@@ -4,38 +4,199 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teacher Alex English Academy BETA</title>
+    
+    <!-- CSS EXTERNO - ESTRATÉGIA VENCEDORA! -->
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="layout.css">
     <link rel="stylesheet" href="theme-patriot.css">
+    
     <style>
-        /* CORREÇÃO RÁPIDA - BOTÕES + MOBILE */
+        /* ===== 🔥 BOTÕES PREMIUM - ARREDONDADOS E MAIORES ===== */
+        
+        /* Botão "Em Desenvolvimento" - Laranja Premium */
+        .coming-soon-button {
+            background: linear-gradient(135deg, #f59e0b, #d97706, #92400e) !important;
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4) !important;
+            border: 3px solid rgba(255, 255, 255, 0.3) !important;
+            color: white !important;
+            font-weight: 800 !important;
+            font-size: 1.1em !important;
+            padding: 18px 32px !important;
+            border-radius: 20px !important;
+            cursor: not-allowed !important;
+            transition: all 0.4s ease !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1.5px !important;
+            font-family: 'Arial', sans-serif !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
 
-/* Botão Em Desenvolvimento */
-button[style*="background: #f59e0b"],
-button[style*="background:#f59e0b"] {
-    background: linear-gradient(135deg, #f59e0b, #d97706, #92400e) !important;
-    box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4) !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-}
+        .coming-soon-button:hover {
+            background: linear-gradient(135deg, #d97706, #92400e, #78350f) !important;
+            transform: translateY(-3px) scale(1.02) !important;
+            box-shadow: 0 15px 40px rgba(245, 158, 11, 0.6) !important;
+        }
 
-/* Botão Investigar */
-button[style*="background: #8b5cf6"],
-button[style*="background:#8b5cf6"] {
-    background: linear-gradient(135deg, #8b5cf6, #7c3aed, #5b21b6) !important;
-    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4) !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-}
+        .coming-soon-button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.8s;
+        }
 
-/* Mobile Fix */
-@media (max-width: 768px) {
-    .card:active {
-        background: white !important;
-        transform: scale(0.98) !important;
-    }
-}
-        /* CSS específico para Coming Soon e Secret Area */
+        .coming-soon-button:hover::before {
+            left: 100%;
+        }
+
+        /* Botão "Investigar" - Roxo Premium */
+        .mystery-button {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed, #5b21b6) !important;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4) !important;
+            border: 3px solid rgba(255, 255, 255, 0.3) !important;
+            color: white !important;
+            font-weight: 800 !important;
+            font-size: 1.1em !important;
+            padding: 18px 32px !important;
+            border-radius: 20px !important;
+            cursor: pointer !important;
+            transition: all 0.4s ease !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1.5px !important;
+            font-family: 'Arial', sans-serif !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
+
+        .mystery-button:hover {
+            background: linear-gradient(135deg, #7c3aed, #5b21b6, #4c1d95) !important;
+            transform: translateY(-3px) scale(1.02) !important;
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.6) !important;
+        }
+
+        .mystery-button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.8s;
+        }
+
+        .mystery-button:hover::before {
+            left: 100%;
+        }
+
+        /* MELHORIA DOS BOTÕES NORMAIS TAMBÉM */
+        .start-button {
+            font-weight: 700 !important;
+            font-size: 1.05em !important;
+            padding: 16px 28px !important;
+            border-radius: 16px !important;
+            letter-spacing: 0.8px !important;
+            transition: all 0.3s ease !important;
+            text-transform: uppercase !important;
+            font-family: 'Arial', sans-serif !important;
+        }
+
+        .start-button:hover {
+            transform: translateY(-2px) scale(1.01) !important;
+        }
+
+        /* ===== 📱 MOBILE FEEDBACK PREMIUM ===== */
+        
+        @media (max-width: 768px) {
+            .activity-card:active {
+                background: white !important;
+                transform: scale(0.97) !important;
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25) !important;
+                border-color: #1e3a8a !important;
+            }
+            
+            /* Secret Area específica */
+            .secret-area:active {
+                background: white !important;
+                opacity: 1 !important;
+                border: 3px solid #1e3a8a !important;
+                transform: scale(0.97) !important;
+            }
+            
+            /* Coming Soon específica */
+            .coming-soon:active {
+                background: white !important;
+                opacity: 1 !important;
+                transform: scale(0.97) !important;
+            }
+            
+            /* Botões no mobile */
+            .mystery-button:active,
+            .coming-soon-button:active,
+            .start-button:active {
+                transform: scale(0.95) !important;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3) !important;
+            }
+        }
+
+        /* ===== 🎨 MELHORIAS VISUAIS EXTRAS ===== */
+        
+        /* Animação de pulso nos ícones dos cards especiais */
+        .mystery-icon {
+            animation: mysteryPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes mysteryPulse {
+            0%, 100% { 
+                transform: scale(1);
+                filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.5));
+            }
+            50% { 
+                transform: scale(1.1);
+                filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.8));
+            }
+        }
+
+        /* Hover melhorado para todos os cards */
+        .activity-card:hover {
+            transform: translateY(-5px) scale(1.02) !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15) !important;
+            border-color: #3b82f6 !important;
+        }
+
+        /* Efeito especial para o secret area */
+        .secret-area:hover .mystery-icon {
+            animation-duration: 1s !important;
+            transform: scale(1.2) rotate(15deg) !important;
+        }
+
+        /* Typography melhorada para todos os cards */
+        .activity-title {
+            font-weight: 800 !important;
+            letter-spacing: 0.5px !important;
+        }
+
+        .activity-description {
+            line-height: 1.6 !important;
+            font-weight: 500 !important;
+        }
+
+        /* ===== 🔧 iOS SAFARI FIXES ===== */
+        @media (max-width: 768px) {
+            * {
+                -webkit-tap-highlight-color: transparent;
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+            }
+            
+            .activity-card {
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+            }
+        }
+
+        /* ===== CSS ESPECÍFICOS EXISTENTES ===== */
         .coming-soon {
             opacity: 0.75;
             border-style: dashed !important;
@@ -44,11 +205,6 @@ button[style*="background:#8b5cf6"] {
 
         .coming-soon:hover { 
             opacity: 1; 
-        }
-
-        .coming-soon-button {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
-            cursor: not-allowed !important;
         }
 
         .secret-area {
@@ -67,19 +223,6 @@ button[style*="background:#8b5cf6"] {
             border: 3px dashed #1e3a8a !important;
             background: rgba(255, 255, 255, 0.95) !important;
             opacity: 1;
-        }
-
-        .mystery-icon {
-            animation: mysteryPulse 2s infinite;
-        }
-
-        @keyframes mysteryPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .mystery-button {
-            background: linear-gradient(135deg, #8b5cf6, #6366f1) !important;
         }
 
         /* Alinhamento dos botões nos cards */
@@ -247,7 +390,7 @@ button[style*="background:#8b5cf6"] {
     </div>
     
     <script>
-        // ===== SISTEMA DE PROTEÇÃO DE LOGIN ENXUTO =====
+        // ===== SISTEMA DE PROTEÇÃO DE LOGIN PURO =====
         function checkLogin() {
             if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
                 window.location.href = 'login.html';
@@ -266,12 +409,9 @@ button[style*="background:#8b5cf6"] {
             return sessionStorage.getItem('studentUsername') || 'Student';
         }
 
-        // Verificar login ao carregar
-        if (!checkLogin()) {
-            throw new Error('Not logged in');
-        }
+        if (!checkLogin()) throw new Error('Not logged in');
 
-        // ===== SISTEMA DE PROGRESSO SIMPLIFICADO =====
+        // ===== SISTEMA DE PROGRESSO PURO LOCALSTORAGE =====
         class SimpleProgress {
             constructor() {
                 this.studentId = sessionStorage.getItem('studentUsername') || 'student';
@@ -284,7 +424,6 @@ button[style*="background:#8b5cf6"] {
                 if (saved) {
                     this.data = JSON.parse(saved);
                 } else {
-                    // Dados limpos para novos usuários
                     this.data = {
                         listening: { lessonsCompleted: [], bestScores: {}, badges: [] },
                         reading: { chaptersCompleted: [], bestScores: {}, badges: [] },
@@ -294,7 +433,6 @@ button[style*="background:#8b5cf6"] {
                         totalStudyTime: 0
                     };
                 }
-                // Garantir compatibilidade
                 if (!this.data.roommate) this.data.roommate = { chaptersCompleted: [], bestScores: {}, badges: [] };
                 if (!this.data.neighbor) this.data.neighbor = { chaptersCompleted: [], bestScores: {}, badges: [] };
             }
@@ -321,33 +459,26 @@ button[style*="background:#8b5cf6"] {
             }
         }
 
-        // ===== INICIALIZAÇÃO SEM FIREBASE =====
+        // ===== INICIALIZAÇÃO PURA =====
         function initializePage() {
             const studentName = getStudentName();
             const progressTracker = new SimpleProgress();
             const stats = progressTracker.getStats();
             
-            // Atualizar informações do usuário DIRETO - sem sync
             document.getElementById('userName').textContent = studentName;
             document.getElementById('userAvatar').textContent = studentName.charAt(0).toUpperCase();
             document.getElementById('welcomeMessage').textContent = `Bem-vindo de volta, ${studentName}!`;
             
-            console.log(`✅ Carregado direto do localStorage - usuário: ${studentName}`);
-            console.log(`📊 Stats reais:`, stats);
+            console.log(`✅ Carregado - usuário: ${studentName}`);
+            console.log(`📊 Stats:`, stats);
             
-            // Atualizar estatísticas COM DADOS REAIS
             const statNumbers = document.querySelectorAll('.stat-number');
             statNumbers[0].textContent = stats.lessonsCompleted;
             statNumbers[1].textContent = stats.chaptersRead;
             statNumbers[2].textContent = stats.totalBadges;
             statNumbers[3].textContent = stats.studyTime + 'h';
             
-            console.log(`📈 Estatísticas atualizadas: ${stats.lessonsCompleted} lições, ${stats.chaptersRead} capítulos, ${stats.totalBadges} badges, ${stats.studyTime}h`);
-            
-            // Adicionar badges de progresso nos cards
             addProgressBadges(progressTracker);
-            
-            // Animar contadores
             animateCounters(statNumbers);
         }
 
@@ -367,7 +498,7 @@ button[style*="background:#8b5cf6"] {
                 listeningCard.appendChild(badge);
             }
             
-            // Graded Readers Badge (A1: 3 + A2: 4 = 7 capítulos)
+            // Graded Readers Badge
             const gradedReadersCard = activityCards[1];
             const readingCompleted = progressTracker.data.reading.chaptersCompleted.length;
             const roommateCompleted = progressTracker.data.roommate.chaptersCompleted.length;
@@ -382,7 +513,7 @@ button[style*="background:#8b5cf6"] {
                 gradedReadersCard.appendChild(badge);
             }
             
-            // Pure Reading Badge (Perfect Neighbor: 5 capítulos)
+            // Pure Reading Badge
             const pureReadingCard = activityCards[2];
             const neighborCompleted = progressTracker.data.neighbor.chaptersCompleted.length;
             if (neighborCompleted > 0) {
@@ -413,7 +544,7 @@ button[style*="background:#8b5cf6"] {
             });
         }
 
-        // ===== NAVEGAÇÃO COM LINKS REAIS =====
+        // ===== NAVEGAÇÃO COM LOADING =====
         document.querySelectorAll('.activity-card').forEach(card => {
             card.addEventListener('click', function() {
                 if (this.classList.contains('coming-soon')) {
@@ -432,14 +563,12 @@ button[style*="background:#8b5cf6"] {
                     return;
                 }
                 
-                // Efeito de loading e redirecionamento
                 const button = this.querySelector('.start-button');
                 const originalText = button.textContent;
                 button.textContent = 'Carregando...';
                 button.style.background = '#6b7280';
                 this.style.opacity = '0.7';
                 
-                // Determinar página de destino
                 let destination = '';
                 const title = this.querySelector('.activity-title').textContent;
                 if (title.includes('Listening')) destination = 'listening.html';
@@ -458,16 +587,15 @@ button[style*="background:#8b5cf6"] {
             });
         });
 
-        // ===== CARREGAMENTO DA PÁGINA SEM FIREBASE =====
+        // ===== INICIALIZAÇÃO FINAL =====
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 Teacher Alex Academy carregando - 100% localStorage...');
+            console.log('🚀 Teacher Alex Academy - Novo Index Premium!');
             initializePage();
-            console.log('✅ Carregado! CSS+JS: ~8KB total - ZERO Firebase');
-            console.log('💾 Todos os dados vêm do localStorage puro');
-            console.log('💡 Para resetar progresso: localStorage.clear()');
+            console.log('✅ Carregado! Botões premium + Mobile fix aplicados');
+            console.log('💾 100% localStorage - ZERO Firebase');
         });
 
-        // ===== LISTA DE USUÁRIOS VÁLIDOS =====
+        // ===== USUÁRIOS VÁLIDOS =====
         const validUsers = {
             "matheus": "english090803", "iasmin": "english050307", 
             "leticia": "english843892", "larissa": "english765352",
