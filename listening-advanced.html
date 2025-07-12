@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listening Advanced - Teacher Alex English Academy BETA</title>
+    
+    <!-- CSS EXTERNO - ESTRATÉGIA VENCEDORA! -->
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="theme-patriot.css">
+    
+    <style>
+        /* CSS ESPECÍFICO PARA LISTENING ADVANCED */
+        .advanced-title {
+            font-size: 2.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .advanced-subtitle {
+            font-size: 1.2em;
+            color: #dc2626;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .back-to-hub {
+            background: linear-gradient(135deg, #6b7280, #374155);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            font-size: 1em;
+        }
+
+        .back-to-hub:hover {
+            background: linear-gradient(135deg, #374155, #6b7280);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Lesson Navigation - 3 lições avançadas */
+        .lesson-navigation {
+            padding: 40px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lesson-navigation::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ef4444, #dc2626, #b91c1c);
+        }
+
+        .lesson-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Lesson Card - Advanced Style */
+        .lesson-card {
+            padding: 30px 25px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 200px;
+            justify-content: space-between;
+            transition: all 0.4s ease;
+        }
+
+        .lesson-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.1), transparent);
+            transition: left 0.6s;
+            z-index: 1;
+        }
+
+        .lesson-card:hover::before {
+            left: 100%;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(239, 68, 68, 0.2);
+        }
+
+        /* Lesson Card States */
+        .lesson-card.active {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            border-color: #ef4444;
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(239, 68, 68, 0.4);
+        }
+
+        .lesson-card.completed {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border-color: #10b981;
+        }
+
+        .lesson-card.active .lesson-number,
+        .lesson-card.completed .lesson-number {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        /* Lesson Number Badge */
+        .lesson-card .lesson-number {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.5em;
+            margin: 0 auto 15px auto;
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .lesson-card:hover .lesson-number {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .lesson-card .lesson-name {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #dc2626;
+            line-height: 1.3;
+            position: relative;
+            z-index: 2;
+        }
+
+        .lesson-card.active .lesson-name,
+        .lesson-card.completed .lesson-name {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .lesson-card .lesson-topic {
+            font-size: 0.9em;
+            color: #7f1d1d;
+            margin-top: 8px;
+            font-weight: 500;
+            position: relative;
+            z-index: 2;
+        }
+
+        .lesson-card.active .lesson-topic,
+        .lesson-card.completed .lesson-topic {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Completion Badge */
+        .lesson-card .completion-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 32px;
+            height: 32px;
+            background: #10b981;
+            border-radius: 50%;
+            color: white;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            border: 3px solid white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+            z-index: 3;
+        }
+
+        /* Celebration Animations */
+        .celebration-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .celebration-text {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4em;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            z-index: 10000;
+            animation: celebrationPulse 2s ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes celebrationPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px; height: 10px;
+            background: #ef4444;
+            animation: confettiFall linear forwards;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .firework {
+            position: fixed;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            animation: fireworkExplode 1.5s ease-out forwards;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        @keyframes fireworkExplode {
+            0% { transform: scale(0); opacity: 1; }
+            50% { transform: scale(15); opacity: 0.8; }
+            100% { transform: scale(25); opacity: 0; }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .advanced-title {
+                font-size: 1.8em;
+            }
+
+            .lesson-cards {
+                grid-template-columns: repeat(1, 1fr);
+                gap: 20px;
+            }
+            
+            .lesson-card {
+                padding: 20px 15px;
+                min-height: 160px;
+            }
+            
+            .lesson-card .lesson-number {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2em;
+            }
+            
+            .lesson-card .lesson-name {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body class="listening-page">
+    <!-- User Info -->
+    <div style="position: fixed; top: 15px; right: 15px; z-index: 1000;">
+        <div style="background: rgba(255,255,255,0.95); border-radius: 15px; padding: 8px 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #dc2626; backdrop-filter: blur(10px);">
+            <span style="color: #1e3a8a; font-weight: 700; margin-right: 8px; font-size: 0.8em;">👋 <span id="userName">Aluno</span></span>
+            <button onclick="logout()" style="background: #dc2626; color: white; border: none; padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 0.75em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='#ef4444'" onmouseout="this.style.background='#dc2626'">🚪 Sair</button>
+        </div>
+    </div>
+    
+    <div class="container listening-page">
+        <button class="back-to-hub" onclick="goBackToHub()">← Voltar ao Hub Listening</button>
+        
+        <div class="header">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <div class="logo">
+                    Teacher Alex <span class="logo-highlight">English Academy</span> BETA
+                </div>
+            </a>
+            <div class="advanced-title">🔴 Listening Advanced Level</div>
+            <div class="advanced-subtitle">Lições 9-11 • Tópicos complexos e vocabulário sofisticado</div>
+        </div>
+        
+        <!-- NAVEGAÇÃO DE LIÇÕES ADVANCED -->
+        <div class="lesson-navigation">
+            <div class="nav-title">🎵 Escolha sua Lição Advanced</div>
+            <div class="lesson-cards" id="lessonCards">
+                <!-- Cards serão gerados dinamicamente -->
+            </div>
+        </div>
+        
+        <div class="lesson-container" id="lessonContainer">
+            <div class="lesson-header">
+                <div class="lesson-title" id="lessonTitle">Work and Career</div>
+                <div class="lesson-number" id="lessonNumber">Lição 9</div>
+            </div>
+            
+            <div class="progress-section">
+                <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+                
+                <div class="badges">
+                    <div class="badge" id="badge1">🎯 Primeira Tentativa</div>
+                    <div class="badge" id="badge2">⭐ Boa Pontuação</div>
+                    <div class="badge" id="badge3">🏆 Perfeito</div>
+                    <div class="badge" id="badge4">🔥 Expert</div>
+                </div>
+            </div>
+            
+            <div class="audio-section">
+                <div class="audio-title" id="audioTitle">🎧 Escute a Lição: Work and Career</div>
+                <audio id="mainAudio" controls>
+                    <source src="audios/audio9.mp3" type="audio/mpeg">
+                    Seu navegador não suporta o elemento de áudio.
+                </audio>
+                <div class="play-buttons">
+                    <button class="btn btn-primary" onclick="playAudio()">▶️ Reproduzir</button>
+                    <button class="btn btn-secondary" onclick="replayAudio()">🔄 Repetir</button>
+                    <button class="btn btn-primary" onclick="pauseAudio()">⏸️ Pausar</button>
+                </div>
+            </div>
+            
+            <div class="questions-section" id="questionsContainer"></div>
+            
+            <div class="controls">
+                <button class="btn btn-primary" onclick="checkAnswers()">✅ Verificar Respostas</button>
+                <button class="btn btn-secondary" onclick="resetQuiz()">🔄 Reiniciar Quiz</button>
+                <button class="btn btn-primary" onclick="nextLesson()">➡️ Próxima Lição</button>
+            </div>
+            
+            <div id="scoreSection" class="score" style="display: none;">
+                Sua Pontuação: <span id="scoreValue">0</span>/5 🎯
+            </div>
+            
+            <div id="feedback" class="feedback" style="display: none;"></div>
+        </div>
+    </div>
+    
+    <script>
+        // ===== SISTEMA DE PROTEÇÃO DE LOGIN =====
+        function checkLogin() {
+            if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+
+        function logout() {
+            sessionStorage.removeItem('studentLoggedIn');
+            sessionStorage.removeItem('studentUsername');
+            window.location.href = 'login.html';
+        }
+
+        function getStudentName() {
+            return sessionStorage.getItem('studentUsername') || 'Student';
+        }
+
+        function goBackToHub() {
+            window.location.href = 'listening-hub.html';
+        }
+
+        if (!checkLogin()) throw new Error('Not logged in');
+
+        // ===== SISTEMA DE PROGRESSO ADVANCED FOCADO =====
+        class AdvancedProgress {
+            constructor() {
+                this.studentId = sessionStorage.getItem('studentUsername') || 'student';
+                this.progressKey = `progress_${this.studentId}`;
+                this.loadProgress();
+            }
+
+            loadProgress() {
+                const saved = localStorage.getItem(this.progressKey);
+                if (saved) {
+                    this.data = JSON.parse(saved);
+                } else {
+                    this.data = {
+                        listening: { lessonsCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        reading: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        roommate: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        neighbor: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        globalBadges: [], lastActivity: null, joinDate: new Date().toISOString(), totalStudyTime: 0
+                    };
+                }
+            }
+
+            saveProgress() { 
+                localStorage.setItem(this.progressKey, JSON.stringify(this.data));
+                console.log(`💾 Progresso Advanced salvo para ${this.studentId}`);
+            }
+
+            completeAdvancedLesson(lessonNumber, score, timeSpent) {
+                const lesson = `lesson_${lessonNumber}`;
+                if (!this.data.listening.lessonsCompleted.includes(lesson)) {
+                    this.data.listening.lessonsCompleted.push(lesson);
+                }
+                if (!this.data.listening.bestScores[lesson] || score > this.data.listening.bestScores[lesson]) {
+                    this.data.listening.bestScores[lesson] = score;
+                }
+                this.data.listening.totalAttempts++;
+                this.data.totalStudyTime += timeSpent;
+                this.data.lastActivity = new Date().toISOString();
+                this.checkAdvancedBadges(lessonNumber, score);
+                this.saveProgress();
+                this.updateLessonCards();
+            }
+
+            checkAdvancedBadges(lessonNumber, score) {
+                const badges = this.data.listening.badges;
+                if (!badges.includes('advanced_warrior')) {
+                    badges.push('advanced_warrior');
+                    this.showBadgeNotification('🔴 Guerreiro Avançado!', 'Você enfrentou o nível expert!');
+                }
+                if (score === 5 && !badges.includes('advanced_perfect')) {
+                    badges.push('advanced_perfect');
+                    this.showBadgeNotification('⭐ Perfeito Expert!', 'Pontuação máxima no nível avançado!');
+                }
+                if (this.getAdvancedCompleted() >= 3 && !badges.includes('listening_champion')) {
+                    badges.push('listening_champion');
+                    this.showBadgeNotification('🏆 CAMPEÃO DO LISTENING!', 'Todas as 11 lições dominadas!');
+                }
+                if (score >= 4 && !badges.includes('professional_english')) {
+                    badges.push('professional_english');
+                    this.showBadgeNotification('💼 Inglês Profissional!', 'Você domina tópicos complexos!');
+                }
+                if (this.hasCompletedAllLevels() && !badges.includes('listening_master')) {
+                    badges.push('listening_master');
+                    this.showBadgeNotification('👑 MESTRE SUPREMO!', 'Você conquistou TODOS os níveis!');
+                }
+            }
+
+            getAdvancedCompleted() {
+                const advancedLessons = [9, 10, 11];
+                return advancedLessons.filter(lesson => 
+                    this.data.listening.lessonsCompleted.includes(`lesson_${lesson}`)
+                ).length;
+            }
+
+            hasCompletedAllLevels() {
+                const beginnerLessons = [1, 2, 3, 4];
+                const intermediateLessons = [5, 6, 7, 8];
+                const advancedLessons = [9, 10, 11];
+                
+                const beginnerComplete = beginnerLessons.every(lesson => 
+                    this.data.listening.lessonsCompleted.includes(`lesson_${lesson}`)
+                );
+                const intermediateComplete = intermediateLessons.every(lesson => 
+                    this.data.listening.lessonsCompleted.includes(`lesson_${lesson}`)
+                );
+                const advancedComplete = advancedLessons.every(lesson => 
+                    this.data.listening.lessonsCompleted.includes(`lesson_${lesson}`)
+                );
+
+                return beginnerComplete && intermediateComplete && advancedComplete;
+            }
+
+            showBadgeNotification(title, message) {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                    background: linear-gradient(135deg, #ef4444, #dc2626); color: white;
+                    padding: 25px 35px; border-radius: 20px; z-index: 10000; text-align: center;
+                    box-shadow: 0 15px 40px rgba(0,0,0,0.3); backdrop-filter: blur(10px);
+                `;
+                notification.innerHTML = `<div style="font-size: 1.8em; font-weight: bold; margin-bottom: 15px;">${title}</div><div style="font-size: 1.1em;">${message}</div>`;
+                document.body.appendChild(notification);
+                setTimeout(() => { if (document.body.contains(notification)) document.body.removeChild(notification); }, 3000);
+            }
+
+            updateLessonCards() {
+                createLessonCards();
+            }
+        }
+
+        // ===== LIÇÕES ADVANCED (9-11 apenas) =====
+        const advancedLessons = {
+            9: { title: "Work and Career", shortTitle: "Career", topic: "Professional Life", icon: "💼", audioUrl: "audios/audio9.mp3", questions: { q1: { text: "What is Michael's current job?", options: ["Marketing manager", "Sales representative", "Software developer", "Graphic designer"], correct: "a" }, q2: { text: "How long has he been working at his company?", options: ["Six months", "One year", "Two years", "Three years"], correct: "d" }, q3: { text: "What time does he usually start work?", options: ["8:00 AM", "8:30 AM", "9:00 AM", "9:30 AM"], correct: "c" }, q4: { text: "What is Michael's biggest challenge at work?", options: ["Managing his team", "Meeting deadlines", "Learning new software", "Dealing with clients"], correct: "a" }, q5: { text: "What are his career goals?", options: ["Change companies", "Start his own business", "Get promoted to director", "Work from home"], correct: "c" } } },
+            10: { title: "Future Plans and Dreams", shortTitle: "Dreams", topic: "Life Goals", icon: "🌟", audioUrl: "audios/audio10.mp3", questions: { q1: { text: "What does Emma want to study at university?", options: ["Medicine", "Engineering", "Psychology", "Business"], correct: "c" }, q2: { text: "Which country does she dream of living in?", options: ["Australia", "Canada", "England", "France"], correct: "b" }, q3: { text: "How much money does she save weekly?", options: ["Thirty dollars", "Forty dollars", "Fifty dollars", "Sixty dollars"], correct: "c" }, q4: { text: "Where does she work part-time?", options: ["At a bookstore", "At a coffee shop", "At a restaurant", "At a library"], correct: "b" }, q5: { text: "What does she want to see in Iceland?", options: ["Volcanoes", "Glaciers", "The Northern Lights", "Hot springs"], correct: "c" } } },
+            11: { title: "Food and Cooking Adventures", shortTitle: "Cooking", topic: "Culinary Arts", icon: "🍕", audioUrl: "audios/audio11.mp3", questions: { q1: { text: "How long ago couldn't Carlos cook eggs?", options: ["One year ago", "Two years ago", "Three years ago", "Five years ago"], correct: "b" }, q2: { text: "What is his specialty cuisine?", options: ["Chinese food", "Mexican food", "Italian food", "Japanese food"], correct: "c" }, q3: { text: "How long did it take him to make fresh pasta?", options: ["One hour", "Two hours", "Three hours", "Four hours"], correct: "c" }, q4: { text: "What is he learning to make this month?", options: ["Pizza", "Sushi", "Tacos", "Bread"], correct: "b" }, q5: { text: "How many people will he cook for next Saturday?", options: ["Six people", "Seven people", "Eight people", "Ten people"], correct: "c" } } }
+        };
+        
+        let currentLesson = 9, attempts = 0, lessonStartTime = Date.now(), studentProgress = new AdvancedProgress();
+        
+        // ===== NAVEGAÇÃO DE LIÇÕES ADVANCED =====
+        function createLessonCards() {
+            const cardsContainer = document.getElementById('lessonCards');
+            cardsContainer.innerHTML = '';
+            
+            for (let i = 9; i <= 11; i++) {
+                const lesson = advancedLessons[i];
+                const isCompleted = studentProgress.data.listening.lessonsCompleted.includes(`lesson_${i}`);
+                const bestScore = studentProgress.data.listening.bestScores[`lesson_${i}`] || 0;
+                const isActive = i === currentLesson;
+                
+                const card = document.createElement('div');
+                card.className = `lesson-card ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`;
+                card.onclick = () => switchToLesson(i);
+                
+                card.innerHTML = `
+                    <div class="lesson-icon">${lesson.icon}</div>
+                    <div class="lesson-number">${i}</div>
+                    <div class="lesson-name">${lesson.shortTitle}</div>
+                    <div class="lesson-topic">${lesson.topic}</div>
+                    ${isCompleted ? `<div class="completion-badge">${bestScore}</div>` : ''}
+                `;
+                
+                cardsContainer.appendChild(card);
+            }
+        }
+        
+        function switchToLesson(lessonNumber) {
+            if (lessonNumber === currentLesson) return;
+            
+            currentLesson = lessonNumber;
+            loadLesson(currentLesson);
+            createLessonCards();
+            
+            const container = document.getElementById('lessonContainer');
+            container.style.animation = 'none';
+            container.offsetHeight;
+            container.style.animation = 'slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        }
+        
+        // ===== CARREGAR LIÇÃO =====
+        function loadLesson(lessonNumber) {
+            if (!advancedLessons[lessonNumber]) return;
+            const lesson = advancedLessons[lessonNumber];
+            document.getElementById('lessonTitle').textContent = lesson.title;
+            document.getElementById('lessonNumber').textContent = `Lição ${lessonNumber}`;
+            document.getElementById('audioTitle').textContent = `🎧 Escute a Lição: ${lesson.title}`;
+            document.getElementById('mainAudio').src = lesson.audioUrl;
+            loadQuestions(lesson.questions);
+            resetQuiz();
+        }
+        
+        function loadQuestions(questions) {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            Object.keys(questions).forEach((key, index) => {
+                const q = questions[key];
+                const div = document.createElement('div');
+                div.className = 'question';
+                div.innerHTML = `
+                    <div class="question-text">${index + 1}. ${q.text}</div>
+                    <div class="options">
+                        ${q.options.map((opt, i) => `
+                            <div class="option" data-value="${String.fromCharCode(97 + i)}">
+                                <input type="radio" name="${key}" value="${String.fromCharCode(97 + i)}" id="${key}_${i}">
+                                <label for="${key}_${i}">${String.fromCharCode(97 + i).toUpperCase()}) ${opt}</label>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            addOptionEventListeners();
+        }
+        
+        function addOptionEventListeners() {
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    const name = radio.name;
+                    document.querySelectorAll(`input[name="${name}"]`).forEach(opt => {
+                        opt.closest('.option').classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                });
+            });
+        }
+        
+        // ===== ÁUDIO =====
+        function playAudio() { document.getElementById('mainAudio').play(); }
+        function replayAudio() { const audio = document.getElementById('mainAudio'); audio.currentTime = 0; audio.play(); }
+        function pauseAudio() { document.getElementById('mainAudio').pause(); }
+        
+        // ===== CELEBRAÇÕES ADVANCED =====
+        function createCelebration(score) {
+            const overlay = document.createElement('div');
+            overlay.className = 'celebration-overlay';
+            document.body.appendChild(overlay);
+            
+            const celebrationText = document.createElement('div');
+            celebrationText.className = 'celebration-text';
+            
+            if (score === 5) {
+                celebrationText.textContent = 'ADVANCED MASTER! 🔴👑';
+                createConfetti();
+                createFireworks();
+            } else if (score === 4) {
+                celebrationText.textContent = 'EXPERT LEVEL! ⭐🔥';
+                createFireworks();
+            }
+            
+            document.body.appendChild(celebrationText);
+            
+            setTimeout(() => {
+                if (document.body.contains(overlay)) document.body.removeChild(overlay);
+                if (document.body.contains(celebrationText)) document.body.removeChild(celebrationText);
+            }, 3000);
+        }
+        
+        function createConfetti() {
+            const colors = ['#ef4444', '#dc2626', '#fbbf24', '#10b981'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0%';
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        if (document.body.contains(confetti)) document.body.removeChild(confetti);
+                    }, 4000);
+                }, i * 30);
+            }
+        }
+
+        function createFireworks() {
+            const colors = ['#ef4444', '#dc2626', '#fbbf24', '#10b981'];
+            for (let i = 0; i < 25; i++) {
+                setTimeout(() => {
+                    const firework = document.createElement('div');
+                    firework.className = 'firework';
+                    firework.style.left = (Math.random() * 80 + 10) + 'vw';
+                    firework.style.top = (Math.random() * 60 + 20) + 'vh';
+                    firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    firework.style.animationDelay = Math.random() * 0.5 + 's';
+                    document.body.appendChild(firework);
+                    
+                    setTimeout(() => {
+                        if (document.body.contains(firework)) document.body.removeChild(firework);
+                    }, 2000);
+                }, i * 60);
+            }
+        }
+        
+        // ===== VERIFICAR RESPOSTAS =====
+        function checkAnswers() {
+            const lesson = advancedLessons[currentLesson];
+            const questions = Object.keys(lesson.questions);
+            let score = 0;
+            let detailedResults = [];
+            attempts++;
+            
+            questions.forEach((key, index) => {
+                const selected = document.querySelector(`input[name="${key}"]:checked`);
+                const correct = lesson.questions[key].correct;
+                const allOptions = document.querySelectorAll(`input[name="${key}"]`);
+                
+                allOptions.forEach(opt => {
+                    opt.closest('.option').classList.remove('correct-answer', 'wrong-answer');
+                });
+                
+                const correctOption = document.querySelector(`input[name="${key}"][value="${correct}"]`);
+                correctOption.closest('.option').classList.add('correct-answer');
+                
+                if (selected && selected.value !== correct) {
+                    selected.closest('.option').classList.add('wrong-answer');
+                }
+                
+                const correctOptionText = lesson.questions[key].options[correct.charCodeAt(0) - 97];
+                const selectedOptionText = selected ? lesson.questions[key].options[selected.value.charCodeAt(0) - 97] : "Não respondida";
+                
+                if (selected && selected.value === correct) {
+                    score++;
+                    detailedResults.push(`✅ Questão ${index + 1}: CORRETO! 🎯`);
+                } else {
+                    detailedResults.push(`❌ Questão ${index + 1}: ${selectedOptionText} → Correto: ${correctOptionText}`);
+                }
+            });
+            
+            studentProgress.completeAdvancedLesson(currentLesson, score, Date.now() - lessonStartTime);
+            
+            document.getElementById('progressBar').style.width = (score / 5) * 100 + '%';
+            document.getElementById('scoreValue').textContent = score;
+            document.getElementById('scoreSection').style.display = 'block';
+            
+            if (attempts === 1) document.getElementById('badge1').classList.add('earned');
+            if (score >= 4) document.getElementById('badge2').classList.add('earned');
+            if (score === 5) document.getElementById('badge3').classList.add('earned');
+            if (score >= 4) document.getElementById('badge4').classList.add('earned');
+            
+            if (score === 5 || score === 4) {
+                setTimeout(() => createCelebration(score), 500);
+            }
+            
+            const feedback = document.getElementById('feedback');
+            let feedbackHeader = score === 5 ? 
+                '<div style="text-align: center; background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 25px; border-radius: 15px; margin-bottom: 25px; font-size: 1.3em; font-weight: 800;">🎉 ADVANCED MASTER! 🔴👑</div>' :
+                '<div style="text-align: center; background: linear-gradient(135deg, #7c2d12, #991b1b); color: white; padding: 25px; border-radius: 15px; margin-bottom: 25px; font-size: 1.2em; font-weight: 800;">💪 DESAFIO EXPERT! 🔥</div>';
+            
+            feedback.innerHTML = feedbackHeader + detailedResults.map(result => `<div style="margin: 10px 0; padding: 15px; background: rgba(239, 68, 68, 0.1); border-radius: 8px;">${result}</div>`).join('');
+            feedback.style.display = 'block';
+        }
+        
+        function resetQuiz() {
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+                const option = radio.closest('.option');
+                option.classList.remove('selected', 'correct-answer', 'wrong-answer');
+            });
+            
+            document.getElementById('scoreSection').style.display = 'none';
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('progressBar').style.width = '0%';
+            
+            document.querySelectorAll('.badge').forEach(badge => {
+                badge.classList.remove('earned');
+            });
+            
+            attempts = 0;
+            lessonStartTime = Date.now();
+        }
+        
+        function nextLesson() {
+            if (currentLesson < 11) {
+                switchToLesson(currentLesson + 1);
+            } else {
+                // Verificar se completou todos os níveis
+                if (studentProgress.hasCompletedAllLevels()) {
+                    alert('🎉 PARABÉNS! Você é um MESTRE SUPREMO DO LISTENING! 👑🏆\n\nVocê conquistou TODAS as 11 lições!\n\nBeginner ✅ Intermediate ✅ Advanced ✅');
+                } else {
+                    alert('🎉 Parabéns! Você completou o Advanced Level! 🔴🏆\n\nVocê é um expert em listening!');
+                }
+                setTimeout(() => {
+                    window.location.href = 'listening-hub.html';
+                }, 3000);
+            }
+        }
+        
+        // ===== INICIALIZAÇÃO =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const studentName = getStudentName();
+            document.getElementById('userName').textContent = studentName;
+            
+            console.log(`🔴 Listening Advanced carregado - usuário: ${studentName}`);
+            console.log('📚 Lições 9-11: Work/Career, Future/Dreams, Food/Cooking');
+            console.log('💾 Sistema localStorage puro - Modular!');
+            console.log('🏆 Nível Expert - Desafio máximo!');
+            
+            createLessonCards();
+            loadLesson(currentLesson);
+        });
+    </script>
+</body>
+</html>
