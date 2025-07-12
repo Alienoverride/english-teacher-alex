@@ -124,6 +124,10 @@
             height: 5px;
         }
 
+        .level-foundation::before {
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+        }
+
         .level-beginner::before {
             background: linear-gradient(90deg, #22c55e, #16a34a);
         }
@@ -150,6 +154,10 @@
             font-size: 1.2em;
             color: white;
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .level-foundation .level-badge {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
         }
 
         .level-beginner .level-badge {
@@ -209,6 +217,10 @@
             transition: width 0.8s ease;
         }
 
+        .level-foundation .progress-fill {
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+        }
+
         .level-beginner .progress-fill {
             background: linear-gradient(90deg, #22c55e, #16a34a);
         }
@@ -261,6 +273,11 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             min-width: 200px;
+        }
+
+        .level-foundation .level-button {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
         }
 
         .level-beginner .level-button {
@@ -355,7 +372,7 @@
                     <div class="stat-label">Lições Concluídas</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">11</div>
+                    <div class="stat-number">23</div>
                     <div class="stat-label">Lições Disponíveis</div>
                 </div>
                 <div class="stat-card">
@@ -371,6 +388,34 @@
 
         <!-- Level Sections -->
         <div class="level-sections">
+            <!-- Foundation Level - NOVO! -->
+            <div class="level-section level-foundation">
+                <div class="level-header">
+                    <div class="level-badge">🟦 Foundation</div>
+                    <div class="level-info">
+                        <div class="level-title">Nível Foundation</div>
+                        <div class="level-description">Survival Kit completo com 12 lições essenciais para brasileiros</div>
+                        <div class="level-lessons">Lições F1-F12 • Basics, Daily Essentials, Practical Skills</div>
+                    </div>
+                </div>
+                
+                <div class="progress-section">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="foundationProgress" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-text" id="foundationText">0/12 Concluídas</div>
+                </div>
+                
+                <ul class="level-features">
+                    <li>Survival Basics: Alfabeto, números, cumprimentos</li>
+                    <li>Daily Essentials: Cores, comida, corpo, direções</li>
+                    <li>Practical Skills: Compras, trabalho, emergência</li>
+                    <li>12 lições de sobrevivência total no inglês</li>
+                </ul>
+                
+                <button class="level-button" onclick="goToLevel('foundation')">🚀 Começar do Zero</button>
+            </div>
+
             <!-- Beginner Level -->
             <div class="level-section level-beginner">
                 <div class="level-header">
@@ -396,7 +441,7 @@
                     <li>Base sólida para próximos níveis</li>
                 </ul>
                 
-                <button class="level-button" onclick="goToLevel('beginner')">🚀 Começar Nível Básico</button>
+                <button class="level-button" onclick="goToLevel('beginner')">⭐ Avançar para Básico</button>
             </div>
 
             <!-- Intermediate Level -->
@@ -424,7 +469,7 @@
                     <li>Preparação para nível avançado</li>
                 </ul>
                 
-                <button class="level-button" onclick="goToLevel('intermediate')">⭐ Desafiar Nível Médio</button>
+                <button class="level-button" onclick="goToLevel('intermediate')">🎯 Desafiar Nível Médio</button>
             </div>
 
             <!-- Advanced Level -->
@@ -517,10 +562,15 @@
                 const averageScore = scores.length > 0 ? 
                     (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : 0;
 
-                // Progresso por nível
+                // Progresso por nível - INCLUINDO FOUNDATION EXPANDIDO
+                const foundationLessons = ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12'];
                 const beginnerLessons = [1, 2, 3, 4];
                 const intermediateLessons = [5, 6, 7, 8];
                 const advancedLessons = [9, 10, 11];
+
+                const foundationCompleted = foundationLessons.filter(lesson => 
+                    listening.lessonsCompleted.includes(`lesson_${lesson}`)
+                ).length;
 
                 const beginnerCompleted = beginnerLessons.filter(lesson => 
                     listening.lessonsCompleted.includes(`lesson_${lesson}`)
@@ -538,6 +588,7 @@
                     totalCompleted,
                     totalBadges,
                     averageScore,
+                    foundation: { completed: foundationCompleted, total: 12 },
                     beginner: { completed: beginnerCompleted, total: 4 },
                     intermediate: { completed: intermediateCompleted, total: 4 },
                     advanced: { completed: advancedCompleted, total: 3 }
@@ -545,15 +596,17 @@
             }
         }
 
-                function goToLevel(level) {
-                    if (level === 'beginner') {
-                        window.location.href = 'listening-beginner.html';
-                    } else if (level === 'intermediate') {
-                       window.location.href = 'listening-intermediate.html'; 
-                    } else if (level === 'advanced') {
-                        window.location.href = 'listening-advanced.html';
-                    }
-                }
+        function goToLevel(level) {
+            if (level === 'foundation') {
+                window.location.href = 'listening-foundation.html';
+            } else if (level === 'beginner') {
+                window.location.href = 'listening-beginner.html';
+            } else if (level === 'intermediate') {
+               window.location.href = 'listening-intermediate.html'; 
+            } else if (level === 'advanced') {
+                window.location.href = 'listening-advanced.html';
+            }
+        }
 
         function updateLevelProgress(level, completed, total) {
             const percentage = (completed / total) * 100;
@@ -574,6 +627,7 @@
             
             console.log(`🎧 Listening Hub carregado - usuário: ${studentName}`);
             console.log('📊 Stats de listening:', stats);
+            console.log('🟦 Foundation Level ADICIONADO!');
             
             // Atualizar user info
             document.getElementById('userName').textContent = studentName;
@@ -583,12 +637,13 @@
             document.getElementById('totalBadges').textContent = stats.totalBadges;
             document.getElementById('averageScore').textContent = stats.averageScore;
             
-            // Atualizar progresso por nível
+            // Atualizar progresso por nível - INCLUINDO FOUNDATION
+            updateLevelProgress('foundation', stats.foundation.completed, stats.foundation.total);
             updateLevelProgress('beginner', stats.beginner.completed, stats.beginner.total);
             updateLevelProgress('intermediate', stats.intermediate.completed, stats.intermediate.total);
             updateLevelProgress('advanced', stats.advanced.completed, stats.advanced.total);
             
-            console.log('✅ Listening Hub inicializado com dados reais do localStorage');
+            console.log('✅ Listening Hub inicializado com 4 níveis: Foundation(12) + Beginner(4) + Intermediate(4) + Advanced(3) = 23 lições!');
         });
     </script>
 </body>
