@@ -488,29 +488,120 @@
 
             checkFoundationBadges(lessonNumber, score) {
                 const badges = this.data.listening.badges;
+                
+                // 🎯 Badges Foundation Especiais
                 if (!badges.includes('foundation_pioneer')) {
                     badges.push('foundation_pioneer');
-                    this.showBadgeNotification('🟦 Pioneer!', 'Primeiro passo no English Survival Kit!');
+                    this.showFoundationBadgeNotification('🟦 ENGLISH PIONEER!', 'Primeira lição do Survival Kit dominada!');
                 }
+                
                 if (score === 5 && !badges.includes('foundation_perfect')) {
                     badges.push('foundation_perfect');
-                    this.showBadgeNotification('⭐ Perfect Foundation!', 'Pontuação perfeita!');
+                    this.showFoundationBadgeNotification('⭐ PERFECT SURVIVOR!', 'Pontuação perfeita no Foundation!');
                 }
-                if (this.getFoundationCompleted() >= 4 && !badges.includes('basics_master')) {
-                    badges.push('basics_master');
-                    this.showBadgeNotification('📝 Basics Master!', 'Grupo 1 dominado!');
+                
+                // Badges por grupos completados
+                if (this.getFoundationCompleted() >= 4 && !badges.includes('basics_champion')) {
+                    badges.push('basics_champion');
+                    this.showFoundationBadgeNotification('📝 BASICS CHAMPION!', 'Grupo 1: Survival Basics dominado!');
                 }
+                
                 if (this.getFoundationCompleted() >= 8 && !badges.includes('daily_master')) {
                     badges.push('daily_master');
-                    this.showBadgeNotification('🌟 Daily Master!', 'Grupo 2 dominado!');
+                    this.showFoundationBadgeNotification('🌟 DAILY MASTER!', 'Grupo 2: Daily Essentials dominado!');
                 }
-                if (this.getFoundationCompleted() >= 12 && !badges.includes('survival_champion')) {
-                    badges.push('survival_champion');
-                    this.showBadgeNotification('🏆 SURVIVAL CHAMPION!', 'Todas as 12 lições dominadas!');
+                
+                if (this.getFoundationCompleted() >= 12 && !badges.includes('survival_legend')) {
+                    badges.push('survival_legend');
+                    this.showFoundationBadgeNotification('🏆 SURVIVAL LEGEND!', 'TODAS as 12 lições Foundation dominadas!');
                 }
+                
+                // Badges por performance
                 if (score >= 4 && !badges.includes('english_survivor')) {
                     badges.push('english_survivor');
-                    this.showBadgeNotification('🚀 English Survivor!', 'Você pode se virar no básico!');
+                    this.showFoundationBadgeNotification('🚀 ENGLISH SURVIVOR!', 'Você pode se virar no básico!');
+                }
+                
+                // Badge especial - 3 perfeitos seguidos
+                if (score === 5) {
+                    const perfectCount = (this.data.listening.perfectStreak || 0) + 1;
+                    this.data.listening.perfectStreak = perfectCount;
+                    
+                    if (perfectCount >= 3 && !badges.includes('perfect_streak')) {
+                        badges.push('perfect_streak');
+                        this.showFoundationBadgeNotification('🔥 PERFECT STREAK!', '3 lições perfeitas seguidas!');
+                    }
+                } else {
+                    this.data.listening.perfectStreak = 0;
+                }
+                
+                // Badge especial - Completou Foundation em menos de 1 hora
+                const startTime = this.data.joinDate ? new Date(this.data.joinDate) : new Date();
+                const timeDiff = Date.now() - new Date(startTime).getTime();
+                const hoursSpent = timeDiff / (1000 * 60 * 60);
+                
+                if (this.getFoundationCompleted() >= 12 && hoursSpent < 1 && !badges.includes('speed_learner')) {
+                    badges.push('speed_learner');
+                    this.showFoundationBadgeNotification('⚡ SPEED LEARNER!', 'Foundation completo em tempo recorde!');
+                }
+            }
+
+            showFoundationBadgeNotification(title, message) {
+                // Criar overlay dramático
+                const overlay = document.createElement('div');
+                overlay.style.cssText = `
+                    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+                    background: rgba(0, 0, 0, 0.3); z-index: 15000; pointer-events: none;
+                    animation: badgeOverlayAppear 2s ease-in-out;
+                `;
+                document.body.appendChild(overlay);
+
+                // Criar notificação épica
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                    background: linear-gradient(135deg, #3b82f6, #1d4ed8, #1e40af); 
+                    color: white; padding: 35px 45px; border-radius: 25px; z-index: 16000; 
+                    text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.4); 
+                    backdrop-filter: blur(20px); border: 3px solid rgba(255,255,255,0.2);
+                    animation: badgeNotificationBounce 2s ease-in-out;
+                `;
+                
+                notification.innerHTML = `
+                    <div style="font-size: 2.2em; font-weight: 900; margin-bottom: 15px; 
+                               text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">${title}</div>
+                    <div style="font-size: 1.3em; font-weight: 600; opacity: 0.95;">${message}</div>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Criar confetti especial para badges
+                this.createBadgeConfetti();
+                
+                setTimeout(() => { 
+                    if (document.body.contains(notification)) document.body.removeChild(notification);
+                    if (document.body.contains(overlay)) document.body.removeChild(overlay);
+                }, 3500);
+            }
+
+            createBadgeConfetti() {
+                const badgeColors = ['#3b82f6', '#1d4ed8', '#fbbf24', '#10b981', '#ffffff'];
+                for (let i = 0; i < 25; i++) {
+                    setTimeout(() => {
+                        const confetti = document.createElement('div');
+                        confetti.style.cssText = `
+                            position: fixed; width: 15px; height: 15px; z-index: 14000;
+                            background: ${badgeColors[Math.floor(Math.random() * badgeColors.length)]};
+                            left: ${Math.random() * 100}vw; border-radius: 50%;
+                            animation: badgeConfettiFall ${Math.random() * 2 + 3}s linear forwards;
+                            pointer-events: none;
+                        `;
+                        document.body.appendChild(confetti);
+                        
+                        setTimeout(() => {
+                            if (document.body.contains(confetti)) document.body.removeChild(confetti);
+                        }, 5000);
+                    }, i * 60);
                 }
             }
 
@@ -538,16 +629,8 @@
             }
 
             showBadgeNotification(title, message) {
-                const notification = document.createElement('div');
-                notification.style.cssText = `
-                    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-                    background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white;
-                    padding: 25px 35px; border-radius: 20px; z-index: 10000; text-align: center;
-                    box-shadow: 0 15px 40px rgba(0,0,0,0.3); backdrop-filter: blur(10px);
-                `;
-                notification.innerHTML = `<div style="font-size: 1.8em; font-weight: bold; margin-bottom: 15px;">${title}</div><div style="font-size: 1.1em;">${message}</div>`;
-                document.body.appendChild(notification);
-                setTimeout(() => { if (document.body.contains(notification)) document.body.removeChild(notification); }, 3000);
+                // Redirecionar para a função Foundation épica
+                this.showFoundationBadgeNotification(title, message);
             }
 
             updateLessonCards() {
@@ -692,7 +775,92 @@
         function replayAudio() { const audio = document.getElementById('mainAudio'); audio.currentTime = 0; audio.play(); }
         function pauseAudio() { document.getElementById('mainAudio').pause(); }
         
-        // ===== VERIFICAR RESPOSTAS =====
+        // ===== CELEBRAÇÕES FOUNDATION ÉPICAS (COMO OS OUTROS NÍVEIS!) =====
+        function createFoundationCelebration(score) {
+            const overlay = document.createElement('div');
+            overlay.className = 'celebration-overlay';
+            document.body.appendChild(overlay);
+            
+            const celebrationText = document.createElement('div');
+            celebrationText.className = 'celebration-text';
+            
+            // Mensagens específicas do Foundation Level
+            if (score === 5) {
+                const perfectMessages = [
+                    'SURVIVAL PERFECT! 🟦✨',
+                    'FOUNDATION MASTER! 🏆🟦',
+                    'ENGLISH SURVIVOR! 🚀✨',
+                    'PERFECT FOUNDATION! 🌟🟦'
+                ];
+                celebrationText.textContent = perfectMessages[Math.floor(Math.random() * perfectMessages.length)];
+                createFoundationConfetti();
+                createFoundationFireworks();
+            } else if (score === 4) {
+                const excellentMessages = [
+                    'EXCELLENT SURVIVAL! ⭐🎯',
+                    'GREAT FOUNDATION! 💪🟦',
+                    'AMAZING PROGRESS! 🌟🚀',
+                    'FOUNDATION HERO! ⭐💙'
+                ];
+                celebrationText.textContent = excellentMessages[Math.floor(Math.random() * excellentMessages.length)];
+                createFoundationConfetti();
+            } else if (score === 3) {
+                const goodMessages = [
+                    'GOOD FOUNDATION! 👍🟦',
+                    'KEEP SURVIVING! 💪📚',
+                    'FOUNDATION WARRIOR! ⚔️🟦'
+                ];
+                celebrationText.textContent = goodMessages[Math.floor(Math.random() * goodMessages.length)];
+            }
+            
+            document.body.appendChild(celebrationText);
+            
+            setTimeout(() => {
+                if (document.body.contains(overlay)) document.body.removeChild(overlay);
+                if (document.body.contains(celebrationText)) document.body.removeChild(celebrationText);
+            }, 3500);
+        }
+        
+        function createFoundationConfetti() {
+            const foundationColors = ['#3b82f6', '#1d4ed8', '#2563eb', '#1e40af', '#fbbf24', '#10b981'];
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.backgroundColor = foundationColors[Math.floor(Math.random() * foundationColors.length)];
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0%';
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    confetti.style.animationDuration = (Math.random() * 2.5 + 2.5) + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        if (document.body.contains(confetti)) document.body.removeChild(confetti);
+                    }, 5000);
+                }, i * 40);
+            }
+        }
+
+        function createFoundationFireworks() {
+            const foundationColors = ['#3b82f6', '#1d4ed8', '#fbbf24', '#10b981'];
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const firework = document.createElement('div');
+                    firework.className = 'firework';
+                    firework.style.left = (Math.random() * 80 + 10) + 'vw';
+                    firework.style.top = (Math.random() * 60 + 20) + 'vh';
+                    firework.style.backgroundColor = foundationColors[Math.floor(Math.random() * foundationColors.length)];
+                    firework.style.animationDelay = Math.random() * 0.8 + 's';
+                    document.body.appendChild(firework);
+                    
+                    setTimeout(() => {
+                        if (document.body.contains(firework)) document.body.removeChild(firework);
+                    }, 2500);
+                }, i * 80);
+            }
+        }
+
+        // ===== VERIFICAR RESPOSTAS COM CELEBRAÇÕES ÉPICAS =====
         function checkAnswers() {
             const lesson = foundationLessons[currentLesson];
             const questions = Object.keys(lesson.questions);
@@ -738,9 +906,16 @@
             if (score === 5) document.getElementById('badge3').classList.add('earned');
             if (score >= 4) document.getElementById('badge4').classList.add('earned');
             
+            // 🎉 CELEBRAÇÃO ÉPICA AQUI! 
+            if (score >= 3) {
+                setTimeout(() => createFoundationCelebration(score), 600);
+            }
+            
             const feedback = document.getElementById('feedback');
             let feedbackHeader = score === 5 ? 
                 '<div style="text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; padding: 25px; border-radius: 15px; margin-bottom: 25px; font-size: 1.3em; font-weight: 800;">🎉 SURVIVAL PERFECT! 🟦✨</div>' :
+                score === 4 ? 
+                '<div style="text-align: center; background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 25px; border-radius: 15px; margin-bottom: 25px; font-size: 1.2em; font-weight: 800;">⭐ EXCELLENT SURVIVAL! 🎯</div>' :
                 '<div style="text-align: center; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 25px; border-radius: 15px; margin-bottom: 25px; font-size: 1.2em; font-weight: 800;">💪 CONTINUE PRATICANDO! 📚</div>';
             
             feedback.innerHTML = feedbackHeader + detailedResults.map(result => `<div style="margin: 10px 0; padding: 15px; background: rgba(59, 130, 246, 0.1); border-radius: 8px;">${result}</div>`).join('');
@@ -773,10 +948,64 @@
             if (currentIndex < allLessons.length - 1) {
                 switchToLesson(allLessons[currentIndex + 1]);
             } else {
-                alert('🎉 PARABÉNS! Você completou o ENGLISH SURVIVAL KIT! 🟦🏆\n\n12 lições dominadas! Agora você pode sobreviver em QUALQUER situação!\n\nPróximo: Beginner Level!');
+                // 🎉 CELEBRAÇÃO ÉPICA FINAL!
                 setTimeout(() => {
-                    window.location.href = 'listening-hub.html';
-                }, 2000);
+                    const finalCelebration = document.createElement('div');
+                    finalCelebration.style.cssText = `
+                        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+                        background: linear-gradient(135deg, #3b82f6, #1d4ed8, #1e40af);
+                        z-index: 20000; display: flex; flex-direction: column;
+                        align-items: center; justify-content: center; text-align: center;
+                        animation: finalCelebrationAppear 4s ease-in-out forwards;
+                    `;
+                    
+                    finalCelebration.innerHTML = `
+                        <div style="font-size: 5em; margin-bottom: 30px; animation: finalTitleBounce 2s ease-in-out;">
+                            🏆✨🟦✨🏆
+                        </div>
+                        <div style="font-size: 3em; font-weight: 900; color: white; margin-bottom: 20px;
+                                   text-shadow: 3px 3px 6px rgba(0,0,0,0.5); animation: finalTitleBounce 2s ease-in-out 0.2s;">
+                            SURVIVAL LEGEND!
+                        </div>
+                        <div style="font-size: 1.5em; color: rgba(255,255,255,0.9); margin-bottom: 30px;
+                                   animation: finalTitleBounce 2s ease-in-out 0.4s;">
+                            ENGLISH SURVIVAL KIT COMPLETO!
+                        </div>
+                        <div style="font-size: 1.2em; color: rgba(255,255,255,0.8); max-width: 600px; line-height: 1.5;
+                                   animation: finalTitleBounce 2s ease-in-out 0.6s;">
+                            🎯 12 lições dominadas!<br>
+                            🚀 Agora você pode sobreviver em QUALQUER situação!<br>
+                            💪 Próximo desafio: Beginner Level!
+                        </div>
+                    `;
+                    
+                    document.body.appendChild(finalCelebration);
+                    
+                    // Confetti épico final
+                    for (let i = 0; i < 60; i++) {
+                        setTimeout(() => {
+                            const confetti = document.createElement('div');
+                            confetti.style.cssText = `
+                                position: fixed; width: 20px; height: 20px; z-index: 19999;
+                                background: ${['#fbbf24', '#10b981', '#ffffff', '#3b82f6'][Math.floor(Math.random() * 4)]};
+                                left: ${Math.random() * 100}vw; border-radius: 50%;
+                                animation: finalConfetti ${Math.random() * 3 + 4}s linear forwards;
+                                pointer-events: none;
+                            `;
+                            document.body.appendChild(confetti);
+                            
+                            setTimeout(() => {
+                                if (document.body.contains(confetti)) document.body.removeChild(confetti);
+                            }, 7000);
+                        }, i * 50);
+                    }
+                    
+                    setTimeout(() => {
+                        if (document.body.contains(finalCelebration)) document.body.removeChild(finalCelebration);
+                        window.location.href = 'listening-hub.html';
+                    }, 4000);
+                    
+                }, 500);
             }
         }
         
