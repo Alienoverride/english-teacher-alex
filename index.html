@@ -566,7 +566,8 @@
             const progressTracker = new SimpleProgress();
             const stats = progressTracker.getStats();
             
-            document.getElementById('userName').textContent = studentName;
+            document.getElementById('userName').textContent = 
+                studentName.charAt(0).toUpperCase() + studentName.slice(1).toLowerCase();
             document.getElementById('userAvatar').textContent = studentName.charAt(0).toUpperCase();
             document.getElementById('welcomeMessage').textContent = `Bem-vindo de volta, ${studentName}!`;
             
