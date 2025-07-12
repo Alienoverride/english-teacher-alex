@@ -328,22 +328,9 @@
             font-size: 0.9em;
         }
         
+        /* ===== CORREÇÃO CIRÚRGICA: ESCONDER STATUS CARREGADA ===== */
         .image-status {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: rgba(239, 68, 68, 0.9);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            font-weight: 600;
-            backdrop-filter: blur(10px);
-            z-index: 4;
-        }
-        
-        .image-status.found {
-            background: rgba(34, 197, 94, 0.9);
+            display: none !important;
         }
         
         /* ===== CARD CONTENT ===== */
@@ -358,9 +345,16 @@
         
         .activity-icon {
             font-size: 4em;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: center;
             filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+        }
+        
+        /* Correção para cards sem imagem - espaçamento menor */
+        .coming-soon .activity-icon,
+        .secret-area .activity-icon {
+            margin-bottom: 10px;
+            margin-top: 20px;
         }
         
         .activity-title {
@@ -441,7 +435,49 @@
             box-shadow: 0 12px 30px rgba(30, 58, 138, 0.4);
         }
         
-        /* ===== ESTADOS ESPECIAIS ===== */
+        /* ===== BOTÕES ESPECIAIS LINDOS (RESTAURADOS) ===== */
+        
+        /* Botão "Em Desenvolvimento" - Laranja Simples */
+        .coming-soon-button {
+            background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+            color: white !important;
+            font-weight: 700 !important;
+            font-size: 1.1em !important;
+            padding: 18px 32px !important;
+            border-radius: 18px !important;
+            border: none !important;
+            cursor: not-allowed !important;
+            transition: all 0.3s ease !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+        }
+
+        .coming-soon-button:hover {
+            background: linear-gradient(135deg, #d97706, #b45309) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        /* Botão "Investigar" - Roxo Simples */
+        .mystery-button {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+            color: white !important;
+            font-weight: 700 !important;
+            font-size: 1.1em !important;
+            padding: 18px 32px !important;
+            border-radius: 18px !important;
+            border: none !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+        }
+
+        .mystery-button:hover {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9) !important;
+            transform: translateY(-2px) !important;
+        }
+        
+        /* ===== ESTADOS ESPECIAIS DOS CARDS ===== */
         .coming-soon {
             opacity: 0.75;
             border-style: dashed !important;
@@ -451,12 +487,6 @@
         .coming-soon:hover {
             transform: translateY(-8px) !important;
             opacity: 1;
-        }
-        
-        .coming-soon-button {
-            background: linear-gradient(135deg, var(--warning-yellow), #f59e0b) !important;
-            cursor: not-allowed !important;
-            opacity: 0.8;
         }
         
         .secret-area {
@@ -469,10 +499,6 @@
             border: 3px dashed var(--primary-blue) !important;
             background: rgba(255, 255, 255, 0.95) !important;
             opacity: 1;
-        }
-        
-        .mystery-button {
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
         }
         
         /* ===== PROGRESS BADGE ===== */
@@ -700,12 +726,11 @@
                          class="activity-image"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="image-fallback">
-                        📸 listening-student.jpg<br>não encontrada<br><small>Coloque a imagem na mesma pasta</small>
+                        <div class="activity-icon">🎧</div>
                     </div>
                     <div class="activity-overlay">
                         <div class="overlay-text">🎧 Comece a Escutar!</div>
                     </div>
-                    <div class="image-status">Sua Imagem</div>
                 </div>
                 <div class="card-content">
                     <div class="activity-title">Listening Practice</div>
@@ -720,20 +745,19 @@
                 </div>
             </div>
             
-            <!-- Graded Readers Hub - Imagem Humanizada -->
+            <!-- Graded Readers Hub - CORREÇÃO: Imagem trocada para reading-student.jpg -->
             <div class="activity-card" onclick="navigateToSection('graded-readers')">
                 <div class="image-container">
-                    <img src="group-students.png" 
-                         alt="Grupo de estudantes com livros" 
+                    <img src="reading-student.jpg" 
+                         alt="Jovem estudando individualmente" 
                          class="activity-image"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="image-fallback">
-                        📸 group-students.png<br>não encontrada<br><small>Coloque a imagem na mesma pasta</small>
+                        <div class="activity-icon">📚</div>
                     </div>
                     <div class="activity-overlay">
                         <div class="overlay-text">📚 Mergulhe nas Histórias!</div>
                     </div>
-                    <div class="image-status">Sua Imagem</div>
                 </div>
                 <div class="card-content">
                     <div class="activity-title">Graded Readers Hub</div>
@@ -748,20 +772,19 @@
                 </div>
             </div>
             
-            <!-- Pure Reading Hub - Imagem Humanizada -->
+            <!-- Pure Reading Hub - CORREÇÃO: Imagem trocada para group-students.png -->
             <div class="activity-card" onclick="navigateToSection('pure-reading')">
                 <div class="image-container">
-                    <img src="reading-student.jpg" 
-                         alt="Jovem estudando com celular e fones" 
+                    <img src="group-students.png" 
+                         alt="Grupo de estudantes colaborando" 
                          class="activity-image"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="image-fallback">
-                        📸 reading-student.jpg<br>não encontrada<br><small>Coloque a imagem na mesma pasta</small>
+                        <div class="activity-icon">📖</div>
                     </div>
                     <div class="activity-overlay">
-                        <div class="overlay-text">📺 Foque na Leitura!</div>
+                        <div class="overlay-text">📖 Foque na Leitura!</div>
                     </div>
-                    <div class="image-status">Sua Imagem</div>
                 </div>
                 <div class="card-content">
                     <div class="activity-title">Pure Reading Hub</div>
@@ -1015,16 +1038,16 @@
             });
         }
 
-        // ===== SISTEMA DE DETECÇÃO DE IMAGENS =====
+        // ===== SISTEMA DE DETECÇÃO DE IMAGENS MELHORADO =====
         function initializeImageSystem() {
             const images = document.querySelectorAll('.activity-image');
             images.forEach((img) => {
                 img.onload = function() {
-                    const status = this.parentElement.querySelector('.image-status');
-                    if (status) {
-                        status.textContent = '✅ Carregada!';
-                        status.classList.add('found');
-                    }
+                    console.log(`✅ Imagem carregada: ${this.src}`);
+                };
+                img.onerror = function() {
+                    console.log(`❌ Imagem não encontrada: ${this.src}`);
+                    // Fallback já está configurado no HTML
                 };
             });
         }
@@ -1059,9 +1082,9 @@
             // Inicializar sistema de imagens
             initializeImageSystem();
             
-            console.log(`✅ Teacher Alex Academy Humanizado carregado - usuário: ${studentName}`);
+            console.log(`✅ Teacher Alex Academy HUMANIZADO carregado - usuário: ${studentName}`);
             console.log(`📊 Stats carregadas:`, stats);
-            console.log('🏠 Versão humanizada com imagens reais ativada!');
+            console.log('🏠 Versão corrigida com imagens nos locais corretos!');
         }
 
         // ===== EVENT LISTENERS PARA SECRET AREA =====
