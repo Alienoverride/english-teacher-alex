@@ -5,15 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teacher Alex English Academy BETA - The Roommate Problem</title>
     
-    <!-- CSS EXTERNO - SEU GARAGE CENTRAL! -->
+    <!-- CSS EXTERNO - ESTRATÉGIA VENCEDORA! -->
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="layout.css">
     <link rel="stylesheet" href="theme-patriot.css">
 
-            <!-- 🔥 ADICIONE ESTAS 3 LINHAS AQUI: -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="firebase-integration.js"></script>
+    <style>
+        /* CSS ESPECÍFICO - ANIMAÇÕES DE CELEBRAÇÃO CRÍTICAS */
+        .celebration-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .celebration-text {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4em;
+            font-weight: 900;
+            background: linear-gradient(135deg, #1e3a8a, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            z-index: 10000;
+            animation: celebrationPulse 2s ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes celebrationPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px; height: 10px;
+            background: #1e3a8a;
+            animation: confettiFall linear forwards;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .firework {
+            position: fixed;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            animation: fireworkExplode 1.5s ease-out forwards;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        @keyframes fireworkExplode {
+            0% { transform: scale(0); opacity: 1; }
+            50% { transform: scale(15); opacity: 0.8; }
+            100% { transform: scale(25); opacity: 0; }
+        }
+
+        /* CSS ESPECÍFICO PARA QUESTION TYPES */
+        .question-type {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .question-type.grammar {
+            background: linear-gradient(135deg, #a855f7, #7c3aed);
+            color: white;
+        }
+
+        .question-type.comprehension {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+        }
+    </style>
 </head>
 <body class="roommate-page">
     <!-- User Info -->
@@ -91,7 +168,7 @@
     </div>
     
     <script>
-        // ===== SISTEMA DE PROTEÇÃO DE LOGIN =====
+        // ===== SISTEMA DE PROTEÇÃO DE LOGIN PURO =====
         function checkLogin() {
             if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
                 window.location.href = 'login.html';
@@ -112,7 +189,7 @@
 
         if (!checkLogin()) throw new Error('Not logged in');
 
-        // ===== SISTEMA DE PROGRESSO =====
+        // ===== SISTEMA DE PROGRESSO PURO LOCALSTORAGE =====
         class StudentProgress {
             constructor() {
                 this.studentId = sessionStorage.getItem('studentUsername') || 'student';
@@ -137,7 +214,10 @@
                 }
             }
 
-            saveProgress() { localStorage.setItem(this.progressKey, JSON.stringify(this.data)); }
+            saveProgress() { 
+                localStorage.setItem(this.progressKey, JSON.stringify(this.data));
+                console.log(`💾 Progresso salvo no localStorage para ${this.studentId}`);
+            }
 
             completeRoommateChapter(chapterNumber, score, timeSpent) {
                 const chapter = `chapter_${chapterNumber}`;
@@ -193,7 +273,7 @@
             }
         }
 
-        // ===== SISTEMA DE CAPÍTULOS =====
+        // ===== SISTEMA DE CAPÍTULOS - 3 CAPÍTULOS A1 =====
         const chapters = {
             1: { 
                 title: "The Missing Money", 
@@ -566,7 +646,13 @@
         
         // ===== INICIALIZAÇÃO =====
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('userName').textContent = getStudentName();
+            const studentName = getStudentName();
+            document.getElementById('userName').textContent = studentName;
+            
+            console.log(`🏠 The Roommate Problem carregado - usuário: ${studentName}`);
+            console.log('💾 Sistema localStorage puro - Firebase EXTERMINADO!');
+            console.log('🎧 3 capítulos A1 com áudio preservados');
+            
             createChapterCards();
             loadChapter(currentChapter);
         });
