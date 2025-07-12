@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listening Hub - Teacher Alex English Academy BETA</title>
+    
+    <!-- CSS EXTERNO - ESTRATÉGIA VENCEDORA! -->
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="theme-patriot.css">
+    
+    <style>
+        /* CSS específico do Listening Hub */
+        .hub-title {
+            font-size: 2.5em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #5850ec, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .hub-subtitle {
+            font-size: 1.4em;
+            color: #5b21b6;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, #6b7280, #374155);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            font-size: 1em;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, #374155, #6b7280);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .listening-overview {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border: 3px solid rgba(88, 80, 236, 0.15);
+            text-align: center;
+        }
+
+        .listening-overview::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #5850ec, #8b5cf6, #3730a3);
+        }
+
+        .overview-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(88, 80, 236, 0.1), rgba(139, 92, 246, 0.1));
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid rgba(88, 80, 236, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.2em;
+            font-weight: 800;
+            color: #5850ec;
+        }
+
+        .stat-label {
+            color: #5b21b6;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .level-sections {
+            display: grid;
+            gap: 40px;
+        }
+
+        .level-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border: 3px solid rgba(88, 80, 236, 0.15);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .level-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .level-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px;
+        }
+
+        .level-beginner::before {
+            background: linear-gradient(90deg, #22c55e, #16a34a);
+        }
+
+        .level-intermediate::before {
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+        }
+
+        .level-advanced::before {
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+        }
+
+        .level-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+
+        .level-badge {
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1.2em;
+            color: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .level-beginner .level-badge {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+        }
+
+        .level-intermediate .level-badge {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        .level-advanced .level-badge {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .level-info {
+            flex: 1;
+        }
+
+        .level-title {
+            font-size: 2em;
+            font-weight: 800;
+            color: #374155;
+            margin-bottom: 8px;
+        }
+
+        .level-description {
+            color: #64748b;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        .level-lessons {
+            font-size: 0.95em;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+
+        .progress-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 12px;
+            background: #e5e7eb;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.8s ease;
+        }
+
+        .level-beginner .progress-fill {
+            background: linear-gradient(90deg, #22c55e, #16a34a);
+        }
+
+        .level-intermediate .progress-fill {
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+        }
+
+        .level-advanced .progress-fill {
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+        }
+
+        .progress-text {
+            font-weight: 700;
+            color: #374155;
+            font-size: 1.1em;
+        }
+
+        .level-features {
+            list-style: none;
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .level-features li {
+            color: #64748b;
+            font-weight: 500;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.05em;
+        }
+
+        .level-features li::before {
+            content: '🎧';
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+
+        .level-button {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            min-width: 200px;
+        }
+
+        .level-beginner .level-button {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+        }
+
+        .level-intermediate .level-button {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+
+        .level-advanced .level-button {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        .level-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .level-button:disabled {
+            background: #9ca3af !important;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @media (max-width: 768px) {
+            .hub-title {
+                font-size: 2em;
+            }
+
+            .hub-subtitle {
+                font-size: 1.2em;
+            }
+
+            .level-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .level-title {
+                font-size: 1.6em;
+            }
+
+            .overview-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .progress-section {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+
+            .level-features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- User Info -->
+    <div style="position: fixed; top: 15px; right: 15px; z-index: 1000;">
+        <div style="background: rgba(255,255,255,0.95); border-radius: 15px; padding: 8px 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #dc2626; backdrop-filter: blur(10px);">
+            <span style="color: #1e3a8a; font-weight: 700; margin-right: 8px; font-size: 0.8em;">👋 <span id="userName">Aluno</span></span>
+            <button onclick="logout()" style="background: #dc2626; color: white; border: none; padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 0.75em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='#ef4444'" onmouseout="this.style.background='#dc2626'">🚪 Sair</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <button class="back-button" onclick="goBack()">← Voltar ao Portal</button>
+        
+        <div class="header">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <div class="logo">
+                    Teacher Alex <span class="logo-highlight">English Academy</span> BETA
+                </div>
+            </a>
+            <div class="hub-title">🎧 Listening Practice Hub</div>
+            <div class="hub-subtitle">Sistema completo para dominar a compreensão auditiva</div>
+        </div>
+
+        <!-- Overview Global -->
+        <div class="listening-overview">
+            <h3 style="color: #5850ec; font-size: 1.5em; margin-bottom: 20px;">📊 Seu Progresso Global</h3>
+            <div class="overview-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalCompleted">0</div>
+                    <div class="stat-label">Lições Concluídas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">11</div>
+                    <div class="stat-label">Lições Disponíveis</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalBadges">0</div>
+                    <div class="stat-label">Badges Conquistadas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="averageScore">0</div>
+                    <div class="stat-label">Pontuação Média</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Level Sections -->
+        <div class="level-sections">
+            <!-- Beginner Level -->
+            <div class="level-section level-beginner">
+                <div class="level-header">
+                    <div class="level-badge">🟢 Beginner</div>
+                    <div class="level-info">
+                        <div class="level-title">Nível Iniciante</div>
+                        <div class="level-description">Fundamentos da compreensão auditiva com diálogos básicos</div>
+                        <div class="level-lessons">Lições 1-4 • Personal Introduction, Daily Routine, Hobbies, Weather</div>
+                    </div>
+                </div>
+                
+                <div class="progress-section">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="beginnerProgress" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-text" id="beginnerText">0/4 Concluídas</div>
+                </div>
+                
+                <ul class="level-features">
+                    <li>Vocabulário essencial do dia a dia</li>
+                    <li>Situações familiares e simples</li>
+                    <li>Apresentações pessoais e rotina</li>
+                    <li>Base sólida para próximos níveis</li>
+                </ul>
+                
+                <button class="level-button" onclick="goToLevel('beginner')">🚀 Começar Nível Básico</button>
+            </div>
+
+            <!-- Intermediate Level -->
+            <div class="level-section level-intermediate">
+                <div class="level-header">
+                    <div class="level-badge">🟡 Intermediate</div>
+                    <div class="level-info">
+                        <div class="level-title">Nível Intermediário</div>
+                        <div class="level-description">Situações reais com vocabulário expandido e contextos práticos</div>
+                        <div class="level-lessons">Lições 5-8 • Shopping, Family, Health, Transportation</div>
+                    </div>
+                </div>
+                
+                <div class="progress-section">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="intermediateProgress" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-text" id="intermediateText">0/4 Concluídas</div>
+                </div>
+                
+                <ul class="level-features">
+                    <li>Conversas em contextos reais</li>
+                    <li>Vocabulário prático para viagens</li>
+                    <li>Situações sociais e familiares</li>
+                    <li>Preparação para nível avançado</li>
+                </ul>
+                
+                <button class="level-button" onclick="goToLevel('intermediate')">⭐ Desafiar Nível Médio</button>
+            </div>
+
+            <!-- Advanced Level -->
+            <div class="level-section level-advanced">
+                <div class="level-header">
+                    <div class="level-badge">🔴 Advanced</div>
+                    <div class="level-info">
+                        <div class="level-title">Nível Avançado</div>
+                        <div class="level-description">Tópicos complexos com vocabulário sofisticado e temas profissionais</div>
+                        <div class="level-lessons">Lições 9-11 • Work & Career, Future Plans, Food & Cooking</div>
+                    </div>
+                </div>
+                
+                <div class="progress-section">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="advancedProgress" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-text" id="advancedText">0/3 Concluídas</div>
+                </div>
+                
+                <ul class="level-features">
+                    <li>Discussões profissionais e acadêmicas</li>
+                    <li>Vocabulário avançado especializado</li>
+                    <li>Temas abstratos e complexos</li>
+                    <li>Preparação para fluência total</li>
+                </ul>
+                
+                <button class="level-button" onclick="goToLevel('advanced')">🏆 Dominar Nível Expert</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== SISTEMA DE PROTEÇÃO DE LOGIN =====
+        function checkLogin() {
+            if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+
+        function logout() {
+            sessionStorage.removeItem('studentLoggedIn');
+            sessionStorage.removeItem('studentUsername');
+            window.location.href = 'login.html';
+        }
+
+        function getStudentName() {
+            return sessionStorage.getItem('studentUsername') || 'Student';
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+
+        if (!checkLogin()) throw new Error('Not logged in');
+
+        // ===== SISTEMA DE PROGRESSO REAL LOCALSTORAGE =====
+        class ListeningHubProgress {
+            constructor() {
+                this.studentId = sessionStorage.getItem('studentUsername') || 'student';
+                this.progressKey = `progress_${this.studentId}`;
+                this.loadProgress();
+            }
+
+            loadProgress() {
+                const saved = localStorage.getItem(this.progressKey);
+                if (saved) {
+                    this.data = JSON.parse(saved);
+                } else {
+                    this.data = {
+                        listening: { lessonsCompleted: [], bestScores: {}, badges: [] },
+                        reading: { chaptersCompleted: [], bestScores: {}, badges: [] },
+                        roommate: { chaptersCompleted: [], bestScores: {}, badges: [] },
+                        neighbor: { chaptersCompleted: [], bestScores: {}, badges: [] },
+                        globalBadges: [],
+                        totalStudyTime: 0
+                    };
+                }
+            }
+
+            getListeningStats() {
+                const listening = this.data.listening || { lessonsCompleted: [], bestScores: {}, badges: [] };
+                const totalCompleted = listening.lessonsCompleted.length;
+                const totalBadges = listening.badges.length;
+                
+                // Calcular pontuação média
+                const scores = Object.values(listening.bestScores);
+                const averageScore = scores.length > 0 ? 
+                    (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : 0;
+
+                // Progresso por nível
+                const beginnerLessons = [1, 2, 3, 4];
+                const intermediateLessons = [5, 6, 7, 8];
+                const advancedLessons = [9, 10, 11];
+
+                const beginnerCompleted = beginnerLessons.filter(lesson => 
+                    listening.lessonsCompleted.includes(`lesson_${lesson}`)
+                ).length;
+
+                const intermediateCompleted = intermediateLessons.filter(lesson => 
+                    listening.lessonsCompleted.includes(`lesson_${lesson}`)
+                ).length;
+
+                const advancedCompleted = advancedLessons.filter(lesson => 
+                    listening.lessonsCompleted.includes(`lesson_${lesson}`)
+                ).length;
+
+                return {
+                    totalCompleted,
+                    totalBadges,
+                    averageScore,
+                    beginner: { completed: beginnerCompleted, total: 4 },
+                    intermediate: { completed: intermediateCompleted, total: 4 },
+                    advanced: { completed: advancedCompleted, total: 3 }
+                };
+            }
+        }
+
+        function goToLevel(level) {
+            // Por enquanto, redireciona para o listening atual
+            // Futuramente será: listening-beginner.html, etc.
+            window.location.href = 'listening.html';
+        }
+
+        function updateLevelProgress(level, completed, total) {
+            const percentage = (completed / total) * 100;
+            const progressElement = document.getElementById(`${level}Progress`);
+            const textElement = document.getElementById(`${level}Text`);
+            
+            if (progressElement && textElement) {
+                progressElement.style.width = percentage + '%';
+                textElement.textContent = `${completed}/${total} Concluídas`;
+            }
+        }
+
+        // ===== INICIALIZAÇÃO =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const studentName = getStudentName();
+            const progressTracker = new ListeningHubProgress();
+            const stats = progressTracker.getListeningStats();
+            
+            console.log(`🎧 Listening Hub carregado - usuário: ${studentName}`);
+            console.log('📊 Stats de listening:', stats);
+            
+            // Atualizar user info
+            document.getElementById('userName').textContent = studentName;
+            
+            // Atualizar overview global
+            document.getElementById('totalCompleted').textContent = stats.totalCompleted;
+            document.getElementById('totalBadges').textContent = stats.totalBadges;
+            document.getElementById('averageScore').textContent = stats.averageScore;
+            
+            // Atualizar progresso por nível
+            updateLevelProgress('beginner', stats.beginner.completed, stats.beginner.total);
+            updateLevelProgress('intermediate', stats.intermediate.completed, stats.intermediate.total);
+            updateLevelProgress('advanced', stats.advanced.completed, stats.advanced.total);
+            
+            console.log('✅ Listening Hub inicializado com dados reais do localStorage');
+        });
+    </script>
+</body>
+</html>
