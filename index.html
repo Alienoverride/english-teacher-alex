@@ -11,21 +11,38 @@
     <link rel="stylesheet" href="theme-patriot.css">
     
     <style>
-        /* ===== 🔥 APENAS CORREÇÕES CIRÚRGICAS ===== */
+        /* ===== 🔥 CORREÇÕES CIRÚRGICAS URGENTES ===== */
         
-        /* CORREÇÃO 1: Esconder status "carregada" */
+        /* CORREÇÃO 1: CONTROLE TOTAL DAS IMAGENS */
+        .image-container {
+            position: relative;
+            height: 260px;
+            overflow: hidden;
+            border-radius: 17px 17px 0 0;
+            background: #f1f5f9;
+        }
+        
+        .activity-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+        
+        /* CORREÇÃO 2: Esconder status "carregada" */
         .image-status {
             display: none !important;
         }
         
-        /* CORREÇÃO 2: Espaçamento dos ícones nos cards especiais */
+        /* CORREÇÃO 3: Espaçamento dos ícones nos cards especiais */
         .coming-soon .activity-icon,
         .secret-area .activity-icon {
             margin-bottom: 10px;
             margin-top: 15px;
         }
         
-        /* CORREÇÃO 3: Garantir que botões especiais continuem lindos */
+        /* CORREÇÃO 4: Garantir que botões especiais continuem lindos */
         .coming-soon-button {
             background: linear-gradient(135deg, #f59e0b, #d97706) !important;
             border-radius: 18px !important;
@@ -46,7 +63,7 @@
             letter-spacing: 1px !important;
         }
         
-        /* CORREÇÃO 4: Fallback humanizado para imagens */
+        /* CORREÇÃO 5: Fallback humanizado para imagens */
         .image-fallback {
             display: none;
             align-items: center;
@@ -54,6 +71,23 @@
             height: 100%;
             background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
             color: #64748b;
+        }
+        
+        /* CORREÇÃO 6: Overlay sempre visível para debug */
+        .activity-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.88), rgba(220, 38, 38, 0.78));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.5s ease;
+            z-index: 3;
+        }
+        
+        .activity-card:hover .activity-overlay {
+            opacity: 1;
         }
     </style>
 </head>
@@ -247,7 +281,7 @@
     </div>
     
     <script>
-        // ===== SISTEMA DE PROTEÇÃO DE LOGIN PURO =====
+        // ===== SISTEMA DE PROTEÇÃO DE LOGIN CRÍTICO =====
         function checkLogin() {
             if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
                 window.location.href = 'login.html';
@@ -266,7 +300,11 @@
             return sessionStorage.getItem('studentUsername') || 'Student';
         }
 
-        if (!checkLogin()) throw new Error('Not logged in');
+        // PROTEÇÃO IMEDIATA - BLOQUEAR ACESSO SEM LOGIN
+        if (!checkLogin()) {
+            document.body.innerHTML = '<div style="text-align:center;padding:50px;"><h1>Redirecionando para login...</h1></div>';
+            throw new Error('Access denied - redirecting to login');
+        }
 
         // ===== SISTEMA DE PROGRESSO PURO LOCALSTORAGE =====
         class SimpleProgress {
