@@ -11,236 +11,157 @@
     <link rel="stylesheet" href="theme-patriot.css">
     
     <style>
-        /* ===== 🔥 BOTÕES PREMIUM - ARREDONDADOS E MAIORES ===== */
+        /* ===== 🔥 BOTÕES LIMPOS - SÓ O ESSENCIAL ===== */
         
-        /* Botão "Em Desenvolvimento" - Laranja Premium */
-        .coming-soon-button {
-            background: linear-gradient(135deg, #f59e0b, #d97706, #92400e) !important;
-            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4) !important;
-            border: 3px solid rgba(255, 255, 255, 0.3) !important;
-            color: white !important;
-            font-weight: 800 !important;
-            font-size: 1.1em !important;
-            padding: 18px 32px !important;
-            border-radius: 20px !important;
-            cursor: not-allowed !important;
-            transition: all 0.4s ease !important;
-            text-transform: uppercase !important;
-            letter-spacing: 1.5px !important;
-            font-family: 'Arial', sans-serif !important;
-            position: relative !important;
-            overflow: hidden !important;
+        /* Botão "Em Desenvolvimento" - Laranja Simples */
+        .activity-card.coming-soon .coming-soon-button {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            font-weight: 700;
+            font-size: 1.1em;
+            padding: 18px 32px;
+            border-radius: 18px;
+            border: none;
+            cursor: not-allowed;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .coming-soon-button:hover {
-            background: linear-gradient(135deg, #d97706, #92400e, #78350f) !important;
-            transform: translateY(-3px) scale(1.02) !important;
-            box-shadow: 0 15px 40px rgba(245, 158, 11, 0.6) !important;
+        .activity-card.coming-soon .coming-soon-button:hover {
+            background: linear-gradient(135deg, #d97706, #b45309);
+            transform: translateY(-2px);
         }
 
-        .coming-soon-button::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.8s;
+        /* Botão "Investigar" - Roxo Simples */
+        .activity-card.secret-area .mystery-button {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            font-weight: 700;
+            font-size: 1.1em;
+            padding: 18px 32px;
+            border-radius: 18px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .coming-soon-button:hover::before {
-            left: 100%;
+        .activity-card.secret-area .mystery-button:hover {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            transform: translateY(-2px);
         }
 
-        /* Botão "Investigar" - Roxo Premium */
-        .mystery-button {
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed, #5b21b6) !important;
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4) !important;
-            border: 3px solid rgba(255, 255, 255, 0.3) !important;
-            color: white !important;
-            font-weight: 800 !important;
-            font-size: 1.1em !important;
-            padding: 18px 32px !important;
-            border-radius: 20px !important;
-            cursor: pointer !important;
-            transition: all 0.4s ease !important;
-            text-transform: uppercase !important;
-            letter-spacing: 1.5px !important;
-            font-family: 'Arial', sans-serif !important;
-            position: relative !important;
-            overflow: hidden !important;
+        /* Botões normais melhorados */
+        .activity-card .start-button {
+            font-weight: 600;
+            font-size: 1.05em;
+            padding: 16px 28px;
+            border-radius: 14px;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
         }
 
-        .mystery-button:hover {
-            background: linear-gradient(135deg, #7c3aed, #5b21b6, #4c1d95) !important;
-            transform: translateY(-3px) scale(1.02) !important;
-            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.6) !important;
+        .activity-card .start-button:hover {
+            transform: translateY(-2px);
         }
 
-        .mystery-button::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.8s;
-        }
-
-        .mystery-button:hover::before {
-            left: 100%;
-        }
-
-        /* MELHORIA DOS BOTÕES NORMAIS TAMBÉM */
-        .start-button {
-            font-weight: 700 !important;
-            font-size: 1.05em !important;
-            padding: 16px 28px !important;
-            border-radius: 16px !important;
-            letter-spacing: 0.8px !important;
-            transition: all 0.3s ease !important;
-            text-transform: uppercase !important;
-            font-family: 'Arial', sans-serif !important;
-        }
-
-        .start-button:hover {
-            transform: translateY(-2px) scale(1.01) !important;
-        }
-
-        /* ===== 📱 MOBILE FEEDBACK PREMIUM ===== */
+        /* ===== 📱 MOBILE FEEDBACK SIMPLES ===== */
         
         @media (max-width: 768px) {
-            .activity-card:active {
-                background: white !important;
-                transform: scale(0.97) !important;
-                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25) !important;
-                border-color: #1e3a8a !important;
+            .dashboard-grid .activity-card:active {
+                background: white;
+                transform: scale(0.97);
+                border-color: #1e3a8a;
             }
             
-            /* Secret Area específica */
-            .secret-area:active {
-                background: white !important;
-                opacity: 1 !important;
-                border: 3px solid #1e3a8a !important;
-                transform: scale(0.97) !important;
+            .dashboard-grid .activity-card.secret-area:active {
+                background: white;
+                opacity: 1;
+                border: 3px solid #1e3a8a;
+                transform: scale(0.97);
             }
             
-            /* Coming Soon específica */
-            .coming-soon:active {
-                background: white !important;
-                opacity: 1 !important;
-                transform: scale(0.97) !important;
+            .dashboard-grid .activity-card.coming-soon:active {
+                background: white;
+                opacity: 1;
+                transform: scale(0.97);
             }
             
-            /* Botões no mobile */
-            .mystery-button:active,
-            .coming-soon-button:active,
-            .start-button:active {
-                transform: scale(0.95) !important;
-                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3) !important;
+            .dashboard-grid .activity-card button:active {
+                transform: scale(0.95);
             }
         }
 
-        /* ===== 🎨 MELHORIAS VISUAIS EXTRAS ===== */
+        /* ===== 🎨 EFEITOS MÍNIMOS ===== */
         
-        /* Animação de pulso nos ícones dos cards especiais */
-        .mystery-icon {
-            animation: mysteryPulse 2s infinite ease-in-out;
+        .activity-card .activity-icon.mystery-icon {
+            animation: mysteryPulse 3s infinite ease-in-out;
         }
 
         @keyframes mysteryPulse {
-            0%, 100% { 
-                transform: scale(1);
-                filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.5));
-            }
-            50% { 
-                transform: scale(1.1);
-                filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.8));
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
-        /* Hover melhorado para todos os cards */
-        .activity-card:hover {
-            transform: translateY(-5px) scale(1.02) !important;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15) !important;
-            border-color: #3b82f6 !important;
+        .dashboard-grid .activity-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
 
-        /* Efeito especial para o secret area */
-        .secret-area:hover .mystery-icon {
-            animation-duration: 1s !important;
-            transform: scale(1.2) rotate(15deg) !important;
-        }
-
-        /* Typography melhorada para todos os cards */
-        .activity-title {
-            font-weight: 800 !important;
-            letter-spacing: 0.5px !important;
-        }
-
-        .activity-description {
-            line-height: 1.6 !important;
-            font-weight: 500 !important;
-        }
-
-        /* ===== 🔧 iOS SAFARI FIXES ===== */
+        /* ===== MOBILE OPTIMIZATIONS ===== */
         @media (max-width: 768px) {
             * {
                 -webkit-tap-highlight-color: transparent;
-                -webkit-touch-callout: none;
-                -webkit-user-select: none;
                 touch-action: manipulation;
-            }
-            
-            .activity-card {
-                -webkit-transform: translateZ(0);
-                transform: translateZ(0);
             }
         }
 
-        /* ===== CSS ESPECÍFICOS EXISTENTES ===== */
-        .coming-soon {
+        /* ===== ESTADOS ESPECIAIS ===== */
+        .activity-card.coming-soon {
             opacity: 0.75;
             border-style: dashed !important;
             cursor: default !important;
         }
 
-        .coming-soon:hover { 
+        .activity-card.coming-soon:hover { 
             opacity: 1; 
         }
 
-        .secret-area {
+        .activity-card.secret-area {
             background: rgba(255, 255, 255, 0.8) !important;
             border: 3px solid rgba(107, 114, 128, 0.4) !important;
             opacity: 0.75;
         }
         
-        .secret-area:hover {
+        .activity-card.secret-area:hover {
             border: 3px dashed #1e3a8a !important;
             background: rgba(255, 255, 255, 0.9) !important;
             opacity: 0.9;
         }
         
-        .secret-area:active {
+        .activity-card.secret-area:active {
             border: 3px dashed #1e3a8a !important;
             background: rgba(255, 255, 255, 0.95) !important;
             opacity: 1;
         }
 
-        /* Alinhamento dos botões nos cards */
-        .activity-card {
-            display: flex !important;
+        /* Layout estrutural */
+        .dashboard-grid .activity-card {
+            display: flex;
             flex-direction: column;
             min-height: 420px;
         }
 
-        .activity-features {
+        .dashboard-grid .activity-features {
             flex-grow: 1;
             margin-bottom: 25px;
         }
 
-        .start-button, 
-        .coming-soon-button, 
-        .mystery-button {
-            margin-top: auto !important;
+        .dashboard-grid .activity-card button {
+            margin-top: auto;
         }
     </style>
 </head>
