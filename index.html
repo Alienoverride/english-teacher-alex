@@ -89,6 +89,156 @@
         .activity-card:hover .activity-overlay {
             opacity: 1;
         }
+        
+        /* ===== 🛡️ FALLBACK CSS CRÍTICO (CASO CSS EXTERNOS FALHEM) ===== */
+        
+        /* Progress Badges - Funcionalidade crítica */
+        .progress-badge {
+            position: absolute !important;
+            top: -8px !important;
+            right: -8px !important;
+            background: #10b981 !important;
+            color: white !important;
+            padding: 6px 12px !important;
+            border-radius: 12px !important;
+            font-size: 0.8em !important;
+            font-weight: 700 !important;
+            border: 3px solid white !important;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4) !important;
+            z-index: 5 !important;
+        }
+        
+        /* Card Content - Layout essencial */
+        .card-content {
+            padding: 30px !important;
+            flex-grow: 1 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            position: relative !important;
+            z-index: 2 !important;
+        }
+        
+        /* Botões principais - Funcionalidade crítica */
+        .start-button {
+            background: linear-gradient(135deg, #1e3a8a, #dc2626) !important;
+            color: white !important;
+            padding: 18px 32px !important;
+            border: none !important;
+            border-radius: 12px !important;
+            font-weight: 700 !important;
+            cursor: pointer !important;
+            font-size: 1.1em !important;
+            transition: all 0.3s ease !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            margin-top: auto !important;
+        }
+        
+        .start-button:hover {
+            transform: translateY(-3px) !important;
+            box-shadow: 0 12px 30px rgba(30, 58, 138, 0.4) !important;
+        }
+        
+        /* Títulos e descrições - Layout essencial */
+        .activity-title {
+            font-size: 1.8em !important;
+            font-weight: 800 !important;
+            color: #1e3a8a !important;
+            margin-bottom: 15px !important;
+            text-align: center !important;
+        }
+        
+        .activity-description {
+            color: #64748b !important;
+            font-size: 1.1em !important;
+            text-align: center !important;
+            margin-bottom: 25px !important;
+            font-weight: 500 !important;
+            line-height: 1.6 !important;
+        }
+        
+        /* Features list - Layout essencial */
+        .activity-features {
+            list-style: none !important;
+            margin-bottom: 30px !important;
+            flex-grow: 1 !important;
+        }
+        
+        .activity-features li {
+            color: #64748b !important;
+            margin-bottom: 12px !important;
+            font-weight: 500 !important;
+            position: relative !important;
+            padding-left: 30px !important;
+            font-size: 1.05em !important;
+        }
+        
+        .activity-features li::before {
+            content: '✓' !important;
+            position: absolute !important;
+            left: 0 !important;
+            color: #10b981 !important;
+            font-weight: bold !important;
+            font-size: 1.2em !important;
+        }
+        
+        /* ===== 📱 FOOTER CENTRALIZADO ===== */
+        .footer {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(20px) !important;
+            border-radius: 16px !important;
+            padding: 30px !important;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 10px 15px rgba(0, 0, 0, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            text-align: center !important;
+            margin-top: 30px !important;
+        }
+        
+        .footer h3 {
+            margin-bottom: 15px !important;
+            font-size: 1.3em !important;
+            color: #1e3a8a !important;
+            font-weight: 800 !important;
+        }
+        
+        .footer p {
+            margin-bottom: 10px !important;
+            opacity: 0.9 !important;
+            color: #64748b !important;
+            font-weight: 500 !important;
+        }
+        
+        .contact-link {
+            color: #dc2626 !important;
+            text-decoration: none !important;
+            font-weight: 600 !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .contact-link:hover {
+            color: #ef4444 !important;
+            text-decoration: underline !important;
+        }
+        
+        /* ===== 📱 MOBILE RESPONSIVO CRÍTICO ===== */
+        @media (max-width: 768px) {
+            .card-content {
+                padding: 20px !important;
+            }
+            
+            .activity-title {
+                font-size: 1.5em !important;
+            }
+            
+            .footer {
+                padding: 20px !important;
+                margin-top: 20px !important;
+            }
+            
+            .footer h3 {
+                font-size: 1.1em !important;
+            }
+        }
     </style>
 </head>
 <body>
