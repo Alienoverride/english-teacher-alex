@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listening Intermediate - Teacher Alex English Academy BETA</title>
+    
+    <!-- CSS EXTERNO - ESTRATÉGIA VENCEDORA! -->
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="theme-patriot.css">
+    
+    <style>
+        /* CSS ESPECÍFICO PARA LISTENING INTERMEDIATE */
+        .intermediate-title {
+            font-size: 2.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .intermediate-subtitle {
+            font-size: 1.2em;
+            color: #d97706;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .back-to-hub {
+            background: linear-gradient(135deg, #6b7280, #374155);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            font-size: 1em;
+        }
+
+        .back-to-hub:hover {
+            background: linear-gradient(135deg, #374155, #6b7280);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Lesson Navigation - 4 lições intermediárias */
+        .lesson-navigation {
+            padding: 40px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lesson-navigation::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #f59e0b, #d97706, #b45309);
+        }
+
+        .lesson-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Lesson Card - Intermediate Style */
+        .lesson-card {
+            padding: 25px 20px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 180px;
+            justify-content: space-between;
+            transition: all 0.4s ease;
+        }
+
+        .lesson-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.1), transparent);
+            transition: left 0.6s;
+            z-index: 1;
+        }
+
+        .lesson-card:hover::before {
+            left: 100%;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.2);
+        }
+
+        /* Lesson Card States */
+        .lesson-card.active {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            border-color: #f59e0b;
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(245, 158, 11, 0.4);
+        }
+
+        .lesson-card.completed {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border-color: #10b981;
+        }
+
+        .lesson-card.active .lesson-number,
+        .lesson-card.completed .lesson-number {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        /* Lesson Number Badge */
+        .lesson-card .lesson-number {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.4em;
+            margin: 0 auto 15px auto;
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .lesson-card:hover .lesson-number {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .lesson-card .lesson-name {
+            font-size: 1em;
+            font-weight: 700;
+            color: #d97706;
+            line-height: 1.3;
+            position: relative;
+            z-index: 2;
+        }
+
+        .lesson-card.active .lesson-name,
+        .lesson-card.completed .lesson-name {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Completion Badge */
+        .lesson-card .completion-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 32px;
+            height: 32px;
+            background: #10b981;
+            border-radius: 50%;
+            color: white;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            border: 3px solid white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+            z-index: 3;
+        }
+
+        /* Celebration Animations */
+        .celebration-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .celebration-text {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4em;
+            font-weight: 900;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            z-index: 10000;
+            animation: celebrationPulse 2s ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes celebrationPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px; height: 10px;
+            background: #f59e0b;
+            animation: confettiFall linear forwards;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .intermediate-title {
+                font-size: 1.8em;
+            }
+
+            .lesson-cards {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .lesson-card {
+                padding: 15px 10px;
+                min-height: 140px;
+            }
+            
+            .lesson-card .lesson-number {
+                width: 35px;
+                height: 35px;
+                font-size: 1.1em;
+            }
+            
+            .lesson-card .lesson-name {
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body class="listening-page">
+    <!-- User Info -->
+    <div style="position: fixed; top: 15px; right: 15px; z-index: 1000;">
+        <div style="background: rgba(255,255,255,0.95); border-radius: 15px; padding: 8px 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #dc2626; backdrop-filter: blur(10px);">
+            <span style="color: #1e3a8a; font-weight: 700; margin-right: 8px; font-size: 0.8em;">👋 <span id="userName">Aluno</span></span>
+            <button onclick="logout()" style="background: #dc2626; color: white; border: none; padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 0.75em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='#ef4444'" onmouseout="this.style.background='#dc2626'">🚪 Sair</button>
+        </div>
+    </div>
+    
+    <div class="container listening-page">
+        <button class="back-to-hub" onclick="goBackToHub()">← Voltar ao Hub Listening</button>
+        
+        <div class="header">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <div class="logo">
+                    Teacher Alex <span class="logo-highlight">English Academy</span> BETA
+                </div>
+            </a>
+            <div class="intermediate-title">🟡 Listening Intermediate Level</div>
+            <div class="intermediate-subtitle">Lições 5-8 • Situações reais e vocabulário expandido</div>
+        </div>
+        
+        <!-- NAVEGAÇÃO DE LIÇÕES INTERMEDIATE -->
+        <div class="lesson-navigation">
+            <div class="nav-title">🎵 Escolha sua Lição Intermediate</div>
+            <div class="lesson-cards" id="lessonCards">
+                <!-- Cards serão gerados dinamicamente -->
+            </div>
+        </div>
+        
+        <div class="lesson-container" id="lessonContainer">
+            <div class="lesson-header">
+                <div class="lesson-title" id="lessonTitle">Shopping at the Store</div>
+                <div class="lesson-number" id="lessonNumber">Lição 5</div>
+            </div>
+            
+            <div class="progress-section">
+                <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+                
+                <div class="badges">
+                    <div class="badge" id="badge1">🎯 Primeira Tentativa</div>
+                    <div class="badge" id="badge2">⭐ Boa Pontuação</div>
+                    <div class="badge" id="badge3">🏆 Perfeito</div>
+                    <div class="badge" id="badge4">🔥 Sequência</div>
+                </div>
+            </div>
+            
+            <div class="audio-section">
+                <div class="audio-title" id="audioTitle">🎧 Escute a Lição: Shopping at the Store</div>
+                <audio id="mainAudio" controls>
+                    <source src="audios/audio5.mp3" type="audio/mpeg">
+                    Seu navegador não suporta o elemento de áudio.
+                </audio>
+                <div class="play-buttons">
+                    <button class="btn btn-primary" onclick="playAudio()">▶️ Reproduzir</button>
+                    <button class="btn btn-secondary" onclick="replayAudio()">🔄 Repetir</button>
+                    <button class="btn btn-primary" onclick="pauseAudio()">⏸️ Pausar</button>
+                </div>
+            </div>
+            
+            <div class="questions-section" id="questionsContainer"></div>
+            
+            <div class="controls">
+                <button class="btn btn-primary" onclick="checkAnswers()">✅ Verificar Respostas</button>
+                <button class="btn btn-secondary" onclick="resetQuiz()">🔄 Reiniciar Quiz</button>
+                <button class="btn btn-primary" onclick="nextLesson()">➡️ Próxima Lição</button>
+            </div>
+            
+            <div id="scoreSection" class="score" style="display: none;">
+                Sua Pontuação: <span id="scoreValue">0</span>/5 🎯
+            </div>
+            
+            <div id="feedback" class="feedback" style="display: none;"></div>
+        </div>
+    </div>
+    
+    <script>
+        // ===== SISTEMA DE PROTEÇÃO DE LOGIN =====
+        function checkLogin() {
+            if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+
+        function logout() {
+            sessionStorage.removeItem('studentLoggedIn');
+            sessionStorage.removeItem('studentUsername');
+            window.location.href = 'login.html';
+        }
+
+        function getStudentName() {
+            return sessionStorage.getItem('studentUsername') || 'Student';
+        }
+
+        function goBackToHub() {
+            window.location.href = 'listening-hub.html';
+        }
+
+        if (!checkLogin()) throw new Error('Not logged in');
+
+        // ===== SISTEMA DE PROGRESSO INTERMEDIATE FOCADO =====
+        class IntermediateProgress {
+            constructor() {
+                this.studentId = sessionStorage.getItem('studentUsername') || 'student';
+                this.progressKey = `progress_${this.studentId}`;
+                this.loadProgress();
+            }
+
+            loadProgress() {
+                const saved = localStorage.getItem(this.progressKey);
+                if (saved) {
+                    this.data = JSON.parse(saved);
+                } else {
+                    this.data = {
+                        listening: { lessonsCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        reading: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        roommate: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        neighbor: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        globalBadges: [], lastActivity: null, joinDate: new Date().toISOString(), totalStudyTime: 0
+                    };
+                }
+            }
+
+            saveProgress() { 
+                localStorage.setItem(this.progressKey, JSON.stringify(this.data));
+                console.log(`💾 Progresso Intermediate salvo para ${this.studentId}`);
+            }
+
+            completeIntermediateLesson(lessonNumber, score, timeSpent) {
+                const lesson = `lesson_${lessonNumber}`;
+                if (!this.data.listening.lessonsCompleted.includes(lesson)) {
+                    this.data.listening.lessonsCompleted.push(lesson);
+                }
+                if (!this.data.listening.bestScores[lesson] || score > this.data.listening.bestScores[lesson]) {
+                    this.data.listening.bestScores[lesson] = score;
+                }
+                this.data.listening.totalAttempts++;
+                this.data.totalStudyTime += timeSpent;
+                this.data.lastActivity = new Date().toISOString();
+                this.checkIntermediateBadges(lessonNumber, score);
+                this.saveProgress();
+                this.updateLessonCards();
+            }
+
+            checkIntermediateBadges(lessonNumber, score) {
+                const badges = this.data.listening.badges;
+                if (!badges.includes('intermediate_start')) {
+                    badges.push('intermediate_start');
+                    this.showBadgeNotification('🟡 Desafiador Corajoso!', 'Você avançou para o nível intermediário!');
+                }
+                if (score === 5 && !badges.includes('intermediate_perfect')) {
+                    badges.push('intermediate_perfect');
+                    this.showBadgeNotification('⭐ Perfeito Intermediário!', 'Pontuação máxima no nível médio!');
+                }
+                if (this.getIntermediateCompleted() >= 4 && !badges.includes('intermediate_master')) {
+                    badges.push('intermediate_master');
+                    this.showBadgeNotification('🏆 Mestre Intermediário!', 'Todas as 4 lições intermediárias dominadas!');
+                }
+                if (score >= 4 && !badges.includes('practical_english')) {
+                    badges.push('practical_english');
+                    this.showBadgeNotification('🌟 Inglês Prático!', 'Você domina situações do dia a dia!');
+                }
+            }
+
+            getIntermediateCompleted() {
+                const intermediateLessons = [5, 6, 7, 8];
+                return intermediateLessons.filter(lesson => 
+                    this.data.listening.lessonsCompleted.includes(`lesson_${lesson}`)
+                ).length;
+            }
+
+            showBadgeNotification(title, message) {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                    background: linear-gradient(135deg, #f59e0b, #d97706); color: white;
+                    padding: 25px 35px; border-radius: 20px; z-index: 10000; text-align: center;
+                    box-shadow: 0 15px 40px rgba(0,0,0,0.3); backdrop-filter: blur(10px);
+                `;
+                notification.innerHTML = `<div style="font-size: 1.8em; font-weight: bold; margin-bottom: 15px;">${title}</div><div style="font-size: 1.1em;">${message}</div>`;
+                document.body.appendChild(notification);
+                setTimeout(() => { if (document.body.contains(notification)) document.body.removeChild(notification); }, 3000);
+            }
+
+            updateLessonCards() {
+                createLessonCards();
+            }
+        }
+
+        // ===== LIÇÕES INTERMEDIATE (5-8 apenas) =====
+        const intermediateLessons = {
+            5: { title: "Shopping at the Store", shortTitle: "Shopping", icon: "🛒", audioUrl: "audios/audio5.mp3", questions: { q1: { text: "Who did she go shopping with?", options: ["Her father", "Her mother", "Her sister", "Her friend"], correct: "b" }, q2: { text: "Which fruits did they buy?", options: ["Grapes, pears, and peaches", "Apples, bananas, and oranges", "Strawberries and kiwi", "Pineapple and mango"], correct: "b" }, q3: { text: "What meat did they buy for dinner?", options: ["Beef", "Pork", "Chicken", "Fish"], correct: "c" }, q4: { text: "How long did the shopping take?", options: ["30 minutes", "45 minutes", "One hour", "Two hours"], correct: "c" }, q5: { text: "How much did the shopping cost?", options: ["Twenty-five pounds", "Thirty pounds", "Thirty-five pounds", "Forty pounds"], correct: "c" } } },
+            6: { title: "Family and Relationships", shortTitle: "Family", icon: "👨‍👩‍👧‍👦", audioUrl: "audios/audio6.mp3", questions: { q1: { text: "How many people are in Maria's family?", options: ["Four people", "Five people", "Six people", "Seven people"], correct: "c" }, q2: { text: "What does Maria's father do for work?", options: ["He's a doctor", "He's an engineer", "He's a teacher", "He's a lawyer"], correct: "b" }, q3: { text: "How old is Maria's youngest brother?", options: ["12 years old", "14 years old", "16 years old", "18 years old"], correct: "b" }, q4: { text: "What does the family like to do together on weekends?", options: ["Go shopping", "Watch movies", "Have barbecues in the backyard", "Visit museums"], correct: "c" }, q5: { text: "How often does Maria call her grandmother?", options: ["Every day", "Every week", "Every month", "Every year"], correct: "b" } } },
+            7: { title: "Health and Body", shortTitle: "Health", icon: "🩺", audioUrl: "audios/audio7.mp3", questions: { q1: { text: "What problem does John have?", options: ["A headache", "A stomachache", "A sore throat", "A fever"], correct: "c" }, q2: { text: "How long has John been feeling sick?", options: ["One day", "Two days", "Three days", "One week"], correct: "c" }, q3: { text: "What does the doctor recommend?", options: ["Take antibiotics", "Rest and drink warm tea", "Go to the hospital", "Take pain medication"], correct: "b" }, q4: { text: "How often should John take the medicine?", options: ["Once a day", "Twice a day", "Three times a day", "Four times a day"], correct: "c" }, q5: { text: "When should John return to the doctor?", options: ["Tomorrow", "In three days", "In one week", "Two weeks"], correct: "c" } } },
+            8: { title: "Transportation and Travel", shortTitle: "Travel", icon: "✈️", audioUrl: "audios/audio8.mp3", questions: { q1: { text: "How does Lisa usually go to work?", options: ["By car", "By bus", "By subway", "By bicycle"], correct: "c" }, q2: { text: "How long does her journey to work take?", options: ["15 minutes", "30 minutes", "45 minutes", "One hour"], correct: "b" }, q3: { text: "Where is Lisa planning to travel next month?", options: ["London", "Paris", "New York", "Tokyo"], correct: "b" }, q4: { text: "How will she travel there?", options: ["By car", "By train", "By plane", "By ship"], correct: "c" }, q5: { text: "How long will she stay there?", options: ["Three days", "One week", "Ten days", "Two weeks"], correct: "c" } } }
+        };
+        
+        let currentLesson = 5, attempts = 0, lessonStartTime = Date.now(), studentProgress = new IntermediateProgress();
+        
+        // ===== NAVEGAÇÃO DE LIÇÕES INTERMEDIATE =====
+        function createLessonCards() {
+            const cardsContainer = document.getElementById('lessonCards');
+            cardsContainer.innerHTML = '';
+            
+            for (let i = 5; i <= 8; i++) {
+                const lesson = intermediateLessons[i];
+                const isCompleted = studentProgress.data.listening.lessonsCompleted.includes(`lesson_${i}`);
+                const bestScore = studentProgress.data.listening.bestScores[`lesson_${i}`] || 0;
+                const isActive = i === currentLesson;
+                
+                const card = document.createElement('div');
+                card.className = `lesson-card ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`;
+                card.onclick = () => switchToLesson(i);
+                
+                card.innerHTML = `
+                    <div class="lesson-icon">${lesson.icon}</div>
+                    <div class="lesson-number">${i}</div>
+                    <div class="lesson-name">${lesson.shortTitle}</div>
+                    ${isCompleted ? `<div class="completion-badge">${bestScore}</div>` : ''}
+                `;
+                
+                cardsContainer.appendChild(card);
+            }
+        }
+        
+        function switchToLesson(lessonNumber) {
+            if (lessonNumber === currentLesson) return;
+            
+            currentLesson = lessonNumber;
+            loadLesson(currentLesson);
+            createLessonCards();
+            
+            const container = document.getElementById('lessonContainer');
+            container.style.animation = 'none';
+            container.offsetHeight;
+            container.style.animation = 'slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        }
+        
+        // ===== CARREGAR LIÇÃO =====
+        function loadLesson(lessonNumber) {
+            if (!intermediateLessons[lessonNumber]) return;
+            const lesson = intermediateLessons[lessonNumber];
+            document.getElementById('lessonTitle').textContent = lesson.title;
+            document.getElementById('lessonNumber').textContent = `Lição ${lessonNumber}`;
+            document.getElementById('audioTitle').textContent = `🎧 Escute a Lição: ${lesson.title}`;
+            document.getElementById('mainAudio').src = lesson.audioUrl;
+            loadQuestions(lesson.questions);
+            resetQuiz();
+        }
+        
+        function loadQuestions(questions) {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            Object.keys(questions).forEach((key, index) => {
+                const q = questions[key];
+                const div = document.createElement('div');
+                div.className = 'question';
+                div.innerHTML = `
+                    <div class="question-text">${index + 1}. ${q.text}</div>
+                    <div class="options">
+                        ${q.options.map((opt, i) => `
+                            <div class="option" data-value="${String.fromCharCode(97 + i)}">
+                                <input type="radio" name="${key}" value="${String.fromCharCode(97 + i)}" id="${key}_${i}">
+                                <label for="${key}_${i}">${String.fromCharCode(97 + i).toUpperCase()}) ${opt}</label>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            addOptionEventListeners();
+        }
+        
+        function addOptionEventListeners() {
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    const name = radio.name;
+                    document.querySelectorAll(`input[name="${name}"]`).forEach(opt => {
+                        opt.closest('.option').classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                });
+            });
+        }
+        
+        // ===== ÁUDIO =====
+        function playAudio() { document.getElementById('mainAudio').play(); }
+        function replayAudio() { const audio = document.getElementById('mainAudio'); audio.currentTime = 0; audio.play(); }
+        function pauseAudio() { document.getElementById('mainAudio').pause(); }
+        
+        // ===== CELEBRAÇÕES INTERMEDIATE =====
+        function createCelebration(score) {
+            const overlay = document.createElement('div');
+            overlay.className = 'celebration-overlay';
+            document.body.appendChild(overlay);
+            
+            const celebrationText = document.createElement('div');
+            celebrationText.className = 'celebration-text';
+            
+            if (score === 5) {
+                celebrationText.textContent = 'PERFECT INTERMEDIATE! 🟡✨';
+                createConfetti();
+            } else if (score === 4) {
+                celebrationText.textContent = 'EXCELLENT PROGRESS! ⭐🎯';
+            }
+            
+            document.body.appendChild(celebrationText);
+            
+            setTimeout(() => {
+                if (document.body.contains(overlay)) document.body.removeChild(overlay);
+                if (document.body.contains(celebrationText)) document.body.removeChild(celebrationText);
+            }, 3000);
+        }
+        
+        function createConfetti() {
+            const colors = ['#f59e0b', '#d97706', '#fbbf24', '#10b981'];
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0%';
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        if (document.body.contains(confetti)) document.body.removeChild(confetti);
+                    }, 4000);
+                }, i * 50);
+            }
+        }
+        
+        // ===== VERIFICAR RESPOSTAS =====
+        function checkAnswers() {
+            const lesson = intermediateLessons[currentLesson];
+            const questions = Object.keys(lesson.questions);
+            let score = 0;
+            let detailedResults = [];
+            attempts++;
+            
+            questions.forEach((key, index) => {
+                const selected = document.querySelector(`input[name="${key}"]:checked`);
+                const correct = lesson.questions[key].correct;
+                const allOptions = document.querySelectorAll(`input[name="${key}"]`);
+                
+                allOptions.forEach(opt => {
+                    opt.closest('.option').classList.remove('correct-answer', 'wrong-answer');
+                });
+                
+                const correctOption = document.querySelector(`input[name="${key}"][value="${correct}"]`);
+                correctOption.closest('.option').classList.add('correct-answer');
+                
+                if (selected && selected.value !== correct) {
+                    selected.closest('.option').classList.add('wrong-answer');
+                }
+                
+                const correctOptionText = lesson.questions[key].options[correct.charCodeAt(0) - 97];
+                const selectedOptionText = selected ? lesson.questions[key].options[selected.value.charCodeAt(0) - 97] : "Não respondida";
+                
+                if (selected && selected.value === correct) {
+                    score++;
+                    detailedResults.push(`✅ Questão ${index + 1}: CORRETO! 🎯`);
+                } else {
+                    detailedResults.push(`❌ Questão ${index + 1}: ${selectedOptionText} → Correto: ${correctOptionText}`);
+                }
+            });
+            
+            studentProgress.completeIntermediateLesson(currentLesson, score, Date.now() - lessonStartTime);
+            
+            document.getElementById('progressBar').style.width = (score / 5) * 100 + '%';
+            document.getElementById('scoreValue').textContent = score;
+            document.getElementById('scoreSection').style.display = 'block';
+            
+            if (attempts === 1) document.getElementById('badge1').classList.add('earned');
+            if (score >= 4) document.getElementById('badge2').classList.add('earned');
+            if (score === 5) document.getElementById('badge3').classList.add('earned');
+            
+            if (score === 5 || score === 4) {
+                setTimeout(() => createCelebration(score), 500);
+            }
+            
+            const feedback = document.getElementById('feedback');
+            let feedbackHeader = score === 5 ? 
+                '<div style="text-align: center; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 25px; border-radius: 15px; margin-bottom: 25px; font-size: 1.3em; font-weight: 800;">🎉 INTERMEDIATE PERFEITO! 🟡✨</div>' :
+                '<div style="text-align: center; background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 25px; border-radius: 15px; margin-bottom: 25px; font-size: 1.2em; font-weight: 800;">💪 CONTINUE O DESAFIO! 🎧</div>';
+            
+            feedback.innerHTML = feedbackHeader + detailedResults.map(result => `<div style="margin: 10px 0; padding: 15px; background: rgba(245, 158, 11, 0.1); border-radius: 8px;">${result}</div>`).join('');
+            feedback.style.display = 'block';
+        }
+        
+        function resetQuiz() {
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+                const option = radio.closest('.option');
+                option.classList.remove('selected', 'correct-answer', 'wrong-answer');
+            });
+            
+            document.getElementById('scoreSection').style.display = 'none';
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('progressBar').style.width = '0%';
+            
+            document.querySelectorAll('.badge').forEach(badge => {
+                badge.classList.remove('earned');
+            });
+            
+            attempts = 0;
+            lessonStartTime = Date.now();
+        }
+        
+        function nextLesson() {
+            if (currentLesson < 8) {
+                switchToLesson(currentLesson + 1);
+            } else {
+                alert('🎉 Parabéns! Você completou o Intermediate Level! 🟡🏆\n\nPróximo: Advanced Level!');
+                setTimeout(() => {
+                    window.location.href = 'listening-hub.html';
+                }, 2000);
+            }
+        }
+        
+        // ===== INICIALIZAÇÃO =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const studentName = getStudentName();
+            document.getElementById('userName').textContent = studentName;
+            
+            console.log(`🟡 Listening Intermediate carregado - usuário: ${studentName}`);
+            console.log('📚 Lições 5-8: Shopping, Family, Health, Travel');
+            console.log('💾 Sistema localStorage puro - Modular!');
+            
+            createLessonCards();
+            loadLesson(currentLesson);
+        });
+    </script>
+</body>
+</html>
