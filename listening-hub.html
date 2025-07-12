@@ -545,11 +545,17 @@
             }
         }
 
-        function goToLevel(level) {
-            // Por enquanto, redireciona para o listening atual
-            // Futuramente será: listening-beginner.html, etc.
-            window.location.href = 'listening.html';
-        }
+                function goToLevel(level) {
+                    if (level === 'beginner') {
+                        window.location.href = 'listening-beginner.html';
+                    } else if (level === 'intermediate') {
+                        // Temporariamente vai pro listening atual até criar intermediate
+                        window.location.href = 'listening.html';
+                    } else if (level === 'advanced') {
+                        // Temporariamente vai pro listening atual até criar advanced
+                        window.location.href = 'listening.html';
+                    }
+                }
 
         function updateLevelProgress(level, completed, total) {
             const percentage = (completed / total) * 100;
