@@ -8,6 +8,33 @@
     <link rel="stylesheet" href="layout.css">
     <link rel="stylesheet" href="theme-patriot.css">
     <style>
+        /* CORREÇÃO RÁPIDA - BOTÕES + MOBILE */
+
+/* Botão Em Desenvolvimento */
+button[style*="background: #f59e0b"],
+button[style*="background:#f59e0b"] {
+    background: linear-gradient(135deg, #f59e0b, #d97706, #92400e) !important;
+    box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4) !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+}
+
+/* Botão Investigar */
+button[style*="background: #8b5cf6"],
+button[style*="background:#8b5cf6"] {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed, #5b21b6) !important;
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4) !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+}
+
+/* Mobile Fix */
+@media (max-width: 768px) {
+    .card:active {
+        background: white !important;
+        transform: scale(0.98) !important;
+    }
+}
         /* CSS específico para Coming Soon e Secret Area */
         .coming-soon {
             opacity: 0.75;
