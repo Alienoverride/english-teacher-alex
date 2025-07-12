@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listening Foundation - Teacher Alex English Academy BETA</title>
+    
+    <!-- CSS EXTERNO - ESTRATÉGIA VENCEDORA! -->
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="theme-patriot.css">
+    
+    <style>
+        /* CSS ESPECÍFICO PARA LISTENING FOUNDATION EXPANDIDO */
+        .foundation-title {
+            font-size: 2.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .foundation-subtitle {
+            font-size: 1.2em;
+            color: #1d4ed8;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .back-to-hub {
+            background: linear-gradient(135deg, #6b7280, #374155);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            font-size: 1em;
+        }
+
+        .back-to-hub:hover {
+            background: linear-gradient(135deg, #374155, #6b7280);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Lesson Navigation - 12 lições organizadas em grupos */
+        .lesson-navigation {
+            padding: 40px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lesson-navigation::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8, #1e40af);
+        }
+
+        .lesson-groups {
+            display: grid;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .lesson-group {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 16px;
+            padding: 25px;
+            border: 2px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .group-title {
+            font-size: 1.3em;
+            font-weight: 800;
+            color: #1d4ed8;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid rgba(59, 130, 246, 0.2);
+            padding-bottom: 10px;
+        }
+
+        .lesson-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+        }
+
+        /* Lesson Card - Foundation Style */
+        .lesson-card {
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 160px;
+            justify-content: space-between;
+            transition: all 0.4s ease;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            border-radius: 12px;
+        }
+
+        .lesson-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transition: left 0.6s;
+            z-index: 1;
+        }
+
+        .lesson-card:hover::before {
+            left: 100%;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.3);
+            border-color: #3b82f6;
+        }
+
+        /* Lesson Card States */
+        .lesson-card.active {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            border-color: #3b82f6;
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .lesson-card.completed {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border-color: #10b981;
+        }
+
+        .lesson-card.active .lesson-number,
+        .lesson-card.completed .lesson-number {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        /* Lesson Number Badge */
+        .lesson-card .lesson-number {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.1em;
+            margin: 0 auto 10px auto;
+            box-shadow: 0 6px 15px rgba(59, 130, 246, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .lesson-card:hover .lesson-number {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .lesson-card .lesson-name {
+            font-size: 0.9em;
+            font-weight: 700;
+            color: #1d4ed8;
+            line-height: 1.2;
+            position: relative;
+            z-index: 2;
+        }
+
+        .lesson-card.active .lesson-name,
+        .lesson-card.completed .lesson-name {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .lesson-card .lesson-icon {
+            font-size: 1.8em;
+            margin-bottom: 8px;
+            display: block;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Completion Badge */
+        .lesson-card .completion-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 24px;
+            height: 24px;
+            background: #10b981;
+            border-radius: 50%;
+            color: white;
+            font-size: 0.7em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            border: 2px solid white;
+            box-shadow: 0 3px 8px rgba(16, 185, 129, 0.4);
+            z-index: 3;
+        }
+
+        /* Progress Overview */
+        .foundation-progress {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            text-align: center;
+        }
+
+        .progress-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .progress-stat {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(29, 78, 216, 0.1));
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .stat-number {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: #1d4ed8;
+        }
+
+        .stat-label {
+            font-size: 0.85em;
+            color: #6b7280;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .foundation-title {
+                font-size: 1.8em;
+            }
+
+            .lesson-cards {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            .lesson-card {
+                padding: 15px 10px;
+                min-height: 130px;
+            }
+            
+            .lesson-card .lesson-number {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9em;
+            }
+            
+            .lesson-card .lesson-name {
+                font-size: 0.8em;
+            }
+
+            .lesson-card .lesson-icon {
+                font-size: 1.5em;
+            }
+
+            .lesson-groups {
+                gap: 20px;
+            }
+
+            .lesson-group {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body class="listening-page">
+    <!-- User Info -->
+    <div style="position: fixed; top: 15px; right: 15px; z-index: 1000;">
+        <div style="background: rgba(255,255,255,0.95); border-radius: 15px; padding: 8px 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #dc2626; backdrop-filter: blur(10px);">
+            <span style="color: #1e3a8a; font-weight: 700; margin-right: 8px; font-size: 0.8em;">👋 <span id="userName">Aluno</span></span>
+            <button onclick="logout()" style="background: #dc2626; color: white; border: none; padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 0.75em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='#ef4444'" onmouseout="this.style.background='#dc2626'">🚪 Sair</button>
+        </div>
+    </div>
+    
+    <div class="container listening-page">
+        <button class="back-to-hub" onclick="goBackToHub()">← Voltar ao Hub Listening</button>
+        
+        <div class="header">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <div class="logo">
+                    Teacher Alex <span class="logo-highlight">English Academy</span> BETA
+                </div>
+            </a>
+            <div class="foundation-title">🟦 Listening Foundation Level</div>
+            <div class="foundation-subtitle">12 Lições • English Survival Kit Completo</div>
+        </div>
+
+        <!-- Foundation Progress Overview -->
+        <div class="foundation-progress">
+            <h3 style="color: #1d4ed8; font-size: 1.4em; margin-bottom: 15px;">📊 Seu Progresso Foundation</h3>
+            <div class="progress-stats">
+                <div class="progress-stat">
+                    <div class="stat-number" id="totalCompleted">0</div>
+                    <div class="stat-label">Lições Concluídas</div>
+                </div>
+                <div class="progress-stat">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Total Available</div>
+                </div>
+                <div class="progress-stat">
+                    <div class="stat-number" id="foundationBadges">0</div>
+                    <div class="stat-label">Badges Earned</div>
+                </div>
+                <div class="progress-stat">
+                    <div class="stat-number" id="averageScore">0.0</div>
+                    <div class="stat-label">Média</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- NAVEGAÇÃO DE LIÇÕES FOUNDATION EXPANDIDO -->
+        <div class="lesson-navigation">
+            <div class="nav-title">🎵 English Survival Kit - 12 Lições Essenciais</div>
+            <div class="lesson-groups">
+                <!-- Grupo 1: Survival Basics -->
+                <div class="lesson-group">
+                    <div class="group-title">📝 Grupo 1: Survival Basics</div>
+                    <div class="lesson-cards" data-group="1">
+                        <!-- F1-F4 serão gerados dinamicamente -->
+                    </div>
+                </div>
+
+                <!-- Grupo 2: Daily Essentials -->
+                <div class="lesson-group">
+                    <div class="group-title">🌟 Grupo 2: Daily Essentials</div>
+                    <div class="lesson-cards" data-group="2">
+                        <!-- F5-F8 serão gerados dinamicamente -->
+                    </div>
+                </div>
+
+                <!-- Grupo 3: Practical Skills -->
+                <div class="lesson-group">
+                    <div class="group-title">🚀 Grupo 3: Practical Skills</div>
+                    <div class="lesson-cards" data-group="3">
+                        <!-- F9-F12 serão gerados dinamicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="lesson-container" id="lessonContainer">
+            <div class="lesson-header">
+                <div class="lesson-title" id="lessonTitle">Alphabet & Spelling</div>
+                <div class="lesson-number" id="lessonNumber">Lição F1</div>
+            </div>
+            
+            <div class="progress-section">
+                <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+                
+                <div class="badges">
+                    <div class="badge" id="badge1">🎯 Primeira Tentativa</div>
+                    <div class="badge" id="badge2">⭐ Boa Pontuação</div>
+                    <div class="badge" id="badge3">🏆 Perfeito</div>
+                    <div class="badge" id="badge4">🔥 Survival Expert</div>
+                </div>
+            </div>
+            
+            <div class="audio-section">
+                <div class="audio-title" id="audioTitle">🎧 Escute a Lição: Alphabet & Spelling</div>
+                <audio id="mainAudio" controls>
+                    <source src="audios/audioF1.mp3" type="audio/mpeg">
+                    Seu navegador não suporta o elemento de áudio.
+                </audio>
+                <div class="play-buttons">
+                    <button class="btn btn-primary" onclick="playAudio()">▶️ Reproduzir</button>
+                    <button class="btn btn-secondary" onclick="replayAudio()">🔄 Repetir</button>
+                    <button class="btn btn-primary" onclick="pauseAudio()">⏸️ Pausar</button>
+                </div>
+            </div>
+            
+            <div class="questions-section" id="questionsContainer"></div>
+            
+            <div class="controls">
+                <button class="btn btn-primary" onclick="checkAnswers()">✅ Verificar Respostas</button>
+                <button class="btn btn-secondary" onclick="resetQuiz()">🔄 Reiniciar Quiz</button>
+                <button class="btn btn-primary" onclick="nextLesson()">➡️ Próxima Lição</button>
+            </div>
+            
+            <div id="scoreSection" class="score" style="display: none;">
+                Sua Pontuação: <span id="scoreValue">0</span>/5 🎯
+            </div>
+            
+            <div id="feedback" class="feedback" style="display: none;"></div>
+        </div>
+    </div>
+    
+    <script>
+        // ===== SISTEMA DE PROTEÇÃO DE LOGIN =====
+        function checkLogin() {
+            if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+
+        function logout() {
+            sessionStorage.removeItem('studentLoggedIn');
+            sessionStorage.removeItem('studentUsername');
+            window.location.href = 'login.html';
+        }
+
+        function getStudentName() {
+            return sessionStorage.getItem('studentUsername') || 'Student';
+        }
+
+        function goBackToHub() {
+            window.location.href = 'listening-hub.html';
+        }
+
+        if (!checkLogin()) throw new Error('Not logged in');
+
+        // ===== SISTEMA DE PROGRESSO FOUNDATION EXPANDIDO =====
+        class FoundationProgress {
+            constructor() {
+                this.studentId = sessionStorage.getItem('studentUsername') || 'student';
+                this.progressKey = `progress_${this.studentId}`;
+                this.loadProgress();
+            }
+
+            loadProgress() {
+                const saved = localStorage.getItem(this.progressKey);
+                if (saved) {
+                    this.data = JSON.parse(saved);
+                } else {
+                    this.data = {
+                        listening: { lessonsCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        reading: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        roommate: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        neighbor: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
+                        globalBadges: [], lastActivity: null, joinDate: new Date().toISOString(), totalStudyTime: 0
+                    };
+                }
+            }
+
+            saveProgress() { 
+                localStorage.setItem(this.progressKey, JSON.stringify(this.data));
+                console.log(`💾 Progresso Foundation salvo para ${this.studentId}`);
+            }
+
+            completeFoundationLesson(lessonNumber, score, timeSpent) {
+                const lesson = `lesson_f${lessonNumber}`;
+                if (!this.data.listening.lessonsCompleted.includes(lesson)) {
+                    this.data.listening.lessonsCompleted.push(lesson);
+                }
+                if (!this.data.listening.bestScores[lesson] || score > this.data.listening.bestScores[lesson]) {
+                    this.data.listening.bestScores[lesson] = score;
+                }
+                this.data.listening.totalAttempts++;
+                this.data.totalStudyTime += timeSpent;
+                this.data.lastActivity = new Date().toISOString();
+                this.checkFoundationBadges(lessonNumber, score);
+                this.saveProgress();
+                this.updateLessonCards();
+                this.updateProgressStats();
+            }
+
+            checkFoundationBadges(lessonNumber, score) {
+                const badges = this.data.listening.badges;
+                if (!badges.includes('foundation_pioneer')) {
+                    badges.push('foundation_pioneer');
+                    this.showBadgeNotification('🟦 Pioneer!', 'Primeiro passo no English Survival Kit!');
+                }
+                if (score === 5 && !badges.includes('foundation_perfect')) {
+                    badges.push('foundation_perfect');
+                    this.showBadgeNotification('⭐ Perfect Foundation!', 'Pontuação perfeita!');
+                }
+                if (this.getFoundationCompleted() >= 4 && !badges.includes('basics_master')) {
+                    badges.push('basics_master');
+                    this.showBadgeNotification('📝 Basics Master!', 'Grupo 1 dominado!');
+                }
+                if (this.getFoundationCompleted() >= 8 && !badges.includes('daily_master')) {
+                    badges.push('daily_master');
+                    this.showBadgeNotification('🌟 Daily Master!', 'Grupo 2 dominado!');
+                }
+                if (this.getFoundationCompleted() >= 12 && !badges.includes('survival_champion')) {
+                    badges.push('survival_champion');
+                    this.showBadgeNotification('🏆 SURVIVAL CHAMPION!', 'Todas as 12 lições dominadas!');
+                }
+                if (score >= 4 && !badges.includes('english_survivor')) {
+                    badges.push('english_survivor');
+                    this.showBadgeNotification('🚀 English Survivor!', 'Você pode se virar no básico!');
+                }
+            }
+
+            getFoundationCompleted() {
+                const foundationLessons = Array.from({length: 12}, (_, i) => `f${i + 1}`);
+                return foundationLessons.filter(lesson => 
+                    this.data.listening.lessonsCompleted.includes(`lesson_${lesson}`)
+                ).length;
+            }
+
+            getFoundationStats() {
+                const completed = this.getFoundationCompleted();
+                const scores = Object.values(this.data.listening.bestScores).filter(score => score > 0);
+                const average = scores.length > 0 ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : 0;
+                const badges = this.data.listening.badges.length;
+
+                return { completed, average, badges };
+            }
+
+            updateProgressStats() {
+                const stats = this.getFoundationStats();
+                document.getElementById('totalCompleted').textContent = stats.completed;
+                document.getElementById('foundationBadges').textContent = stats.badges;
+                document.getElementById('averageScore').textContent = stats.average;
+            }
+
+            showBadgeNotification(title, message) {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                    background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white;
+                    padding: 25px 35px; border-radius: 20px; z-index: 10000; text-align: center;
+                    box-shadow: 0 15px 40px rgba(0,0,0,0.3); backdrop-filter: blur(10px);
+                `;
+                notification.innerHTML = `<div style="font-size: 1.8em; font-weight: bold; margin-bottom: 15px;">${title}</div><div style="font-size: 1.1em;">${message}</div>`;
+                document.body.appendChild(notification);
+                setTimeout(() => { if (document.body.contains(notification)) document.body.removeChild(notification); }, 3000);
+            }
+
+            updateLessonCards() {
+                createLessonCards();
+            }
+        }
+
+        // ===== 12 LIÇÕES FOUNDATION EXPANDIDAS =====
+        const foundationLessons = {
+            // Grupo 1: Survival Basics (F1-F4)
+            'f1': { title: "Alphabet & Spelling", shortTitle: "Alphabet", icon: "🔤", group: 1, audioUrl: "audios/audioF1.mp3", questions: { q1: { text: "How do you spell 'HELLO'?", options: ["H-E-L-L-O", "H-A-L-L-O", "E-L-L-O", "H-E-L-O"], correct: "a" }, q2: { text: "Which letter comes before 'M'?", options: ["N", "L", "K", "O"], correct: "b" }, q3: { text: "How do you spell 'NAME'?", options: ["N-A-M-E", "N-E-A-M", "M-A-N-E", "N-A-E-M"], correct: "a" }, q4: { text: "What's the last letter of the alphabet?", options: ["Y", "X", "Z", "W"], correct: "c" }, q5: { text: "How many letters are in the English alphabet?", options: ["24", "25", "26", "27"], correct: "c" } } },
+            
+            'f2': { title: "Numbers & Time", shortTitle: "Numbers", icon: "🕐", group: 1, audioUrl: "audios/audioF2.mp3", questions: { q1: { text: "What number comes after 'seven'?", options: ["Six", "Eight", "Nine", "Ten"], correct: "b" }, q2: { text: "How do you say '15'?", options: ["Fifty", "Fifteen", "Fourteen", "Sixteen"], correct: "b" }, q3: { text: "What time is 'three thirty'?", options: ["3:00", "3:30", "3:13", "13:30"], correct: "b" }, q4: { text: "How do you say '21'?", options: ["Twelve one", "Twenty one", "Two ten", "Twenty first"], correct: "b" }, q5: { text: "What comes after 'nineteenth'?", options: ["Eighteenth", "Twentieth", "Twenty first", "Thirtieth"], correct: "b" } } },
+            
+            'f3': { title: "Essential Greetings", shortTitle: "Greetings", icon: "👋", group: 1, audioUrl: "audios/audioF3.mp3", questions: { q1: { text: "What do you say in the morning?", options: ["Good night", "Good morning", "Good afternoon", "Good evening"], correct: "b" }, q2: { text: "How do you ask someone's name?", options: ["How are you?", "What's your name?", "Where are you from?", "How old are you?"], correct: "b" }, q3: { text: "What's the response to 'Thank you'?", options: ["Yes", "No", "You're welcome", "Excuse me"], correct: "c" }, q4: { text: "How do you say goodbye?", options: ["Hello", "Hi", "Goodbye", "Please"], correct: "c" }, q5: { text: "What do you say to be polite?", options: ["Sorry", "Excuse me", "Thank you", "All answers"], correct: "d" } } },
+            
+            'f4': { title: "Family & People", shortTitle: "Family", icon: "👨‍👩‍👧‍👦", group: 1, audioUrl: "audios/audioF4.mp3", questions: { q1: { text: "What do you call your father's wife?", options: ["Sister", "Mother", "Daughter", "Aunt"], correct: "b" }, q2: { text: "What do you call your mother's son?", options: ["Father", "Uncle", "Cousin", "Brother"], correct: "d" }, q3: { text: "Who is your father's father?", options: ["Uncle", "Grandfather", "Cousin", "Brother"], correct: "b" }, q4: { text: "What do you call your sister's daughter?", options: ["Niece", "Nephew", "Cousin", "Daughter"], correct: "a" }, q5: { text: "Who is your parent's sister?", options: ["Grandmother", "Cousin", "Aunt", "Sister"], correct: "c" } } },
+
+            // Grupo 2: Daily Essentials (F5-F8)
+            'f5': { title: "Colors & Weather", shortTitle: "Colors", icon: "☀️", group: 2, audioUrl: "audios/audioF5.mp3", questions: { q1: { text: "What color is the sun?", options: ["Blue", "Yellow", "Green", "Red"], correct: "b" }, q2: { text: "What's the weather when it rains?", options: ["Sunny", "Rainy", "Hot", "Cold"], correct: "b" }, q3: { text: "What color is grass?", options: ["Blue", "Yellow", "Green", "Red"], correct: "c" }, q4: { text: "When it's very cold, it might...", options: ["Rain", "Snow", "Sun", "Wind"], correct: "b" }, q5: { text: "What color is the sky on a clear day?", options: ["Blue", "Yellow", "Green", "Red"], correct: "a" } } },
+            
+            'f6': { title: "Food & Drinks", shortTitle: "Food", icon: "🍔", group: 2, audioUrl: "audios/audioF6.mp3", questions: { q1: { text: "What do you drink when thirsty?", options: ["Bread", "Water", "Meat", "Rice"], correct: "b" }, q2: { text: "What meal do you eat in the morning?", options: ["Lunch", "Dinner", "Breakfast", "Snack"], correct: "c" }, q3: { text: "What fruit is yellow?", options: ["Apple", "Banana", "Orange", "Grape"], correct: "b" }, q4: { text: "Where do you buy food?", options: ["Hospital", "School", "Supermarket", "Bank"], correct: "c" }, q5: { text: "What do you use to eat soup?", options: ["Fork", "Knife", "Spoon", "Hands"], correct: "c" } } },
+            
+            'f7': { title: "Body & Health", shortTitle: "Body", icon: "💪", group: 2, audioUrl: "audios/audioF7.mp3", questions: { q1: { text: "What do you use to see?", options: ["Ears", "Eyes", "Nose", "Mouth"], correct: "b" }, q2: { text: "What do you use to hear?", options: ["Ears", "Eyes", "Nose", "Mouth"], correct: "a" }, q3: { text: "When you're sick, you go to...", options: ["School", "Doctor", "Store", "Park"], correct: "b" }, q4: { text: "What do you use to walk?", options: ["Hands", "Arms", "Feet", "Head"], correct: "c" }, q5: { text: "Where is your brain?", options: ["In your head", "In your chest", "In your stomach", "In your legs"], correct: "a" } } },
+            
+            'f8': { title: "Directions & Places", shortTitle: "Directions", icon: "🗺️", group: 2, audioUrl: "audios/audioF8.mp3", questions: { q1: { text: "What's the opposite of 'left'?", options: ["Up", "Down", "Right", "Front"], correct: "c" }, q2: { text: "Where do children learn?", options: ["Hospital", "School", "Store", "Park"], correct: "b" }, q3: { text: "Where do you sleep?", options: ["Kitchen", "Bathroom", "Bedroom", "Living room"], correct: "c" }, q4: { text: "How do you ask for directions?", options: ["Where is...?", "What is...?", "Who is...?", "When is...?"], correct: "a" }, q5: { text: "Where do you buy medicine?", options: ["Supermarket", "Pharmacy", "Restaurant", "Bank"], correct: "b" } } },
+
+            // Grupo 3: Practical Skills (F9-F12)
+            'f9': { title: "Shopping & Money", shortTitle: "Shopping", icon: "💰", group: 3, audioUrl: "audios/audioF9.mp3", questions: { q1: { text: "How do you ask the price?", options: ["How much?", "How many?", "How old?", "How big?"], correct: "a" }, q2: { text: "What do you say when you want to buy?", options: ["I need this", "I want this", "I like this", "I have this"], correct: "b" }, q3: { text: "What do you give to pay?", options: ["Food", "Money", "Water", "Clothes"], correct: "b" }, q4: { text: "Where do you pay?", options: ["Entrance", "Cashier", "Exit", "Bathroom"], correct: "b" }, q5: { text: "What do you get after paying?", options: ["Receipt", "Menu", "Map", "Key"], correct: "a" } } },
+            
+            'f10': { title: "Work & School", shortTitle: "Work", icon: "📚", group: 3, audioUrl: "audios/audioF10.mp3", questions: { q1: { text: "What do you ask in an interview?", options: ["What's your name?", "What's your job?", "Where do you work?", "All answers"], correct: "d" }, q2: { text: "Where do students study?", options: ["Office", "School", "Hospital", "Store"], correct: "b" }, q3: { text: "Who teaches in school?", options: ["Doctor", "Teacher", "Driver", "Cook"], correct: "b" }, q4: { text: "What do you need for a job?", options: ["Experience", "Skills", "Resume", "All answers"], correct: "d" }, q5: { text: "When do most people work?", options: ["Night", "Weekend", "Morning to evening", "Midnight"], correct: "c" } } },
+            
+            'f11': { title: "Emergency & Help", shortTitle: "Emergency", icon: "🚨", group: 3, audioUrl: "audios/audioF11.mp3", questions: { q1: { text: "What do you call for emergency?", options: ["Store", "Friend", "Police", "Teacher"], correct: "c" }, q2: { text: "How do you ask for help?", options: ["Help me!", "Thank you!", "Goodbye!", "Hello!"], correct: "a" }, q3: { text: "Where do you go when very sick?", options: ["School", "Hospital", "Store", "Park"], correct: "b" }, q4: { text: "What number for emergency in US?", options: ["111", "999", "911", "411"], correct: "c" }, q5: { text: "When you're lost, you ask...", options: ["Where am I?", "Who are you?", "What time?", "How much?"], correct: "a" } } },
+            
+            'f12': { title: "Phone & Internet", shortTitle: "Technology", icon: "📱", group: 3, audioUrl: "audios/audioF12.mp3", questions: { q1: { text: "How do you answer the phone?", options: ["Goodbye", "Hello", "Thank you", "Excuse me"], correct: "b" }, q2: { text: "What do you need for internet?", options: ["Water", "Food", "WiFi password", "Money"], correct: "c" }, q3: { text: "How do you end a phone call?", options: ["Hello", "Goodbye", "Please", "Sorry"], correct: "b" }, q4: { text: "What app do you use for messages?", options: ["Camera", "Clock", "Messages", "Calculator"], correct: "c" }, q5: { text: "When your phone doesn't work...", options: ["It's broken", "It's expensive", "It's new", "It's big"], correct: "a" } } }
+        };
+        
+        let currentLesson = 'f1', attempts = 0, lessonStartTime = Date.now(), studentProgress = new FoundationProgress();
+        
+        // ===== NAVEGAÇÃO DE LIÇÕES FOUNDATION EXPANDIDO =====
+        function createLessonCards() {
+            // Para cada grupo (1, 2, 3)
+            for (let group = 1; group <= 3; group++) {
+                const container = document.querySelector(`[data-group="${group}"]`);
+                container.innerHTML = '';
+                
+                // Filtrar lições do grupo atual
+                const groupLessons = Object.keys(foundationLessons).filter(lessonId => 
+                    foundationLessons[lessonId].group === group
+                );
+                
+                groupLessons.forEach(lessonId => {
+                    const lesson = foundationLessons[lessonId];
+                    const isCompleted = studentProgress.data.listening.lessonsCompleted.includes(`lesson_${lessonId}`);
+                    const bestScore = studentProgress.data.listening.bestScores[`lesson_${lessonId}`] || 0;
+                    const isActive = lessonId === currentLesson;
+                    
+                    const card = document.createElement('div');
+                    card.className = `lesson-card ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`;
+                    card.onclick = () => switchToLesson(lessonId);
+                    
+                    const lessonNumber = lessonId.toUpperCase();
+                    
+                    card.innerHTML = `
+                        <div class="lesson-icon">${lesson.icon}</div>
+                        <div class="lesson-number">${lessonNumber}</div>
+                        <div class="lesson-name">${lesson.shortTitle}</div>
+                        ${isCompleted ? `<div class="completion-badge">${bestScore}</div>` : ''}
+                    `;
+                    
+                    container.appendChild(card);
+                });
+            }
+        }
+        
+        function switchToLesson(lessonId) {
+            if (lessonId === currentLesson) return;
+            
+            currentLesson = lessonId;
+            loadLesson(currentLesson);
+            createLessonCards();
+            
+            const container = document.getElementById('lessonContainer');
+            container.style.animation = 'none';
+            container.offsetHeight;
+            container.style.animation = 'slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+        }
+        
+        // ===== CARREGAR LIÇÃO =====
+        function loadLesson(lessonId) {
+            if (!foundationLessons[lessonId]) return;
+            const lesson = foundationLessons[lessonId];
+            const lessonNumber = lessonId.toUpperCase();
+            
+            document.getElementById('lessonTitle').textContent = lesson.title;
+            document.getElementById('lessonNumber').textContent = `Lição ${lessonNumber}`;
+            document.getElementById('audioTitle').textContent = `🎧 Escute a Lição: ${lesson.title}`;
+            document.getElementById('mainAudio').src = lesson.audioUrl;
+            loadQuestions(lesson.questions);
+            resetQuiz();
+        }
+        
+        function loadQuestions(questions) {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            Object.keys(questions).forEach((key, index) => {
+                const q = questions[key];
+                const div = document.createElement('div');
+                div.className = 'question';
+                div.innerHTML = `
+                    <div class="question-text">${index + 1}. ${q.text}</div>
+                    <div class="options">
+                        ${q.options.map((opt, i) => `
+                            <div class="option" data-value="${String.fromCharCode(97 + i)}">
+                                <input type="radio" name="${key}" value="${String.fromCharCode(97 + i)}" id="${key}_${i}">
+                                <label for="${key}_${i}">${String.fromCharCode(97 + i).toUpperCase()}) ${opt}</label>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            addOptionEventListeners();
+        }
+        
+        function addOptionEventListeners() {
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    const name = radio.name;
+                    document.querySelectorAll(`input[name="${name}"]`).forEach(opt => {
+                        opt.closest('.option').classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                });
+            });
+        }
+        
+        // ===== ÁUDIO =====
+        function playAudio() { document.getElementById('mainAudio').play(); }
+        function replayAudio() { const audio = document.getElementById('mainAudio'); audio.currentTime = 0; audio.play(); }
+        function pauseAudio() { document.getElementById('mainAudio').pause(); }
+        
+        // ===== VERIFICAR RESPOSTAS =====
+        function checkAnswers() {
+            const lesson = foundationLessons[currentLesson];
+            const questions = Object.keys(lesson.questions);
+            let score = 0;
+            let detailedResults = [];
+            attempts++;
+            
+            questions.forEach((key, index) => {
+                const selected = document.querySelector(`input[name="${key}"]:checked`);
+                const correct = lesson.questions[key].correct;
+                const allOptions = document.querySelectorAll(`input[name="${key}"]`);
+                
+                allOptions.forEach(opt => {
+                    opt.closest('.option').classList.remove('correct-answer', 'wrong-answer');
+                });
+                
+                const correctOption = document.querySelector(`input[name="${key}"][value="${correct}"]`);
+                correctOption.closest('.option').classList.add('correct-answer');
+                
+                if (selected && selected.value !== correct) {
+                    selected.closest('.option').classList.add('wrong-answer');
+                }
+                
+                const correctOptionText = lesson.questions[key].options[correct.charCodeAt(0) - 97];
+                const selectedOptionText = selected ? lesson.questions[key].options[selected.value.charCodeAt(0) - 97] : "Não respondida";
+                
+                if (selected && selected.value === correct) {
+                    score++;
+                    detailedResults.push(`✅ Questão ${index + 1}: CORRETO! 🎯`);
+                } else {
+                    detailedResults.push(`❌ Questão ${index + 1}: ${selectedOptionText} → Correto: ${correctOptionText}`);
+                }
+            });
+            
+            studentProgress.completeFoundationLesson(currentLesson.replace('f', ''), score, Date.now() - lessonStartTime);
+            
+            document.getElementById('progressBar').style.width = (score / 5) * 100 + '%';
+            document.getElementById('scoreValue').textContent = score;
+            document.getElementById('scoreSection').style.display = 'block';
+            
+            if (attempts === 1) document.getElementById('badge1').classList.add('earned');
+            if (score >= 4) document.getElementById('badge2').classList.add('earned');
+            if (score === 5) document.getElementById('badge3').classList.add('earned');
+            if (score >= 4) document.getElementById('badge4').classList.add('earned');
+            
+            const feedback = document.getElementById('feedback');
+            let feedbackHeader = score === 5 ? 
+                '<div style="text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; padding: 25px; border-radius: 15px; margin-bottom: 25px; font-size: 1.3em; font-weight: 800;">🎉 SURVIVAL PERFECT! 🟦✨</div>' :
+                '<div style="text-align: center; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 25px; border-radius: 15px; margin-bottom: 25px; font-size: 1.2em; font-weight: 800;">💪 CONTINUE PRATICANDO! 📚</div>';
+            
+            feedback.innerHTML = feedbackHeader + detailedResults.map(result => `<div style="margin: 10px 0; padding: 15px; background: rgba(59, 130, 246, 0.1); border-radius: 8px;">${result}</div>`).join('');
+            feedback.style.display = 'block';
+        }
+        
+        function resetQuiz() {
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+                const option = radio.closest('.option');
+                option.classList.remove('selected', 'correct-answer', 'wrong-answer');
+            });
+            
+            document.getElementById('scoreSection').style.display = 'none';
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('progressBar').style.width = '0%';
+            
+            document.querySelectorAll('.badge').forEach(badge => {
+                badge.classList.remove('earned');
+            });
+            
+            attempts = 0;
+            lessonStartTime = Date.now();
+        }
+        
+        function nextLesson() {
+            const allLessons = ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12'];
+            const currentIndex = allLessons.indexOf(currentLesson);
+            
+            if (currentIndex < allLessons.length - 1) {
+                switchToLesson(allLessons[currentIndex + 1]);
+            } else {
+                alert('🎉 PARABÉNS! Você completou o ENGLISH SURVIVAL KIT! 🟦🏆\n\n12 lições dominadas! Agora você pode sobreviver em QUALQUER situação!\n\nPróximo: Beginner Level!');
+                setTimeout(() => {
+                    window.location.href = 'listening-hub.html';
+                }, 2000);
+            }
+        }
+        
+        // ===== INICIALIZAÇÃO =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const studentName = getStudentName();
+            document.getElementById('userName').textContent = studentName;
+            
+            console.log(`🟦 Foundation EXPANDIDO carregado - usuário: ${studentName}`);
+            console.log('📚 12 Lições Survival English!');
+            console.log('🎯 F1-F4: Basics | F5-F8: Daily | F9-F12: Practical');
+            
+            createLessonCards();
+            loadLesson(currentLesson);
+            studentProgress.updateProgressStats();
+        });
+    </script>
+</body>
+</html>
