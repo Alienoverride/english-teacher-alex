@@ -493,26 +493,39 @@
                 if (!this.data.neighbor) this.data.neighbor = { chaptersCompleted: [], bestScores: {}, badges: [] };
             }
 
-            getStats() {
-                const listeningLessons = this.data.listening.lessonsCompleted.length;
-                const readingChapters = this.data.reading.chaptersCompleted.length;
-                const roommateChapters = this.data.roommate.chaptersCompleted.length;
-                const neighborChapters = this.data.neighbor.chaptersCompleted.length;
-                const totalChapters = readingChapters + roommateChapters + neighborChapters;
-                const totalBadges = this.data.listening.badges.length + 
-                                  this.data.reading.badges.length + 
-                                  this.data.roommate.badges.length +
-                                  this.data.neighbor.badges.length +
-                                  this.data.globalBadges.length;
-                const studyTimeHours = Math.floor(this.data.totalStudyTime / (1000 * 60 * 60));
+getStats() {
+    // INCLUINDO FOUNDATION AGORA! 🟦
+    const foundationLessons = Array.from({length: 12}, (_, i) => `f${i + 1}`);
+    const foundationCompleted = foundationLessons.filter(lesson => 
+        this.data.listening.lessonsCompleted.includes(`lesson_${lesson}`)
+    ).length;
+    
+    // Lições regulares
+    const regularLessonsCompleted = this.data.listening.lessonsCompleted.filter(lesson => 
+        !lesson.startsWith('lesson_f')
+    ).length;
+    
+    // TOTAL: Foundation + Regular
+    const totalListeningLessons = foundationCompleted + regularLessonsCompleted;
+    
+    const readingChapters = this.data.reading.chaptersCompleted.length;
+    const roommateChapters = this.data.roommate.chaptersCompleted.length;
+    const neighborChapters = this.data.neighbor.chaptersCompleted.length;
+    const totalChapters = readingChapters + roommateChapters + neighborChapters;
+    const totalBadges = this.data.listening.badges.length + 
+                      this.data.reading.badges.length + 
+                      this.data.roommate.badges.length +
+                      this.data.neighbor.badges.length +
+                      this.data.globalBadges.length;
+    const studyTimeHours = Math.floor(this.data.totalStudyTime / (1000 * 60 * 60));
 
-                return {
-                    lessonsCompleted: listeningLessons,
-                    chaptersRead: totalChapters,
-                    totalBadges: totalBadges,
-                    studyTime: studyTimeHours
-                };
-            }
+    return {
+        lessonsCompleted: totalListeningLessons, // 📊 AGORA INCLUI FOUNDATION!
+        chaptersRead: totalChapters,
+        totalBadges: totalBadges,
+        studyTime: studyTimeHours
+    };
+}
         }
 
         // ===== NAVEGAÇÃO REAL RESPEITANDO ARQUITETURA =====
