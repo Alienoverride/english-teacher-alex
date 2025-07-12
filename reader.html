@@ -5,15 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teacher Alex English Academy - The Secret in the Old House</title>
     
-    <!-- CSS EXTERNO - SEU GARAGE CENTRAL! -->
+    <!-- CSS EXTERNO - ESTRATÉGIA VENCEDORA FINAL! -->
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="layout.css">
     <link rel="stylesheet" href="theme-patriot.css">
 
-            <!-- 🔥 ADICIONE ESTAS 3 LINHAS AQUI: -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="firebase-integration.js"></script>
+    <style>
+        /* CSS ESPECÍFICO - ANIMAÇÕES DE CELEBRAÇÃO CRÍTICAS */
+        .celebration-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .celebration-text {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4em;
+            font-weight: 900;
+            background: linear-gradient(135deg, #1e3a8a, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            z-index: 10000;
+            animation: celebrationPulse 2s ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes celebrationPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px; height: 10px;
+            background: #1e3a8a;
+            animation: confettiFall linear forwards;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .firework {
+            position: fixed;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            animation: fireworkExplode 1.5s ease-out forwards;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        @keyframes fireworkExplode {
+            0% { transform: scale(0); opacity: 1; }
+            50% { transform: scale(15); opacity: 0.8; }
+            100% { transform: scale(25); opacity: 0; }
+        }
+
+        /* CSS ESPECÍFICO PARA QUESTION TYPES */
+        .question-type {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .question-type.grammar {
+            background: linear-gradient(135deg, #a855f7, #7c3aed);
+            color: white;
+        }
+
+        .question-type.comprehension {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+        }
+    </style>
 </head>
 <body class="reading-page">
     <!-- User Info -->
@@ -25,17 +102,17 @@
     </div>
     
     <div class="container reading-page">
-            <div class="header">
-                <a href="index.html" style="text-decoration: none; color: inherit;">
-                    <div class="logo">
-                        Teacher Alex <span class="logo-highlight">English Academy</span> BETA
-                    </div>
-                </a>
-                <div class="story-title">📚 The Secret in the Old House</div>
-                <div class="level-badge">📖 Nível A2 - Graded Reader</div>
-            </div>
-        
-        <!-- NOVA NAVEGAÇÃO DE CAPÍTULOS -->
+        <div class="header">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <div class="logo">
+                    Teacher Alex <span class="logo-highlight">English Academy</span> BETA
+                </div>
+            </a>
+            <div class="story-title">📚 The Secret in the Old House</div>
+            <div class="level-badge">📖 Nível A2 - Graded Reader</div>
+        </div>
+    
+        <!-- NAVEGAÇÃO DE CAPÍTULOS -->
         <div class="chapter-navigation">
             <div class="nav-title">📖 Escolha seu Capítulo</div>
             <div class="chapter-cards" id="chapterCards">
@@ -91,7 +168,7 @@
     </div>
     
     <script>
-        // ===== SISTEMA DE PROTEÇÃO DE LOGIN =====
+        // ===== SISTEMA DE PROTEÇÃO DE LOGIN PURO =====
         function checkLogin() {
             if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
                 window.location.href = 'login.html';
@@ -112,7 +189,7 @@
 
         if (!checkLogin()) throw new Error('Not logged in');
 
-        // ===== SISTEMA DE PROGRESSO =====
+        // ===== SISTEMA DE PROGRESSO PURO LOCALSTORAGE =====
         class StudentProgress {
             constructor() {
                 this.studentId = sessionStorage.getItem('studentUsername') || 'student';
@@ -133,7 +210,10 @@
                 }
             }
 
-            saveProgress() { localStorage.setItem(this.progressKey, JSON.stringify(this.data)); }
+            saveProgress() { 
+                localStorage.setItem(this.progressKey, JSON.stringify(this.data));
+                console.log(`💾 Progresso salvo no localStorage para ${this.studentId}`);
+            }
 
             completeReadingChapter(chapterNumber, score, timeSpent) {
                 const chapter = `chapter_${chapterNumber}`;
@@ -148,7 +228,7 @@
                 this.data.lastActivity = new Date().toISOString();
                 this.checkReadingBadges(chapterNumber, score);
                 this.saveProgress();
-                this.updateChapterCards(); // Atualizar cards
+                this.updateChapterCards();
             }
 
             checkReadingBadges(chapterNumber, score) {
@@ -185,12 +265,11 @@
             }
 
             updateChapterCards() {
-                // Atualizar visual dos cards após progresso
                 createChapterCards();
             }
         }
 
-        // ===== SISTEMA DE CAPÍTULOS =====
+        // ===== SISTEMA DE CAPÍTULOS - 4 CAPÍTULOS A2 =====
         const chapters = {
             1: { title: "The New Neighbor", shortTitle: "New Neighbor", icon: "🏠", audioUrl: "audios/chapter1.mp3", questions: { q1: { type: "comprehension", text: "How old is Emma?", options: ["Fifteen years old", "Sixteen years old", "Seventeen years old", "Eighteen years old"], correct: "b" }, q2: { type: "comprehension", text: "How long was the old house empty?", options: ["For one year", "For many years", "For fifty years", "For two months"], correct: "b" }, q3: { type: "grammar", text: '"She _____ from her bedroom window." Which past tense form is correct?', options: ["was watching", "watched", "has watched", "watches"], correct: "b" }, q4: { type: "comprehension", text: "What did Emma see in the old house that night?", options: ["A television", "A strange light moving around", "The new neighbor cooking", "Nothing unusual"], correct: "b" }, q5: { type: "grammar", text: '"Wait _____ tomorrow." Which preposition completes the sentence?', options: ["until", "for", "at", "in"], correct: "a" } } },
             2: { title: "The Meeting", shortTitle: "The Meeting", icon: "👥", audioUrl: "audios/chapter2.mp3", questions: { q1: { type: "comprehension", text: "What is the new neighbor's name?", options: ["Mrs. Peterson", "Mrs. Johnson", "Mrs. Williams", "Mrs. Anderson"], correct: "a" }, q2: { type: "comprehension", text: "Who lived in the house fifty years ago?", options: ["Mrs. Peterson", "Mrs. Peterson's mother", "Mrs. Peterson's grandmother", "Mrs. Peterson's sister"], correct: "c" }, q3: { type: "grammar", text: '"Do you need help?" This is an example of:', options: ["A statement", "A yes/no question", "A wh-question", "An exclamation"], correct: "b" }, q4: { type: "comprehension", text: "What is Mrs. Peterson looking for?", options: ["Her keys", "A special box", "Her glasses", "A book"], correct: "b" }, q5: { type: "grammar", text: '"I _____ find it anywhere." Which modal verb fits best?', options: ["can't", "mustn't", "shouldn't", "wouldn't"], correct: "a" } } },
@@ -200,7 +279,7 @@
         
         let currentChapter = 1, attempts = 0, chapterStartTime = Date.now(), studentProgress = new StudentProgress();
         
-        // ===== NAVEGAÇÃO DE CAPÍTULOS - NOVA =====
+        // ===== NAVEGAÇÃO DE CAPÍTULOS =====
         function createChapterCards() {
             const cardsContainer = document.getElementById('chapterCards');
             cardsContainer.innerHTML = '';
@@ -227,16 +306,15 @@
         }
         
         function switchToChapter(chapterNumber) {
-            if (chapterNumber === currentChapter) return; // Já está no capítulo
+            if (chapterNumber === currentChapter) return;
             
             currentChapter = chapterNumber;
             loadChapter(currentChapter);
-            createChapterCards(); // Atualizar cards
+            createChapterCards();
             
-            // Animação suave
             const container = document.getElementById('chapterContainer');
             container.style.animation = 'none';
-            container.offsetHeight; // Trigger reflow
+            container.offsetHeight;
             container.style.animation = 'slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
         }
         
@@ -297,12 +375,10 @@
         
         // ===== ANIMAÇÕES DE CELEBRAÇÃO =====
         function createCelebration(score) {
-            // Overlay
             const overlay = document.createElement('div');
             overlay.className = 'celebration-overlay';
             document.body.appendChild(overlay);
             
-            // Texto de celebração
             const celebrationText = document.createElement('div');
             celebrationText.className = 'celebration-text';
             
@@ -316,7 +392,6 @@
             
             document.body.appendChild(celebrationText);
             
-            // Remover após animação
             setTimeout(() => {
                 if (document.body.contains(overlay)) document.body.removeChild(overlay);
                 if (document.body.contains(celebrationText)) document.body.removeChild(celebrationText);
@@ -362,7 +437,7 @@
             }
         }
         
-        // ===== VERIFICAR RESPOSTAS - NOVO SISTEMA =====
+        // ===== VERIFICAR RESPOSTAS =====
         function checkAnswers() {
             const chapter = chapters[currentChapter];
             const questions = Object.keys(chapter.questions);
@@ -372,7 +447,6 @@
             let comprehensionScore = 0;
             attempts++;
             
-            // Primeiro, marcar visualmente as respostas
             questions.forEach((key, index) => {
                 const selected = document.querySelector(`input[name="${key}"]:checked`);
                 const correct = chapter.questions[key].correct;
@@ -380,21 +454,17 @@
                 const questionType = chapter.questions[key].type;
                 const isGrammar = questionType === 'grammar';
                 
-                // Limpar classes anteriores
                 allOptions.forEach(opt => {
                     opt.closest('.option').classList.remove('correct-answer', 'wrong-answer');
                 });
                 
-                // Marcar resposta correta
                 const correctOption = document.querySelector(`input[name="${key}"][value="${correct}"]`);
                 correctOption.closest('.option').classList.add('correct-answer');
                 
-                // Se respondeu errado, marcar em vermelho
                 if (selected && selected.value !== correct) {
                     selected.closest('.option').classList.add('wrong-answer');
                 }
                 
-                // Calcular pontuação e preparar feedback
                 const correctOptionText = chapter.questions[key].options[correct.charCodeAt(0) - 97];
                 const selectedOptionText = selected ? chapter.questions[key].options[selected.value.charCodeAt(0) - 97] : "Não respondida";
                 
@@ -441,27 +511,22 @@
                 detailedResults.push(resultHTML);
             });
             
-            // Salvar progresso
             studentProgress.completeReadingChapter(currentChapter, score, Date.now() - chapterStartTime);
             
-            // Atualizar barra de progresso
             document.getElementById('progressBar').style.width = (score / 5) * 100 + '%';
             document.getElementById('scoreValue').textContent = score;
             document.getElementById('scoreSection').style.display = 'block';
             
-            // Badges
             if (attempts === 1) document.getElementById('badge1').classList.add('earned');
             if (score >= 4) document.getElementById('badge2').classList.add('earned');
             if (score === 5) document.getElementById('badge3').classList.add('earned');
             if (grammarScore >= 2) document.getElementById('badge4').classList.add('earned');
             if (comprehensionScore >= 3) document.getElementById('badge5').classList.add('earned');
             
-            // CELEBRAÇÃO
             if (score === 5 || score === 4) {
                 setTimeout(() => createCelebration(score), 500);
             }
             
-            // FEEDBACK PREMIUM
             const feedback = document.getElementById('feedback');
             
             let feedbackHeader = '';
@@ -495,7 +560,6 @@
                 `;
             }
             
-            // Estatísticas por tipo
             const statsHTML = `
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
                     <div style="background: rgba(59, 130, 246, 0.1); border: 2px solid #3b82f6; border-radius: 12px; padding: 18px; text-align: center;">
@@ -543,7 +607,13 @@
         
         // ===== INICIALIZAÇÃO =====
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('userName').textContent = getStudentName();
+            const studentName = getStudentName();
+            document.getElementById('userName').textContent = studentName;
+            
+            console.log(`📚 The Secret in the Old House carregado - usuário: ${studentName}`);
+            console.log('💾 Sistema localStorage puro - Firebase EXTERMINADO!');
+            console.log('🎧 4 capítulos A2 Graded Reader com áudio preservados');
+            
             createChapterCards();
             loadChapter(currentChapter);
         });
