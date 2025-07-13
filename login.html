@@ -39,6 +39,30 @@
 }
         }
     </style>
+    <!-- ===== PWA CONFIGURATION ===== -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#dc2626">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Alex Academy">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="msapplication-TileColor" content="#1e3a8a">
+<meta name="msapplication-config" content="browserconfig.xml">
+
+<!-- Service Worker Registration -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(registration => {
+        console.log('✅ SW registrado:', registration.scope);
+      })
+      .catch(error => {
+        console.log('❌ SW falhou:', error);
+      });
+  });
+}
+</script>
 </head>
 <body class="login-page">
     <div class="login-container">
