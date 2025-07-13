@@ -123,7 +123,7 @@ if ('serviceWorker' in navigator) {
             "testy": "testy"
         };
         
-        // ===== SISTEMA DE LOGIN SIMPLIFICADO =====
+        // ===== SISTEMA DE LOGIN SIMPLIFICADO - CORRIGIDO =====
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -154,9 +154,9 @@ if ('serviceWorker' in navigator) {
                     successDiv.textContent = '✅ Bem-vindo! Redirecionando para suas aulas...';
                     successDiv.style.display = 'block';
                     
-                    // Salvar login no navegador
-                    sessionStorage.setItem('studentLoggedIn', 'true');
-                    sessionStorage.setItem('studentUsername', usernameKey);
+                    // ✅ CORREÇÃO: localStorage em vez de sessionStorage
+                    localStorage.setItem('studentLoggedIn', 'true');
+                    localStorage.setItem('studentUsername', usernameKey);
                     
                     console.log(`✅ Login realizado: ${usernameKey}`);
                     
@@ -186,10 +186,10 @@ if ('serviceWorker' in navigator) {
             }, 800);
         });
         
-        // ===== VERIFICAÇÕES INICIAIS =====
+        // ===== VERIFICAÇÕES INICIAIS - CORRIGIDA =====
         
         // Se já está logado, redirecionar
-        if (sessionStorage.getItem('studentLoggedIn') === 'true') {
+        if (localStorage.getItem('studentLoggedIn') === 'true') {
             console.log('👤 Usuário já logado, redirecionando...');
             window.location.href = 'index.html';
         }
