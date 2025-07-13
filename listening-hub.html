@@ -3,26 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pure Reading Hub - Teacher Alex English Academy BETA</title>
+    <title>Listening Hub - Teacher Alex English Academy BETA</title>
+    
+    <!-- CSS EXTERNO - ESTRATÉGIA VENCEDORA! -->
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="layout.css">
     <link rel="stylesheet" href="theme-patriot.css">
+    
     <style>
-        /* CSS específico do Pure Reading Hub REVOLUTIONIZED */
+        /* CSS específico do Listening Hub */
         .hub-title {
             font-size: 2.5em;
             font-weight: 800;
-            background: linear-gradient(135deg, #374151, #111827);
+            background: linear-gradient(135deg, #5850ec, #8b5cf6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 15px;
+            text-align: center;
         }
 
         .hub-subtitle {
             font-size: 1.4em;
-            color: #64748b;
+            color: #5b21b6;
             font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         .back-button {
@@ -44,23 +50,23 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
-        .reading-overview {
-            background: rgba(255, 255, 255, 0.98);
+        .listening-overview {
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             border-radius: 16px;
             padding: 40px;
             margin-bottom: 40px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-            border: 3px solid rgba(107, 114, 128, 0.15);
+            border: 3px solid rgba(88, 80, 236, 0.15);
             text-align: center;
         }
 
-        .reading-overview::before {
+        .listening-overview::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0;
             height: 5px;
-            background: linear-gradient(90deg, #6b7280, #374151, #111827);
+            background: linear-gradient(90deg, #5850ec, #8b5cf6, #3730a3);
         }
 
         .overview-stats {
@@ -71,20 +77,20 @@
         }
 
         .stat-card {
-            background: linear-gradient(135deg, rgba(107, 114, 128, 0.1), rgba(55, 65, 81, 0.1));
+            background: linear-gradient(135deg, rgba(88, 80, 236, 0.1), rgba(139, 92, 246, 0.1));
             padding: 20px;
             border-radius: 12px;
-            border: 2px solid rgba(107, 114, 128, 0.2);
+            border: 2px solid rgba(88, 80, 236, 0.2);
         }
 
         .stat-number {
             font-size: 2.2em;
             font-weight: 800;
-            color: #374151;
+            color: #5850ec;
         }
 
         .stat-label {
-            color: #64748b;
+            color: #5b21b6;
             font-weight: 600;
             font-size: 0.9em;
         }
@@ -95,12 +101,12 @@
         }
 
         .level-section {
-            background: rgba(255, 255, 255, 0.98);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             border-radius: 16px;
             padding: 40px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-            border: 3px solid rgba(107, 114, 128, 0.15);
+            border: 3px solid rgba(88, 80, 236, 0.15);
             position: relative;
             overflow: hidden;
             transition: all 0.4s ease;
@@ -118,16 +124,20 @@
             height: 5px;
         }
 
-        .level-a2-low::before {
-            background: linear-gradient(90deg, #6b7280, #4b5563);
+        .level-foundation::before {
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
         }
 
-        .level-a2-mid::before {
-            background: linear-gradient(90deg, #374151, #1f2937);
+        .level-beginner::before {
+            background: linear-gradient(90deg, #22c55e, #16a34a);
         }
 
-        .level-b1::before {
-            background: linear-gradient(90deg, #111827, #030712);
+        .level-intermediate::before {
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+        }
+
+        .level-advanced::before {
+            background: linear-gradient(90deg, #ef4444, #dc2626);
         }
 
         .level-header {
@@ -146,16 +156,20 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
-        .level-a2-low .level-badge {
-            background: linear-gradient(135deg, #6b7280, #4b5563);
+        .level-foundation .level-badge {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
         }
 
-        .level-a2-mid .level-badge {
-            background: linear-gradient(135deg, #374151, #1f2937);
+        .level-beginner .level-badge {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
         }
 
-        .level-b1 .level-badge {
-            background: linear-gradient(135deg, #111827, #030712);
+        .level-intermediate .level-badge {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        .level-advanced .level-badge {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
         }
 
         .level-info {
@@ -175,7 +189,7 @@
             font-weight: 500;
         }
 
-        .level-stories {
+        .level-lessons {
             font-size: 0.95em;
             color: #6b7280;
             margin-top: 5px;
@@ -203,16 +217,20 @@
             transition: width 0.8s ease;
         }
 
-        .level-a2-low .progress-fill {
-            background: linear-gradient(90deg, #6b7280, #4b5563);
+        .level-foundation .progress-fill {
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
         }
 
-        .level-a2-mid .progress-fill {
-            background: linear-gradient(90deg, #374151, #1f2937);
+        .level-beginner .progress-fill {
+            background: linear-gradient(90deg, #22c55e, #16a34a);
         }
 
-        .level-b1 .progress-fill {
-            background: linear-gradient(90deg, #111827, #030712);
+        .level-intermediate .progress-fill {
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+        }
+
+        .level-advanced .progress-fill {
+            background: linear-gradient(90deg, #ef4444, #dc2626);
         }
 
         .progress-text {
@@ -238,7 +256,7 @@
         }
 
         .level-features li::before {
-            content: '📖';
+            content: '🎧';
             position: absolute;
             left: 0;
             font-size: 1.2em;
@@ -255,24 +273,37 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             min-width: 200px;
+        }
+
+        .level-foundation .level-button {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
             color: white;
         }
 
-        .level-a2-low .level-button {
-            background: linear-gradient(135deg, #6b7280, #4b5563);
+        .level-beginner .level-button {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
         }
 
-        .level-a2-mid .level-button {
-            background: linear-gradient(135deg, #374151, #1f2937);
+        .level-intermediate .level-button {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
         }
 
-        .level-b1 .level-button {
-            background: linear-gradient(135deg, #111827, #030712);
+        .level-advanced .level-button {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
         }
 
         .level-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .level-button:disabled {
+            background: #9ca3af !important;
+            cursor: not-allowed;
+            transform: none;
         }
 
         @media (max-width: 768px) {
@@ -313,9 +344,9 @@
 <body>
     <!-- User Info -->
     <div style="position: fixed; top: 15px; right: 15px; z-index: 1000;">
-        <div style="background: rgba(255,255,255,0.95); border-radius: 15px; padding: 8px 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #6b7280; backdrop-filter: blur(10px);">
-            <span style="color: #374151; font-weight: 700; margin-right: 8px; font-size: 0.8em;">👋 <span id="userName">Aluno</span></span>
-            <button onclick="logout()" style="background: #6b7280; color: white; border: none; padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 0.75em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='#374151'" onmouseout="this.style.background='#6b7280'">🚪 Sair</button>
+        <div style="background: rgba(255,255,255,0.95); border-radius: 15px; padding: 8px 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #dc2626; backdrop-filter: blur(10px);">
+            <span style="color: #1e3a8a; font-weight: 700; margin-right: 8px; font-size: 0.8em;">👋 <span id="userName">Aluno</span></span>
+            <button onclick="logout()" style="background: #dc2626; color: white; border: none; padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 0.75em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='#ef4444'" onmouseout="this.style.background='#dc2626'">🚪 Sair</button>
         </div>
     </div>
 
@@ -328,21 +359,21 @@
                     Teacher Alex <span class="logo-highlight">English Academy</span> BETA
                 </div>
             </a>
-            <div class="hub-title">📺 Pure Reading Hub</div>
-            <div class="hub-subtitle">Sistema completo para dominar a interpretação textual</div>
+            <div class="hub-title">🎧 Listening Practice Hub</div>
+            <div class="hub-subtitle">Sistema completo para dominar a compreensão auditiva</div>
         </div>
 
         <!-- Overview Global -->
-        <div class="reading-overview">
-            <h3 style="color: #374151; font-size: 1.5em; margin-bottom: 20px;">📊 Seu Progresso de Leitura</h3>
+        <div class="listening-overview">
+            <h3 style="color: #5850ec; font-size: 1.5em; margin-bottom: 20px;">📊 Seu Progresso Global</h3>
             <div class="overview-stats">
                 <div class="stat-card">
                     <div class="stat-number" id="totalCompleted">0</div>
-                    <div class="stat-label">Histórias Concluídas</div>
+                    <div class="stat-label">Lições Concluídas</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">12</div>
-                    <div class="stat-label">Histórias Disponíveis</div>
+                    <div class="stat-number">23</div>
+                    <div class="stat-label">Lições Disponíveis</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" id="totalBadges">0</div>
@@ -357,88 +388,116 @@
 
         <!-- Level Sections -->
         <div class="level-sections">
-            <!-- A2 Low Level -->
-            <div class="level-section level-a2-low">
+            <!-- Foundation Level - NOVO! -->
+            <div class="level-section level-foundation">
                 <div class="level-header">
-                    <div class="level-badge">🔸 A2 Low</div>
+                    <div class="level-badge">🟦 Foundation</div>
                     <div class="level-info">
-                        <div class="level-title">Nível Elementar Inicial</div>
-                        <div class="level-description">Interpretação textual pura para desenvolver autonomia de leitura</div>
-                        <div class="level-stories">4 histórias disponíveis • Perfect Neighbor já liberada</div>
+                        <div class="level-title">Nível Foundation</div>
+                        <div class="level-description">Survival Kit completo com 12 lições essenciais para brasileiros</div>
+                        <div class="level-lessons">Lições F1-F12 • Basics, Daily Essentials, Practical Skills</div>
                     </div>
                 </div>
                 
                 <div class="progress-section">
                     <div class="progress-bar">
-                        <div class="progress-fill" id="a2LowProgress" style="width: 0%"></div>
+                        <div class="progress-fill" id="foundationProgress" style="width: 0%"></div>
                     </div>
-                    <div class="progress-text" id="a2LowText">0/4 Concluídas</div>
+                    <div class="progress-text" id="foundationText">0/12 Concluídas</div>
                 </div>
                 
                 <ul class="level-features">
-                    <li>The Perfect Neighbor - thriller psicológico disponível</li>
-                    <li>The Hospital Mystery - mistério médico</li>
-                    <li>The New Teacher - drama escolar</li>
-                    <li>Vocabulário A2 estruturado e controlado</li>
+                    <li>Survival Basics: Alfabeto, números, cumprimentos</li>
+                    <li>Daily Essentials: Cores, comida, corpo, direções</li>
+                    <li>Practical Skills: Compras, trabalho, emergência</li>
+                    <li>12 lições de sobrevivência total no inglês</li>
                 </ul>
                 
-                <button class="level-button" onclick="goToLevel('a2-low')">📖 Começar Leitura</button>
+                <button class="level-button" onclick="goToLevel('foundation')">🚀 Começar do Zero</button>
             </div>
 
-            <!-- A2 Mid Level -->
-            <div class="level-section level-a2-mid">
+            <!-- Beginner Level -->
+            <div class="level-section level-beginner">
                 <div class="level-header">
-                    <div class="level-badge">🔹 A2 Mid</div>
+                    <div class="level-badge">🟢 Beginner</div>
                     <div class="level-info">
-                        <div class="level-title">Nível Elementar Avançado</div>
-                        <div class="level-description">Textos mais complexos para consolidar autonomia de leitura</div>
-                        <div class="level-stories">4 histórias • City of Secrets, Last Library, Island Dreams</div>
+                        <div class="level-title">Nível Iniciante</div>
+                        <div class="level-description">Fundamentos da compreensão auditiva com diálogos básicos</div>
+                        <div class="level-lessons">Lições 1-4 • Personal Introduction, Daily Routine, Hobbies, Weather</div>
                     </div>
                 </div>
                 
                 <div class="progress-section">
                     <div class="progress-bar">
-                        <div class="progress-fill" id="a2MidProgress" style="width: 0%"></div>
+                        <div class="progress-fill" id="beginnerProgress" style="width: 0%"></div>
                     </div>
-                    <div class="progress-text" id="a2MidText">0/4 Concluídas</div>
+                    <div class="progress-text" id="beginnerText">0/4 Concluídas</div>
                 </div>
                 
                 <ul class="level-features">
-                    <li>City of Secrets - jornalismo investigativo</li>
-                    <li>The Last Library - ficção científica distópica</li>
-                    <li>Island of Lost Dreams - fantasia psicológica</li>
-                    <li>Interpretação complexa e leitura crítica</li>
+                    <li>Vocabulário essencial do dia a dia</li>
+                    <li>Situações familiares e simples</li>
+                    <li>Apresentações pessoais e rotina</li>
+                    <li>Base sólida para próximos níveis</li>
                 </ul>
                 
-                <button class="level-button" onclick="goToLevel('a2-mid')">🌟 Avançar Leitura</button>
+                <button class="level-button" onclick="goToLevel('beginner')">⭐ Avançar para Básico</button>
             </div>
 
-            <!-- B1 Level -->
-            <div class="level-section level-b1">
+            <!-- Intermediate Level -->
+            <div class="level-section level-intermediate">
                 <div class="level-header">
-                    <div class="level-badge">⚫ B1</div>
+                    <div class="level-badge">🟡 Intermediate</div>
                     <div class="level-info">
                         <div class="level-title">Nível Intermediário</div>
-                        <div class="level-description">Para alunos avançados - leitura autônoma complexa</div>
-                        <div class="level-stories">4 histórias • Digital Detective, Climate Warrior</div>
+                        <div class="level-description">Situações reais com vocabulário expandido e contextos práticos</div>
+                        <div class="level-lessons">Lições 5-8 • Shopping, Family, Health, Transportation</div>
                     </div>
                 </div>
                 
                 <div class="progress-section">
                     <div class="progress-bar">
-                        <div class="progress-fill" id="b1Progress" style="width: 0%"></div>
+                        <div class="progress-fill" id="intermediateProgress" style="width: 0%"></div>
                     </div>
-                    <div class="progress-text" id="b1Text">0/4 Concluídas</div>
+                    <div class="progress-text" id="intermediateText">0/4 Concluídas</div>
                 </div>
                 
                 <ul class="level-features">
-                    <li>The Digital Detective - crimes cibernéticos</li>
-                    <li>The Climate Warrior - ativismo ambiental</li>
-                    <li>Vocabulário técnico avançado</li>
-                    <li>Interpretação crítica e análise profunda</li>
+                    <li>Conversas em contextos reais</li>
+                    <li>Vocabulário prático para viagens</li>
+                    <li>Situações sociais e familiares</li>
+                    <li>Preparação para nível avançado</li>
                 </ul>
                 
-                <button class="level-button" onclick="goToLevel('b1')">🏆 Desafio Expert</button>
+                <button class="level-button" onclick="goToLevel('intermediate')">🎯 Desafiar Nível Médio</button>
+            </div>
+
+            <!-- Advanced Level -->
+            <div class="level-section level-advanced">
+                <div class="level-header">
+                    <div class="level-badge">🔴 Advanced</div>
+                    <div class="level-info">
+                        <div class="level-title">Nível Avançado</div>
+                        <div class="level-description">Tópicos complexos com vocabulário sofisticado e temas profissionais</div>
+                        <div class="level-lessons">Lições 9-11 • Work & Career, Future Plans, Food & Cooking</div>
+                    </div>
+                </div>
+                
+                <div class="progress-section">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="advancedProgress" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-text" id="advancedText">0/3 Concluídas</div>
+                </div>
+                
+                <ul class="level-features">
+                    <li>Discussões profissionais e acadêmicas</li>
+                    <li>Vocabulário avançado especializado</li>
+                    <li>Temas abstratos e complexos</li>
+                    <li>Preparação para fluência total</li>
+                </ul>
+                
+                <button class="level-button" onclick="goToLevel('advanced')">🏆 Dominar Nível Expert</button>
             </div>
         </div>
     </div>
@@ -469,8 +528,8 @@
 
         if (!checkLogin()) throw new Error('Not logged in');
 
-        // ===== SISTEMA DE PROGRESSO READING HUB =====
-        class ReadingHubProgress {
+        // ===== SISTEMA DE PROGRESSO REAL LOCALSTORAGE =====
+        class ListeningHubProgress {
             constructor() {
                 this.studentId = sessionStorage.getItem('studentUsername') || 'student';
                 this.progressKey = `progress_${this.studentId}`;
@@ -493,71 +552,60 @@
                 }
             }
 
-            getReadingStats() {
-                // Neighbor é A2-Low disponível
-                const neighbor = this.data.neighbor || { chaptersCompleted: [], bestScores: {}, badges: [] };
-                const reading = this.data.reading || { chaptersCompleted: [], bestScores: {}, badges: [] };
-                
-                const totalCompleted = neighbor.chaptersCompleted.length + reading.chaptersCompleted.length;
-                const totalBadges = neighbor.badges.length + reading.badges.length;
+            getListeningStats() {
+                const listening = this.data.listening || { lessonsCompleted: [], bestScores: {}, badges: [] };
+                const totalCompleted = listening.lessonsCompleted.length;
+                const totalBadges = listening.badges.length;
                 
                 // Calcular pontuação média
-                const allScores = { ...neighbor.bestScores, ...reading.bestScores };
-                const scores = Object.values(allScores);
+                const scores = Object.values(listening.bestScores);
                 const averageScore = scores.length > 0 ? 
                     (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : 0;
 
-                // Progresso por nível
-                const a2LowCompleted = neighbor.chaptersCompleted.length; // Perfect Neighbor tem 5 capítulos
-                const a2MidCompleted = 0; // Em breve
-                const b1Completed = 0; // Em breve
+                // Progresso por nível - INCLUINDO FOUNDATION EXPANDIDO
+                const foundationLessons = ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f10', 'f11', 'f12'];
+                const beginnerLessons = [1, 2, 3, 4];
+                const intermediateLessons = [5, 6, 7, 8];
+                const advancedLessons = [9, 10, 11];
+
+                const foundationCompleted = foundationLessons.filter(lesson => 
+                    listening.lessonsCompleted.includes(`lesson_${lesson}`)
+                ).length;
+
+                const beginnerCompleted = beginnerLessons.filter(lesson => 
+                    listening.lessonsCompleted.includes(`lesson_${lesson}`)
+                ).length;
+
+                const intermediateCompleted = intermediateLessons.filter(lesson => 
+                    listening.lessonsCompleted.includes(`lesson_${lesson}`)
+                ).length;
+
+                const advancedCompleted = advancedLessons.filter(lesson => 
+                    listening.lessonsCompleted.includes(`lesson_${lesson}`)
+                ).length;
 
                 return {
                     totalCompleted,
                     totalBadges,
                     averageScore,
-                    a2Low: { completed: a2LowCompleted, total: 4 },
-                    a2Mid: { completed: a2MidCompleted, total: 4 },
-                    b1: { completed: b1Completed, total: 4 },
-                    // Verificações de acesso
-                    canAccessA2Mid: a2LowCompleted >= 3,
-                    canAccessB1: a2LowCompleted >= 3 && a2MidCompleted >= 2
+                    foundation: { completed: foundationCompleted, total: 12 },
+                    beginner: { completed: beginnerCompleted, total: 4 },
+                    intermediate: { completed: intermediateCompleted, total: 4 },
+                    advanced: { completed: advancedCompleted, total: 3 }
                 };
             }
         }
 
         function goToLevel(level) {
-            console.log(`🚀 Navegando para nível: ${level}`);
-            
-            // Verificar pré-requisitos
-            const progressTracker = new ReadingHubProgress();
-            const stats = progressTracker.getReadingStats();
-            
-            if (level === 'a2-mid' && !stats.canAccessA2Mid) {
-                alert('🔒 ACESSO BLOQUEADO!\n\nPara acessar o A2 Mid Level, você precisa completar pelo menos 3 histórias do A2 Low Level primeiro.\n\nProgresso atual: ' + stats.a2Low.completed + '/4 histórias A2 Low concluídas.');
-                return;
+            if (level === 'foundation') {
+                window.location.href = 'listening-foundation.html';
+            } else if (level === 'beginner') {
+                window.location.href = 'listening-beginner.html';
+            } else if (level === 'intermediate') {
+               window.location.href = 'listening-intermediate.html'; 
+            } else if (level === 'advanced') {
+                window.location.href = 'listening-advanced.html';
             }
-            
-            if (level === 'b1' && !stats.canAccessB1) {
-                alert('🔒 NÍVEL EXPERT BLOQUEADO!\n\nPara acessar o B1 Level, você precisa:\n• Completar pelo menos 3 histórias A2 Low\n• Completar pelo menos 2 histórias A2 Mid\n\nEste nível é apenas para alunos experientes!');
-                return;
-            }
-            
-            // Feedback visual no botão
-            const button = event.target;
-            const originalText = button.textContent;
-            button.textContent = 'Carregando...';
-            button.style.opacity = '0.7';
-            
-            setTimeout(() => {
-                if (level === 'a2-low') {
-                    window.location.href = 'pure-reading-a2-low.html';
-                } else if (level === 'a2-mid') {
-                    window.location.href = 'pure-reading-a2-mid.html';
-                } else if (level === 'b1') {
-                    window.location.href = 'pure-reading-b1.html';
-                }
-            }, 600);
         }
 
         function updateLevelProgress(level, completed, total) {
@@ -574,12 +622,12 @@
         // ===== INICIALIZAÇÃO =====
         document.addEventListener('DOMContentLoaded', function() {
             const studentName = getStudentName();
-            const progressTracker = new ReadingHubProgress();
-            const stats = progressTracker.getReadingStats();
+            const progressTracker = new ListeningHubProgress();
+            const stats = progressTracker.getListeningStats();
             
-            console.log(`📖 Pure Reading Hub REVOLUTIONIZED carregado - usuário: ${studentName}`);
-            console.log('📊 Stats de reading:', stats);
-            console.log('🚀 3 sub-páginas criadas: A2-Low, A2-Mid, B1');
+            console.log(`🎧 Listening Hub carregado - usuário: ${studentName}`);
+            console.log('📊 Stats de listening:', stats);
+            console.log('🟦 Foundation Level ADICIONADO!');
             
             // Atualizar user info
             document.getElementById('userName').textContent = studentName;
@@ -589,28 +637,13 @@
             document.getElementById('totalBadges').textContent = stats.totalBadges;
             document.getElementById('averageScore').textContent = stats.averageScore;
             
-            // Atualizar progresso por nível
-            updateLevelProgress('a2Low', stats.a2Low.completed, stats.a2Low.total);
-            updateLevelProgress('a2Mid', stats.a2Mid.completed, stats.a2Mid.total);
-            updateLevelProgress('b1', stats.b1.completed, stats.b1.total);
+            // Atualizar progresso por nível - INCLUINDO FOUNDATION
+            updateLevelProgress('foundation', stats.foundation.completed, stats.foundation.total);
+            updateLevelProgress('beginner', stats.beginner.completed, stats.beginner.total);
+            updateLevelProgress('intermediate', stats.intermediate.completed, stats.intermediate.total);
+            updateLevelProgress('advanced', stats.advanced.completed, stats.advanced.total);
             
-            // Aplicar estilos de bloqueio se necessário
-            const a2MidButton = document.querySelector('.level-a2-mid .level-button');
-            const b1Button = document.querySelector('.level-b1 .level-button');
-            
-            if (!stats.canAccessA2Mid && a2MidButton) {
-                a2MidButton.style.background = '#9ca3af';
-                a2MidButton.style.cursor = 'not-allowed';
-                a2MidButton.textContent = '🔒 Bloqueado';
-            }
-            
-            if (!stats.canAccessB1 && b1Button) {
-                b1Button.style.background = '#9ca3af';
-                b1Button.style.cursor = 'not-allowed';
-                b1Button.textContent = '🔒 Expert Bloqueado';
-            }
-            
-            console.log('✅ Pure Reading Hub inicializado com 3 níveis: A2-Low(4) + A2-Mid(4) + B1(4) = 12 histórias!');
+            console.log('✅ Listening Hub inicializado com 4 níveis: Foundation(12) + Beginner(4) + Intermediate(4) + Advanced(3) = 23 lições!');
         });
     </script>
 </body>
