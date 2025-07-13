@@ -491,41 +491,23 @@ if ('serviceWorker' in navigator) {
     </div>
     
     <script>
-        // ===== SISTEMA DE PROTEÇÃO DE LOGIN COMPATÍVEL =====
+        // ===== SISTEMA DE PROTEÇÃO DE LOGIN CRÍTICO =====
         function checkLogin() {
-            // Verifica localStorage primeiro, depois sessionStorage (compatibilidade)
-            const localLoggedIn = localStorage.getItem('studentLoggedIn') === 'true';
-            const sessionLoggedIn = sessionStorage.getItem('studentLoggedIn') === 'true';
-            
-            if (localLoggedIn || sessionLoggedIn) {
-                // Se está logado em qualquer um, migra para localStorage
-                if (sessionLoggedIn && !localLoggedIn) {
-                    // Migra sessionStorage → localStorage
-                    const username = sessionStorage.getItem('studentUsername');
-                    localStorage.setItem('studentLoggedIn', 'true');
-                    localStorage.setItem('studentUsername', username);
-                    console.log('🔄 Migrado sessionStorage → localStorage');
-                }
-                return true;
+            if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
+                window.location.href = 'login.html';
+                return false;
             }
-            
-            window.location.href = 'login.html';
-            return false;
+            return true;
         }
 
         function logout() {
-            // Limpa ambos para garantir
-            localStorage.removeItem('studentLoggedIn');
-            localStorage.removeItem('studentUsername');
             sessionStorage.removeItem('studentLoggedIn');
             sessionStorage.removeItem('studentUsername');
             window.location.href = 'login.html';
         }
 
         function getStudentName() {
-            // Prioriza localStorage, fallback sessionStorage
-            return localStorage.getItem('studentUsername') || 
-                   sessionStorage.getItem('studentUsername') || 'Student';
+            return sessionStorage.getItem('studentUsername') || 'Student';
         }
 
         // PROTEÇÃO IMEDIATA - BLOQUEAR ACESSO SEM LOGIN
@@ -534,12 +516,10 @@ if ('serviceWorker' in navigator) {
             throw new Error('Access denied - redirecting to login');
         }
 
-        // ===== SISTEMA DE PROGRESSO COMPATÍVEL =====
+        // ===== SISTEMA DE PROGRESSO PURO LOCALSTORAGE =====
         class SimpleProgress {
             constructor() {
-                // Pega username de qualquer storage
-                this.studentId = localStorage.getItem('studentUsername') || 
-                                sessionStorage.getItem('studentUsername') || 'student';
+                this.studentId = sessionStorage.getItem('studentUsername') || 'student';
                 this.progressKey = `progress_${this.studentId}`;
                 this.loadProgress();
             }
