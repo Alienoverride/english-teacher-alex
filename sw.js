@@ -1,6 +1,6 @@
-// ===== SERVICE WORKER GITHUB PAGES OPTIMIZADO =====
+// ===== SERVICE WORKER FORCE UPDATE =====
 
-const CACHE_NAME = 'teacher-alex-v4-github';
+const CACHE_NAME = 'teacher-alex-v7-localStorage-fix'; // ← NOVO NÚMERO!
 
 // ✅ URLs RELATIVOS - Compatível com GitHub Pages
 const urlsToCache = [
@@ -12,15 +12,15 @@ const urlsToCache = [
 
 // ===== INSTALAR =====
 self.addEventListener('install', event => {
-  console.log('🔧 SW GitHub Pages instalando...');
+  console.log('🔧 SW v7 com localStorage fix instalando...');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('📦 Cacheando arquivos essenciais...');
+        console.log('📦 Cacheando arquivos atualizados...');
         return cache.addAll(urlsToCache);
       })
       .then(() => {
-        console.log('✅ Cache GitHub Pages OK!');
+        console.log('✅ Cache v7 com fix OK!');
         self.skipWaiting(); // Força ativação imediata
       })
       .catch(error => {
@@ -31,7 +31,7 @@ self.addEventListener('install', event => {
 
 // ===== ATIVAR =====
 self.addEventListener('activate', event => {
-  console.log('✅ SW GitHub Pages ativo');
+  console.log('✅ SW v7 localStorage fix ativo');
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
@@ -81,6 +81,6 @@ self.addEventListener('fetch', event => {
 });
 
 // ===== DEBUG INFO =====
-console.log('🎓 SW Teacher Alex GitHub Pages carregado!');
+console.log('🎓 SW v7 Teacher Alex localStorage fix carregado!');
 console.log('🌍 Origin:', self.location.origin);
 console.log('📂 Scope:', self.registration?.scope || 'N/A');
