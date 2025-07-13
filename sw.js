@@ -1,88 +1,71 @@
-// ===== SERVICE WORKER CORRIGIDO - TEACHER ALEX PWA =====
+// ===== SERVICE WORKER MÍNIMO - ZERO RISCO 404 =====
 
-const CACHE_NAME = 'teacher-alex-academy-v2';
+const CACHE_NAME = 'teacher-alex-v3-minimal';
 const urlsToCache = [
   './',
   './index.html',
-  './login.html',
-  './listening-hub.html',
-  './graded-readers-hub.html',
-  './pure-reading-hub.html',
-  './base.css',
-  './layout.css',
-  './theme-patriot.css',
-  './icon-192.png',
-  './icon-512.png'
-];
+  './login.html'
+]; // SÓ O ESSENCIAL!
 
-// ===== INSTALAR E CACHEAR ARQUIVOS =====
+// ===== INSTALAR =====
 self.addEventListener('install', event => {
-  console.log('🔧 Service Worker instalando...');
+  console.log('🔧 SW Mínimo instalando...');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('📦 Tentando cachear arquivos...');
-        // Cachear arquivos individualmente para evitar erro 404
-        return Promise.allSettled(
-          urlsToCache.map(url => {
-            return cache.add(url).catch(error => {
-              console.log(`❌ Erro ao cachear ${url}:`, error);
-              return null; // Continua mesmo se um arquivo falhar
-            });
-          })
-        );
+        console.log('📦 Cacheando apenas essenciais...');
+        return cache.addAll(urlsToCache);
       })
       .then(() => {
-        console.log('✅ Cache configurado com sucesso');
+        console.log('✅ Cache mínimo OK!');
+        self.skipWaiting(); // Força ativação imediata
       })
   );
 });
 
-// ===== ATIVAR E LIMPAR CACHES ANTIGOS =====
+// ===== ATIVAR =====
 self.addEventListener('activate', event => {
-  console.log('✅ Service Worker ativo');
+  console.log('✅ SW Mínimo ativo');
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheName !== CACHE_NAME) {
-            console.log('🗑️ Removendo cache antigo:', cacheName);
+            console.log('🗑️ Removendo cache:', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
+    }).then(() => {
+      return self.clients.claim(); // Assume controle imediato
     })
   );
 });
 
-// ===== SERVIR ARQUIVOS (NETWORK FIRST PARA ATUALIZAÇÕES) =====
+// ===== FETCH SIMPLIFICADO =====
 self.addEventListener('fetch', event => {
-  event.respondWith(
-    fetch(event.request)
-      .then(response => {
-        // Se conseguiu da rede, usa e atualiza cache
-        if (response.status === 200) {
-          const responseClone = response.clone();
-          caches.open(CACHE_NAME)
-            .then(cache => cache.put(event.request, responseClone));
-        }
-        return response;
-      })
-      .catch(() => {
-        // Se falhou na rede, tenta do cache
-        return caches.match(event.request)
-          .then(response => {
-            if (response) {
-              console.log('📦 Servindo do cache:', event.request.url);
-              return response;
-            }
-            // Se não tem no cache e é documento, redireciona para index
-            if (event.request.destination === 'document') {
-              return caches.match('./index.html');
-            }
-          });
-      })
-  );
+  // Só intercepta requests para o próprio site
+  if (event.request.url.startsWith(self.location.origin)) {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          // Se deu certo, guarda no cache
+          if (response.status === 200) {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME)
+              .then(cache => cache.put(event.request, responseClone));
+          }
+          return response;
+        })
+        .catch(() => {
+          // Se falhou, tenta do cache
+          return caches.match(event.request)
+            .then(response => {
+              return response || caches.match('./index.html');
+            });
+        })
+    );
+  }
 });
 
-console.log('🎓 Teacher Alex PWA Service Worker v2 carregado!');
+console.log('🎓 SW Mínimo Teacher Alex carregado - Zero risco 404!');
