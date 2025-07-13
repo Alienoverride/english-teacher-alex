@@ -3,15 +3,591 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Alex English Academy BETA - The Perfect Neighbor</title>
+    <title>The Perfect Neighbor - Teacher Alex English Academy BETA</title>
     
-    <!-- CSS EXTERNO - ESTRATÉGIA VENCEDORA! -->
+    <!-- CSS EXTERNO -->
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="layout.css">
     <link rel="stylesheet" href="theme-patriot.css">
 
     <style>
-        /* CSS ESPECÍFICO - ANIMAÇÕES DE CELEBRAÇÃO CRÍTICAS */
+        /* REDESIGN COMPLETO - MODERN & CLEAN */
+        
+        /* Header específico da história */
+        .story-header {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .story-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6b7280, #374151);
+        }
+
+        .story-main-title {
+            font-size: 2.5em;
+            font-weight: 900;
+            color: #374151;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .story-subtitle {
+            font-size: 1.2em;
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .story-level-badge {
+            background: linear-gradient(135deg, #6b7280, #374151);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: 700;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
+        }
+
+        /* Back Button */
+        .back-button {
+            background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+            color: #374151;
+            border: 2px solid #d1d5db;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            font-size: 1em;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, #d1d5db, #9ca3af);
+            color: #1f2937;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Chapter Navigation Redesign */
+        .chapter-navigation {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border: 1px solid #f1f5f9;
+        }
+
+        .nav-title {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: #374151;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .nav-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #6b7280, #374151);
+            border-radius: 2px;
+        }
+
+        .chapter-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .chapter-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 25px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .chapter-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            border-color: #6b7280;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        }
+
+        .chapter-card.active {
+            background: linear-gradient(135deg, #6b7280, #374151);
+            color: white;
+            border-color: #6b7280;
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(107, 114, 128, 0.4);
+        }
+
+        .chapter-card.completed {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border-color: #10b981;
+        }
+
+        .chapter-card .chapter-icon {
+            font-size: 2.5em;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .chapter-card .chapter-number {
+            font-size: 1.1em;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+
+        .chapter-card.active .chapter-number,
+        .chapter-card.completed .chapter-number {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .chapter-card .chapter-name {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #64748b;
+            line-height: 1.3;
+        }
+
+        .chapter-card.active .chapter-name,
+        .chapter-card.completed .chapter-name {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .completion-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 32px;
+            height: 32px;
+            background: #10b981;
+            border-radius: 50%;
+            color: white;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            border: 3px solid white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Chapter Container */
+        .chapter-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border: 1px solid #f1f5f9;
+            margin-bottom: 40px;
+        }
+
+        .chapter-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .chapter-title {
+            font-size: 2.2em;
+            font-weight: 900;
+            color: #374151;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+
+        .chapter-number {
+            background: linear-gradient(135deg, #6b7280, #374151);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1em;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 14px;
+            background: #e2e8f0;
+            border-radius: 7px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #6b7280, #374151);
+            width: 0%;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 7px;
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            padding: 12px 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #64748b;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .badge.earned {
+            background: linear-gradient(135deg, #6b7280, #374151);
+            color: white;
+            border-color: #6b7280;
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
+            animation: badgeEarn 0.8s ease-out;
+        }
+
+        @keyframes badgeEarn {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(5deg); }
+            100% { transform: scale(1.05) rotate(0deg); }
+        }
+
+        /* Reading Section */
+        .reading-section {
+            margin-bottom: 50px;
+        }
+
+        .reading-title {
+            font-size: 1.6em;
+            font-weight: 800;
+            color: #374151;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .story-text {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 20px;
+            padding: 45px;
+            margin-bottom: 30px;
+            border: 2px solid #f1f5f9;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            line-height: 1.8;
+            font-size: 1.1em;
+            color: #374155;
+            position: relative;
+        }
+
+        .story-text::before {
+            content: '"';
+            position: absolute;
+            top: 15px;
+            left: 25px;
+            font-size: 4em;
+            color: #e2e8f0;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .story-text p {
+            margin-bottom: 20px;
+            text-align: justify;
+            text-indent: 1.5em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .story-text p:first-child {
+            text-indent: 0;
+            margin-top: 20px;
+        }
+
+        .reading-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Questions Section */
+        .questions-section {
+            margin-top: 50px;
+        }
+
+        .question {
+            background: white;
+            border: 2px solid #f1f5f9;
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            transition: all 0.3s ease;
+        }
+
+        .question:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            border-color: #e2e8f0;
+        }
+
+        .question-type {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .question-type.grammar {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+        }
+
+        .question-type.comprehension {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+        }
+
+        .question-text {
+            font-size: 1.3em;
+            color: #374151;
+            font-weight: 700;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: grid;
+            gap: 15px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 20px 25px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(107, 114, 128, 0.05), transparent);
+            transition: left 0.5s;
+        }
+
+        .option:hover::before {
+            left: 100%;
+        }
+
+        .option:hover {
+            border-color: #6b7280;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #374151;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            transform: translateX(5px);
+        }
+
+        .option.correct-answer {
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            border-color: #10b981;
+            animation: correctPulse 1s ease-in-out;
+        }
+
+        .option.wrong-answer {
+            background: linear-gradient(135deg, #fef2f2, #fecaca);
+            border-color: #ef4444;
+            animation: wrongShake 0.6s ease-in-out;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: translateX(5px); }
+            50% { transform: translateX(8px) scale(1.02); box-shadow: 0 8px 25px rgba(16, 185, 129, 0.2); }
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .option input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.3);
+            accent-color: #6b7280;
+        }
+
+        .option label {
+            font-weight: 600;
+            font-size: 1.05em;
+            cursor: pointer;
+            flex: 1;
+            color: #374155;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #f1f5f9;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1.05em;
+            transition: all 0.3s ease;
+            text-transform: none;
+            letter-spacing: 0.3px;
+            position: relative;
+            overflow: hidden;
+            min-width: 160px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6b7280, #374151);
+            color: white;
+            box-shadow: 0 4px 15px rgba(107, 114, 128, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #374151, #1f2937);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(107, 114, 128, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+            color: #374151;
+            border: 2px solid #d1d5db;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #d1d5db, #9ca3af);
+            color: #1f2937;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        /* Score Section */
+        .score {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #6b7280, #374151);
+            color: white;
+            border-radius: 20px;
+            font-size: 1.4em;
+            font-weight: 800;
+            box-shadow: 0 8px 30px rgba(107, 114, 128, 0.4);
+            animation: scoreAppear 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes scoreAppear {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Feedback */
+        .feedback {
+            margin-top: 30px;
+            animation: feedbackSlide 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes feedbackSlide {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Celebration Animations */
         .celebration-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -27,7 +603,7 @@
             transform: translate(-50%, -50%);
             font-size: 4em;
             font-weight: 900;
-            background: linear-gradient(135deg, #1e3a8a, #dc2626);
+            background: linear-gradient(135deg, #6b7280, #374151);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             z-index: 10000;
@@ -40,13 +616,15 @@
             50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
         }
 
-        .confetti {
+        .confetti, .firework {
             position: fixed;
-            width: 10px; height: 10px;
-            background: #1e3a8a;
-            animation: confettiFall linear forwards;
             pointer-events: none;
             z-index: 9998;
+        }
+
+        .confetti {
+            width: 10px; height: 10px;
+            animation: confettiFall linear forwards;
         }
 
         @keyframes confettiFall {
@@ -55,12 +633,9 @@
         }
 
         .firework {
-            position: fixed;
             width: 6px; height: 6px;
             border-radius: 50%;
             animation: fireworkExplode 1.5s ease-out forwards;
-            pointer-events: none;
-            z-index: 9998;
         }
 
         @keyframes fireworkExplode {
@@ -69,59 +644,94 @@
             100% { transform: scale(25); opacity: 0; }
         }
 
-        /* CSS ESPECÍFICO PARA STORY READING */
-        .story-text {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 16px;
-            padding: 40px;
-            margin: 30px 0;
-            line-height: 1.8;
-            font-size: 1.1em;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border: 3px solid rgba(30, 58, 138, 0.1);
-        }
-
-        .story-text p {
-            margin-bottom: 20px;
-            color: #374155;
-            text-align: justify;
-        }
-
-        /* QUESTION TYPES - ESPECÍFICO */
-        .question-type {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            font-weight: 700;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .question-type.grammar {
-            background: linear-gradient(135deg, #a855f7, #7c3aed);
-            color: white;
-        }
-
-        .question-type.comprehension {
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            color: white;
-        }
-
-        /* READING CONTROLS - ESPECÍFICO */
-        .reading-controls {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin: 25px 0;
-            flex-wrap: wrap;
-        }
-
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .reading-controls {
+            .story-header {
+                padding: 30px 20px;
+            }
+
+            .story-main-title {
+                font-size: 2em;
+            }
+
+            .chapter-navigation {
+                padding: 25px 20px;
+            }
+
+            .chapter-cards {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .chapter-card {
+                padding: 20px 15px;
+                min-height: 120px;
+            }
+
+            .chapter-card .chapter-icon {
+                font-size: 2em;
+            }
+
+            .chapter-container {
+                padding: 30px 20px;
+            }
+
+            .chapter-title {
+                font-size: 1.8em;
+            }
+
+            .story-text {
+                padding: 30px 25px;
+                font-size: 1em;
+            }
+
+            .question {
+                padding: 25px 20px;
+            }
+
+            .question-text {
+                font-size: 1.2em;
+            }
+
+            .option {
+                padding: 18px 20px;
+            }
+
+            .controls {
                 flex-direction: column;
                 align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .celebration-text {
+                font-size: 2.5em;
+            }
+
+            .badges {
+                gap: 10px;
+            }
+
+            .badge {
+                padding: 10px 16px;
+                font-size: 0.8em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chapter-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .story-text {
+                padding: 25px 20px;
+            }
+
+            .story-text p {
+                text-indent: 0;
             }
         }
     </style>
@@ -129,21 +739,21 @@
 <body class="neighbor-page">
     <!-- User Info -->
     <div style="position: fixed; top: 15px; right: 15px; z-index: 1000;">
-        <div style="background: rgba(255,255,255,0.95); border-radius: 15px; padding: 8px 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #dc2626; backdrop-filter: blur(10px);">
-            <span style="color: #1e3a8a; font-weight: 700; margin-right: 8px; font-size: 0.8em;">👋 <span id="userName">Aluno</span></span>
-            <button onclick="logout()" style="background: #dc2626; color: white; border: none; padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 0.75em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='#ef4444'" onmouseout="this.style.background='#dc2626'">🚪 Sair</button>
+        <div style="background: rgba(255,255,255,0.95); border-radius: 15px; padding: 8px 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #6b7280; backdrop-filter: blur(10px);">
+            <span style="color: #374151; font-weight: 700; margin-right: 8px; font-size: 0.8em;">👋 <span id="userName">Aluno</span></span>
+            <button onclick="logout()" style="background: #6b7280; color: white; border: none; padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 0.75em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='#374151'" onmouseout="this.style.background='#6b7280'">🚪 Sair</button>
         </div>
     </div>
     
     <div class="container">
-        <div class="header">
-            <a href="index.html" style="text-decoration: none; color: inherit;">
-                <div class="logo">
-                    Teacher Alex <span class="logo-highlight">English Academy</span> BETA
-                </div>
-            </a>
-            <div class="story-title">📺 The Perfect Neighbor</div>
-            <div class="level-badge">📖 Nível A2 Low - Pure Reading</div>
+        <button class="back-button" onclick="goBackToHub()">
+            ← Voltar ao Reading Hub
+        </button>
+        
+        <div class="story-header">
+            <div class="story-main-title">📺 The Perfect Neighbor</div>
+            <div class="story-subtitle">Um thriller psicológico sobre obsessão e identidade</div>
+            <div class="story-level-badge">📖 Nível A2 Low - Pure Reading</div>
         </div>
     
         <!-- NAVEGAÇÃO DE CAPÍTULOS -->
@@ -200,7 +810,7 @@
     </div>
     
     <script>
-        // ===== SISTEMA DE PROTEÇÃO DE LOGIN PURO =====
+        // ===== SISTEMA DE PROTEÇÃO DE LOGIN =====
         function checkLogin() {
             if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
                 window.location.href = 'login.html';
@@ -219,9 +829,13 @@
             return sessionStorage.getItem('studentUsername') || 'Student';
         }
 
+        function goBackToHub() {
+            window.location.href = 'pure-reading-hub.html';
+        }
+
         if (!checkLogin()) throw new Error('Not logged in');
 
-        // ===== SISTEMA DE PROGRESSO PURO LOCALSTORAGE =====
+        // ===== SISTEMA DE PROGRESSO =====
         class StudentProgress {
             constructor() {
                 this.studentId = sessionStorage.getItem('studentUsername') || 'student';
@@ -249,7 +863,7 @@
 
             saveProgress() { 
                 localStorage.setItem(this.progressKey, JSON.stringify(this.data));
-                console.log(`💾 Progresso salvo no localStorage para ${this.studentId}`);
+                console.log(`💾 Progresso salvo para ${this.studentId}`);
             }
 
             completeNeighborChapter(chapterNumber, score, timeSpent) {
@@ -292,7 +906,7 @@
                 const notification = document.createElement('div');
                 notification.style.cssText = `
                     position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-                    background: linear-gradient(135deg, #1e3a8a, #dc2626); color: white;
+                    background: linear-gradient(135deg, #6b7280, #374151); color: white;
                     padding: 25px 35px; border-radius: 20px; z-index: 10000; text-align: center;
                     box-shadow: 0 15px 40px rgba(0,0,0,0.3); backdrop-filter: blur(10px);
                 `;
@@ -306,7 +920,7 @@
             }
         }
 
-        // ===== SISTEMA DE CAPÍTULOS - 5 HISTÓRIAS COMPLETAS =====
+        // ===== SISTEMA DE CAPÍTULOS =====
         const chapters = {
             1: { 
                 title: "The New Neighbor", 
@@ -862,7 +1476,7 @@ Because sometimes, the perfect neighbor is perfectly dangerous.`,
         }
         
         function createConfetti() {
-            const colors = ['#1e3a8a', '#dc2626', '#fbbf24', '#10b981', '#8b5cf6'];
+            const colors = ['#6b7280', '#374151', '#fbbf24', '#10b981', '#3b82f6'];
             for (let i = 0; i < 50; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
@@ -942,14 +1556,14 @@ Because sometimes, the perfect neighbor is perfectly dangerous.`,
                     const typeLabel = isGrammar ? 'GRAMÁTICA' : 'INTERPRETAÇÃO';
                     
                     resultHTML = `
-                        <div style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1)); border-left: 5px solid #10b981; padding: 20px; border-radius: 12px; margin-bottom: 15px; border: 2px solid rgba(16, 185, 129, 0.2);">
-                            <div style="font-weight: 800; color: #059669; margin-bottom: 10px; font-size: 1.1em;">
+                        <div style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.1)); border-left: 5px solid #10b981; padding: 25px; border-radius: 15px; margin-bottom: 20px; border: 2px solid rgba(16, 185, 129, 0.2);">
+                            <div style="font-weight: 800; color: #059669; margin-bottom: 12px; font-size: 1.2em;">
                                 ✅ Questão ${index + 1} (${typeLabel}) ${iconType}: CORRETO! 🎯
                             </div>
-                            <div style="color: #047857; font-size: 1em; line-height: 1.5;">
+                            <div style="color: #047857; font-size: 1.05em; line-height: 1.6;">
                                 <strong>Pergunta:</strong> ${chapter.questions[key].text}<br>
-                                <strong>Sua resposta:</strong> <span style="background: rgba(34, 197, 94, 0.2); padding: 4px 8px; border-radius: 6px; font-weight: 700;">${selectedOptionText}</span> 
-                                <span style="color: #10b981; font-size: 1.2em;">✨</span>
+                                <strong>Sua resposta:</strong> <span style="background: rgba(34, 197, 94, 0.2); padding: 6px 12px; border-radius: 8px; font-weight: 700;">${selectedOptionText}</span> 
+                                <span style="color: #10b981; font-size: 1.3em;">✨</span>
                             </div>
                         </div>
                     `;
@@ -958,14 +1572,14 @@ Because sometimes, the perfect neighbor is perfectly dangerous.`,
                     const typeLabel = isGrammar ? 'GRAMÁTICA' : 'INTERPRETAÇÃO';
                     
                     resultHTML = `
-                        <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1)); border-left: 5px solid #ef4444; padding: 20px; border-radius: 12px; margin-bottom: 15px; border: 2px solid rgba(239, 68, 68, 0.2);">
-                            <div style="font-weight: 800; color: #dc2626; margin-bottom: 10px; font-size: 1.1em;">
+                        <div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1)); border-left: 5px solid #ef4444; padding: 25px; border-radius: 15px; margin-bottom: 20px; border: 2px solid rgba(239, 68, 68, 0.2);">
+                            <div style="font-weight: 800; color: #dc2626; margin-bottom: 12px; font-size: 1.2em;">
                                 ❌ Questão ${index + 1} (${typeLabel}) ${iconType}: INCORRETO 
                             </div>
-                            <div style="color: #991b1b; font-size: 1em; line-height: 1.5;">
+                            <div style="color: #991b1b; font-size: 1.05em; line-height: 1.6;">
                                 <strong>Pergunta:</strong> ${chapter.questions[key].text}<br>
-                                <strong>Sua resposta:</strong> <span style="background: rgba(239, 68, 68, 0.2); padding: 4px 8px; border-radius: 6px; font-weight: 600;">${selectedOptionText}</span><br>
-                                <strong>Resposta correta:</strong> <span style="background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white; padding: 4px 10px; border-radius: 8px; font-weight: 700; margin-top: 5px; display: inline-block;">${correctOptionText}</span>
+                                <strong>Sua resposta:</strong> <span style="background: rgba(239, 68, 68, 0.2); padding: 6px 12px; border-radius: 8px; font-weight: 600;">${selectedOptionText}</span><br>
+                                <strong>Resposta correta:</strong> <span style="background: linear-gradient(135deg, #fbbf24, #f59e0b); color: white; padding: 6px 14px; border-radius: 10px; font-weight: 700; margin-top: 8px; display: inline-block;">${correctOptionText}</span>
                             </div>
                         </div>
                     `;
@@ -995,43 +1609,43 @@ Because sometimes, the perfect neighbor is perfectly dangerous.`,
             let feedbackHeader = '';
             if (score === 5) {
                 feedbackHeader = `
-                    <div style="text-align: center; background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 25px; border-radius: 15px; margin-bottom: 25px; font-size: 1.3em; font-weight: 800; box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);">
+                    <div style="text-align: center; background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 30px; border-radius: 20px; margin-bottom: 30px; font-size: 1.4em; font-weight: 800; box-shadow: 0 12px 35px rgba(16, 185, 129, 0.4);">
                         🎉 CAPÍTULO PERFEITO! 📚✨<br>
-                        <span style="font-size: 0.8em; opacity: 0.9;">Você entendeu perfeitamente a história!</span>
+                        <span style="font-size: 0.75em; opacity: 0.9; font-weight: 600;">Você entendeu perfeitamente a história!</span>
                     </div>
                 `;
             } else if (score === 4) {
                 feedbackHeader = `
-                    <div style="text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; padding: 25px; border-radius: 15px; margin-bottom: 25px; font-size: 1.3em; font-weight: 800; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);">
+                    <div style="text-align: center; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; padding: 30px; border-radius: 20px; margin-bottom: 30px; font-size: 1.4em; font-weight: 800; box-shadow: 0 12px 35px rgba(59, 130, 246, 0.4);">
                         ⭐ EXCELENTE LEITURA! 🎯<br>
-                        <span style="font-size: 0.8em; opacity: 0.9;">Quase perfeito! Continue assim!</span>
+                        <span style="font-size: 0.75em; opacity: 0.9; font-weight: 600;">Quase perfeito! Continue assim!</span>
                     </div>
                 `;
             } else if (score === 3) {
                 feedbackHeader = `
-                    <div style="text-align: center; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 25px; border-radius: 15px; margin-bottom: 25px; font-size: 1.2em; font-weight: 800; box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);">
+                    <div style="text-align: center; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 30px; border-radius: 20px; margin-bottom: 30px; font-size: 1.3em; font-weight: 800; box-shadow: 0 12px 35px rgba(245, 158, 11, 0.4);">
                         👍 BOM TRABALHO! 💪<br>
-                        <span style="font-size: 0.8em; opacity: 0.9;">Continue lendo e praticando!</span>
+                        <span style="font-size: 0.75em; opacity: 0.9; font-weight: 600;">Continue lendo e praticando!</span>
                     </div>
                 `;
             } else {
                 feedbackHeader = `
-                    <div style="text-align: center; background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 25px; border-radius: 15px; margin-bottom: 25px; font-size: 1.2em; font-weight: 800; box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4);">
+                    <div style="text-align: center; background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 30px; border-radius: 20px; margin-bottom: 30px; font-size: 1.3em; font-weight: 800; box-shadow: 0 12px 35px rgba(239, 68, 68, 0.4);">
                         💪 CONTINUE TENTANDO! 📖<br>
-                        <span style="font-size: 0.8em; opacity: 0.9;">Releia cuidadosamente e tente novamente!</span>
+                        <span style="font-size: 0.75em; opacity: 0.9; font-weight: 600;">Releia cuidadosamente e tente novamente!</span>
                     </div>
                 `;
             }
             
             const statsHTML = `
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
-                    <div style="background: rgba(59, 130, 246, 0.1); border: 2px solid #3b82f6; border-radius: 12px; padding: 18px; text-align: center;">
-                        <div style="font-size: 1.6em; font-weight: 800; color: #1d4ed8;">📖 ${comprehensionScore}/3</div>
-                        <div style="color: #1e40af; font-weight: 700;">Interpretação</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+                    <div style="background: rgba(59, 130, 246, 0.1); border: 2px solid #3b82f6; border-radius: 15px; padding: 25px; text-align: center;">
+                        <div style="font-size: 1.8em; font-weight: 800; color: #1d4ed8;">📖 ${comprehensionScore}/3</div>
+                        <div style="color: #1e40af; font-weight: 700; font-size: 1.1em;">Interpretação</div>
                     </div>
-                    <div style="background: rgba(168, 85, 247, 0.1); border: 2px solid #a855f7; border-radius: 12px; padding: 18px; text-align: center;">
-                        <div style="font-size: 1.6em; font-weight: 800; color: #7c3aed;">🧠 ${grammarScore}/2</div>
-                        <div style="color: #6d28d9; font-weight: 700;">Gramática</div>
+                    <div style="background: rgba(168, 85, 247, 0.1); border: 2px solid #a855f7; border-radius: 15px; padding: 25px; text-align: center;">
+                        <div style="font-size: 1.8em; font-weight: 800; color: #7c3aed;">🧠 ${grammarScore}/2</div>
+                        <div style="color: #6d28d9; font-weight: 700; font-size: 1.1em;">Gramática</div>
                     </div>
                 </div>
             `;
@@ -1045,7 +1659,7 @@ Because sometimes, the perfect neighbor is perfectly dangerous.`,
                     behavior: 'smooth', 
                     block: 'center' 
                 });
-            }, 500);
+            }, 600);
         }
         
         function resetQuiz() {
@@ -1075,6 +1689,9 @@ Because sometimes, the perfect neighbor is perfectly dangerous.`,
                 switchToChapter(currentChapter + 1);
             } else {
                 alert('🎉 Parabéns! Você terminou "The Perfect Neighbor"! 🏆📺');
+                setTimeout(() => {
+                    window.location.href = 'pure-reading-hub.html';
+                }, 2000);
             }
         }
         
@@ -1083,9 +1700,9 @@ Because sometimes, the perfect neighbor is perfectly dangerous.`,
             const studentName = getStudentName();
             document.getElementById('userName').textContent = studentName;
             
-            console.log(`📖 The Perfect Neighbor carregado - usuário: ${studentName}`);
-            console.log('💾 Sistema localStorage puro - Firebase EXTERMINADO!');
-            console.log('📚 5 capítulos preservados com sistema de quiz completo');
+            console.log(`📺 The Perfect Neighbor REDESIGNED - usuário: ${studentName}`);
+            console.log('✨ Design completamente reformulado!');
+            console.log('📱 Mobile-first e desktop perfeito');
             
             createChapterCards();
             loadChapter(currentChapter);
