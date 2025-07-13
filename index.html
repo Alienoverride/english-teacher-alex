@@ -250,6 +250,31 @@
                 font-size: 1.1em !important;
             }
         }
+        /* ===== EFEITO ESMAECIDO PARA CARDS ESPECIAIS ===== */
+
+/* Cards esmaecidos por padrão */
+.coming-soon,
+.secret-area {
+    opacity: 0.5 !important;
+    filter: grayscale(30%) !important;
+    transition: all 0.4s ease !important;
+}
+
+/* Ativar cor normal no hover */
+.coming-soon:hover,
+.secret-area:hover {
+    opacity: 1 !important;
+    filter: grayscale(0%) !important;
+    transform: translateY(-8px) !important;
+}
+
+/* Ativar cor normal no clique/toque (mobile) */
+.coming-soon:active,
+.secret-area:active {
+    opacity: 1 !important;
+    filter: grayscale(0%) !important;
+    transform: translateY(-4px) scale(0.98) !important;
+}
     </style>
 </head>
 <body>
