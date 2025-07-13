@@ -491,9 +491,9 @@ if ('serviceWorker' in navigator) {
     </div>
     
     <script>
-        // ===== SISTEMA DE PROTEÇÃO DE LOGIN CRÍTICO =====
+        // ===== SISTEMA DE PROTEÇÃO DE LOGIN CRÍTICO - CORRIGIDO =====
         function checkLogin() {
-            if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
+            if (localStorage.getItem('studentLoggedIn') !== 'true') {
                 window.location.href = 'login.html';
                 return false;
             }
@@ -501,13 +501,13 @@ if ('serviceWorker' in navigator) {
         }
 
         function logout() {
-            sessionStorage.removeItem('studentLoggedIn');
-            sessionStorage.removeItem('studentUsername');
+            localStorage.removeItem('studentLoggedIn');
+            localStorage.removeItem('studentUsername');
             window.location.href = 'login.html';
         }
 
         function getStudentName() {
-            return sessionStorage.getItem('studentUsername') || 'Student';
+            return localStorage.getItem('studentUsername') || 'Student';
         }
 
         // PROTEÇÃO IMEDIATA - BLOQUEAR ACESSO SEM LOGIN
@@ -516,10 +516,10 @@ if ('serviceWorker' in navigator) {
             throw new Error('Access denied - redirecting to login');
         }
 
-        // ===== SISTEMA DE PROGRESSO PURO LOCALSTORAGE =====
+        // ===== SISTEMA DE PROGRESSO PURO LOCALSTORAGE - CORRIGIDO =====
         class SimpleProgress {
             constructor() {
-                this.studentId = sessionStorage.getItem('studentUsername') || 'student';
+                this.studentId = localStorage.getItem('studentUsername') || 'student';
                 this.progressKey = `progress_${this.studentId}`;
                 this.loadProgress();
             }
