@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="layout.css">
     <link rel="stylesheet" href="theme-patriot.css">
     <style>
-        /* CSS específico do Pure Reading Hub - tema cinza neutro vs patriótico */
+        /* CSS específico do Pure Reading Hub REVOLUTIONIZED */
         .hub-title {
             font-size: 2.5em;
             font-weight: 800;
@@ -44,7 +44,7 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
-        .reading-level-section {
+        .reading-overview {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             border-radius: 16px;
@@ -52,17 +52,66 @@
             margin-bottom: 40px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
             border: 3px solid rgba(107, 114, 128, 0.15);
+            text-align: center;
+        }
+
+        .reading-overview::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #6b7280, #374151, #111827);
+        }
+
+        .overview-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(107, 114, 128, 0.1), rgba(55, 65, 81, 0.1));
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid rgba(107, 114, 128, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.2em;
+            font-weight: 800;
+            color: #374151;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .level-sections {
+            display: grid;
+            gap: 40px;
+        }
+
+        .level-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border: 3px solid rgba(107, 114, 128, 0.15);
             position: relative;
             overflow: hidden;
             transition: all 0.4s ease;
         }
 
-        .reading-level-section:hover {
+        .level-section:hover {
             transform: translateY(-3px);
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
         }
 
-        .reading-level-section::before {
+        .level-section::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0;
@@ -81,14 +130,14 @@
             background: linear-gradient(90deg, #111827, #030712);
         }
 
-        .reading-level-header {
+        .level-header {
             display: flex;
             align-items: center;
             margin-bottom: 30px;
             gap: 20px;
         }
 
-        .reading-level-badge {
+        .level-badge {
             padding: 15px 30px;
             border-radius: 12px;
             font-weight: 800;
@@ -97,130 +146,105 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
-        .level-a2-low .reading-level-badge {
+        .level-a2-low .level-badge {
             background: linear-gradient(135deg, #6b7280, #4b5563);
         }
 
-        .level-a2-mid .reading-level-badge {
+        .level-a2-mid .level-badge {
             background: linear-gradient(135deg, #374151, #1f2937);
         }
 
-        .level-b1 .reading-level-badge {
+        .level-b1 .level-badge {
             background: linear-gradient(135deg, #111827, #030712);
         }
 
-        .reading-level-title {
+        .level-info {
+            flex: 1;
+        }
+
+        .level-title {
             font-size: 2em;
             font-weight: 800;
             color: #374155;
+            margin-bottom: 8px;
         }
 
-        .reading-level-description {
-            color: #64748b;
-            font-size: 1.2em;
-            margin-top: 10px;
-            font-weight: 500;
-        }
-
-        .stories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 30px;
-        }
-
-        .story-card {
-            background: rgba(255, 255, 255, 0.9);
-            border: 3px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 35px;
-            text-decoration: none;
-            color: inherit;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            min-height: 420px;
-        }
-
-        .story-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.6s;
-            z-index: 1;
-        }
-
-        .story-card:hover::before {
-            left: 100%;
-        }
-
-        .story-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
-            border-color: #6b7280;
-            background: white;
-        }
-
-        .story-icon {
-            font-size: 4.5em;
-            margin-bottom: 20px;
-            text-align: center;
-            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
-            position: relative;
-            z-index: 2;
-        }
-
-        .story-title {
-            font-size: 1.7em;
-            font-weight: 800;
-            color: #374155;
-            margin-bottom: 15px;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .story-description {
+        .level-description {
             color: #64748b;
             font-size: 1.1em;
-            margin-bottom: 20px;
-            text-align: center;
             font-weight: 500;
-            flex-grow: 1;
-            position: relative;
-            z-index: 2;
         }
 
-        .story-features {
-            list-style: none;
+        .level-stories {
+            font-size: 0.95em;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+
+        .progress-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
             margin-bottom: 25px;
-            position: relative;
-            z-index: 2;
         }
 
-        .story-features li {
+        .progress-bar {
+            flex: 1;
+            height: 12px;
+            background: #e5e7eb;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.8s ease;
+        }
+
+        .level-a2-low .progress-fill {
+            background: linear-gradient(90deg, #6b7280, #4b5563);
+        }
+
+        .level-a2-mid .progress-fill {
+            background: linear-gradient(90deg, #374151, #1f2937);
+        }
+
+        .level-b1 .progress-fill {
+            background: linear-gradient(90deg, #111827, #030712);
+        }
+
+        .progress-text {
+            font-weight: 700;
+            color: #374155;
+            font-size: 1.1em;
+        }
+
+        .level-features {
+            list-style: none;
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .level-features li {
             color: #64748b;
-            margin-bottom: 10px;
             font-weight: 500;
-            position: relative;
             padding-left: 30px;
+            position: relative;
             font-size: 1.05em;
         }
 
-        .story-features li::before {
+        .level-features li::before {
             content: '📖';
             position: absolute;
             left: 0;
             font-size: 1.2em;
         }
 
-        .story-button {
-            background: linear-gradient(135deg, #6b7280, #374155);
-            color: white;
+        .level-button {
             padding: 16px 32px;
             border: none;
             border-radius: 12px;
@@ -228,33 +252,27 @@
             cursor: pointer;
             font-size: 1.1em;
             transition: all 0.4s ease;
-            text-align: center;
-            margin-top: auto;
-            position: relative;
-            z-index: 2;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            min-width: 200px;
+            color: white;
         }
 
-        .story-button:hover {
-            background: linear-gradient(135deg, #374155, #1f2937);
+        .level-a2-low .level-button {
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+        }
+
+        .level-a2-mid .level-button {
+            background: linear-gradient(135deg, #374151, #1f2937);
+        }
+
+        .level-b1 .level-button {
+            background: linear-gradient(135deg, #111827, #030712);
+        }
+
+        .level-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(107, 114, 128, 0.4);
-        }
-
-        .coming-soon {
-            opacity: 0.75;
-            border-style: dashed !important;
-            cursor: default !important;
-        }
-
-        .coming-soon:hover {
-            transform: translateY(-4px) !important;
-            opacity: 1;
-        }
-
-        .coming-soon-button {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
-            cursor: not-allowed !important;
-            opacity: 0.8;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
 
         @media (max-width: 768px) {
@@ -266,46 +284,39 @@
                 font-size: 1.2em;
             }
 
-            .reading-level-header {
+            .level-header {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 15px;
             }
 
-            .reading-level-title {
+            .level-title {
                 font-size: 1.6em;
             }
 
-            .reading-level-description {
-                font-size: 1.1em;
+            .overview-stats {
+                grid-template-columns: repeat(2, 1fr);
             }
 
-            .stories-grid {
+            .progress-section {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+
+            .level-features {
                 grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .story-card {
-                padding: 25px;
-                min-height: 380px;
-            }
-
-            .story-icon {
-                font-size: 3.5em;
-            }
-
-            .story-title {
-                font-size: 1.5em;
             }
         }
     </style>
 </head>
 <body>
     <!-- User Info -->
-    <div class="user-info">
-        <div class="user-avatar" id="userAvatar">A</div>
-        <div class="user-name" id="userName">Aluno</div>
-        <button class="logout-btn" onclick="logout()">Sair</button>
+    <div style="position: fixed; top: 15px; right: 15px; z-index: 1000;">
+        <div style="background: rgba(255,255,255,0.95); border-radius: 15px; padding: 8px 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #6b7280; backdrop-filter: blur(10px);">
+            <span style="color: #374151; font-weight: 700; margin-right: 8px; font-size: 0.8em;">👋 <span id="userName">Aluno</span></span>
+            <button onclick="logout()" style="background: #6b7280; color: white; border: none; padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 0.75em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='#374151'" onmouseout="this.style.background='#6b7280'">🚪 Sair</button>
+        </div>
     </div>
 
     <div class="container">
@@ -318,164 +329,122 @@
                 </div>
             </a>
             <div class="hub-title">📺 Pure Reading Hub</div>
-            <div class="hub-subtitle">Foco 100% na interpretação textual sem apoio de áudio</div>
+            <div class="hub-subtitle">Sistema completo para dominar a interpretação textual</div>
         </div>
 
-        <!-- A2 Low Level -->
-        <div class="level-section reading-level-section level-a2-low">
-            <div class="reading-level-header">
-                <div class="reading-level-badge">A2 Low - Elementary</div>
-                <div>
-                    <div class="reading-level-title">Nível Elementar Inicial</div>
-                    <div class="reading-level-description">Interpretação textual pura para desenvolver autonomia de leitura</div>
+        <!-- Overview Global -->
+        <div class="reading-overview">
+            <h3 style="color: #374151; font-size: 1.5em; margin-bottom: 20px;">📊 Seu Progresso de Leitura</h3>
+            <div class="overview-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalCompleted">0</div>
+                    <div class="stat-label">Histórias Concluídas</div>
                 </div>
-            </div>
-            
-            <div class="stories-grid">
-                <a href="neighbor.html" class="story-card">
-                    <div class="story-icon">📺</div>
-                    <div class="story-title">The Perfect Neighbor</div>
-                    <div class="story-description">Thriller psicológico sobre Helena, uma vizinha que quer roubar a vida de Paula</div>
-                    <ul class="story-features">
-                        <li>5 capítulos envolventes</li>
-                        <li>Leitura pura sem áudio</li>
-                        <li>Vocabulário A2 estruturado</li>
-                        <li>Foco na interpretação</li>
-                        <li>História de suspense</li>
-                    </ul>
-                    <button class="story-button">Começar Leitura Pura</button>
-                    <div class="progress-badge" id="neighborProgress">✅ Disponível</div>
-                </a>
-
-                <div class="story-card coming-soon">
-                    <div class="story-icon">🏥</div>
-                    <div class="story-title">The Hospital Mystery</div>
-                    <div class="story-description">Enfermeira descobre segredos obscuros no hospital onde trabalha</div>
-                    <ul class="story-features">
-                        <li>4 capítulos de mistério</li>
-                        <li>Vocabulário médico básico</li>
-                        <li>Tensão psicológica</li>
-                        <li>Interpretação avançada</li>
-                        <li>Final surpreendente</li>
-                    </ul>
-                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                <div class="stat-card">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Histórias Disponíveis</div>
                 </div>
-
-                <div class="story-card coming-soon">
-                    <div class="story-icon">🏫</div>
-                    <div class="story-title">The New Teacher</div>
-                    <div class="story-description">Professor substituto esconde um passado sombrio que ameaça a escola</div>
-                    <ul class="story-features">
-                        <li>5 capítulos dramáticos</li>
-                        <li>Vocabulário escolar avançado</li>
-                        <li>Desenvolvimento de personagens</li>
-                        <li>Leitura independente</li>
-                        <li>Reflexões pedagógicas</li>
-                    </ul>
-                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalBadges">0</div>
+                    <div class="stat-label">Badges Conquistadas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="averageScore">0</div>
+                    <div class="stat-label">Pontuação Média</div>
                 </div>
             </div>
         </div>
 
-        <!-- A2 Mid Level -->
-        <div class="level-section reading-level-section level-a2-mid">
-            <div class="reading-level-header">
-                <div class="reading-level-badge">A2 Mid - Elementary Plus</div>
-                <div>
-                    <div class="reading-level-title">Nível Elementar Avançado</div>
-                    <div class="reading-level-description">Textos mais complexos para consolidar autonomia de leitura</div>
+        <!-- Level Sections -->
+        <div class="level-sections">
+            <!-- A2 Low Level -->
+            <div class="level-section level-a2-low">
+                <div class="level-header">
+                    <div class="level-badge">🔸 A2 Low</div>
+                    <div class="level-info">
+                        <div class="level-title">Nível Elementar Inicial</div>
+                        <div class="level-description">Interpretação textual pura para desenvolver autonomia de leitura</div>
+                        <div class="level-stories">4 histórias disponíveis • Perfect Neighbor já liberada</div>
+                    </div>
                 </div>
+                
+                <div class="progress-section">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="a2LowProgress" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-text" id="a2LowText">0/4 Concluídas</div>
+                </div>
+                
+                <ul class="level-features">
+                    <li>The Perfect Neighbor - thriller psicológico disponível</li>
+                    <li>The Hospital Mystery - mistério médico</li>
+                    <li>The New Teacher - drama escolar</li>
+                    <li>Vocabulário A2 estruturado e controlado</li>
+                </ul>
+                
+                <button class="level-button" onclick="goToLevel('a2-low')">📖 Começar Leitura</button>
             </div>
-            
-            <div class="stories-grid">
-                <div class="story-card coming-soon">
-                    <div class="story-icon">🌃</div>
-                    <div class="story-title">City of Secrets</div>
-                    <div class="story-description">Jornalista investiga corrupção e descobre conspiração que envolve toda a cidade</div>
-                    <ul class="story-features">
-                        <li>6 capítulos investigativos</li>
-                        <li>Vocabulário jornalístico</li>
-                        <li>Interpretação complexa</li>
-                        <li>Leitura crítica</li>
-                        <li>Temas sociais</li>
-                    </ul>
-                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
-                </div>
 
-                <div class="story-card coming-soon">
-                    <div class="story-icon">🏰</div>
-                    <div class="story-title">The Last Library</div>
-                    <div class="story-description">Em futuro distópico, bibliotecária protege últimos livros da humanidade</div>
-                    <ul class="story-features">
-                        <li>5 capítulos futurísticos</li>
-                        <li>Vocabulário tecnológico</li>
-                        <li>Ficção científica</li>
-                        <li>Reflexão social</li>
-                        <li>Leitura imaginativa</li>
-                    </ul>
-                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+            <!-- A2 Mid Level -->
+            <div class="level-section level-a2-mid">
+                <div class="level-header">
+                    <div class="level-badge">🔹 A2 Mid</div>
+                    <div class="level-info">
+                        <div class="level-title">Nível Elementar Avançado</div>
+                        <div class="level-description">Textos mais complexos para consolidar autonomia de leitura</div>
+                        <div class="level-stories">4 histórias • City of Secrets, Last Library, Island Dreams</div>
+                    </div>
                 </div>
-
-                <div class="story-card coming-soon">
-                    <div class="story-icon">⛵</div>
-                    <div class="story-title">Island of Lost Dreams</div>
-                    <div class="story-description">Náufrago descobre ilha misteriosa onde sonhos se tornam realidade</div>
-                    <ul class="story-features">
-                        <li>4 capítulos fantásticos</li>
-                        <li>Vocabulário de aventura</li>
-                        <li>Interpretação simbólica</li>
-                        <li>Narrativa psicológica</li>
-                        <li>Final reflexivo</li>
-                    </ul>
-                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                
+                <div class="progress-section">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="a2MidProgress" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-text" id="a2MidText">0/4 Concluídas</div>
                 </div>
+                
+                <ul class="level-features">
+                    <li>City of Secrets - jornalismo investigativo</li>
+                    <li>The Last Library - ficção científica distópica</li>
+                    <li>Island of Lost Dreams - fantasia psicológica</li>
+                    <li>Interpretação complexa e leitura crítica</li>
+                </ul>
+                
+                <button class="level-button" onclick="goToLevel('a2-mid')">🌟 Avançar Leitura</button>
             </div>
-        </div>
 
-        <!-- B1 Level -->
-        <div class="level-section reading-level-section level-b1">
-            <div class="reading-level-header">
-                <div class="reading-level-badge">B1 - Intermediate</div>
-                <div>
-                    <div class="reading-level-title">Nível Intermediário</div>
-                    <div class="reading-level-description">Para seus poucos alunos avançados - leitura autônoma complexa</div>
+            <!-- B1 Level -->
+            <div class="level-section level-b1">
+                <div class="level-header">
+                    <div class="level-badge">⚫ B1</div>
+                    <div class="level-info">
+                        <div class="level-title">Nível Intermediário</div>
+                        <div class="level-description">Para alunos avançados - leitura autônoma complexa</div>
+                        <div class="level-stories">4 histórias • Digital Detective, Climate Warrior</div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="stories-grid">
-                <div class="story-card coming-soon">
-                    <div class="story-icon">🕵️</div>
-                    <div class="story-title">The Digital Detective</div>
-                    <div class="story-description">Investigador especializado em crimes cibernéticos enfrenta seu maior desafio</div>
-                    <ul class="story-features">
-                        <li>7 capítulos complexos</li>
-                        <li>Vocabulário técnico avançado</li>
-                        <li>Interpretação crítica</li>
-                        <li>Leitura analítica</li>
-                        <li>Temas contemporâneos</li>
-                    </ul>
-                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                
+                <div class="progress-section">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="b1Progress" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-text" id="b1Text">0/4 Concluídas</div>
                 </div>
-
-                <div class="story-card coming-soon">
-                    <div class="story-icon">🌍</div>
-                    <div class="story-title">The Climate Warrior</div>
-                    <div class="story-description">Ativista ambiental luta contra corporações que destroem o planeta</div>
-                    <ul class="story-features">
-                        <li>6 capítulos inspiradores</li>
-                        <li>Vocabulário ambiental</li>
-                        <li>Leitura consciente</li>
-                        <li>Interpretação profunda</li>
-                        <li>Mensagem social</li>
-                    </ul>
-                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
-                </div>
+                
+                <ul class="level-features">
+                    <li>The Digital Detective - crimes cibernéticos</li>
+                    <li>The Climate Warrior - ativismo ambiental</li>
+                    <li>Vocabulário técnico avançado</li>
+                    <li>Interpretação crítica e análise profunda</li>
+                </ul>
+                
+                <button class="level-button" onclick="goToLevel('b1')">🏆 Desafio Expert</button>
             </div>
         </div>
     </div>
 
     <script>
-        // ===== SISTEMA DE PROTEÇÃO DE LOGIN SEM FIREBASE =====
+        // ===== SISTEMA DE PROTEÇÃO DE LOGIN =====
         function checkLogin() {
             if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
                 window.location.href = 'login.html';
@@ -498,13 +467,10 @@
             window.location.href = 'index.html';
         }
 
-        // Verificar login ao carregar a página
-        if (!checkLogin()) {
-            throw new Error('Not logged in');
-        }
+        if (!checkLogin()) throw new Error('Not logged in');
 
-        // ===== SISTEMA DE PROGRESSO 100% LOCALSTORAGE =====
-        class ProgressTracker {
+        // ===== SISTEMA DE PROGRESSO READING HUB =====
+        class ReadingHubProgress {
             constructor() {
                 this.studentId = sessionStorage.getItem('studentUsername') || 'student';
                 this.progressKey = `progress_${this.studentId}`;
@@ -517,73 +483,135 @@
                     this.data = JSON.parse(saved);
                 } else {
                     this.data = {
-                        listening: { lessonsCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                        reading: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                        roommate: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                        neighbor: { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] },
-                        globalBadges: [], lastActivity: null, joinDate: new Date().toISOString(), totalStudyTime: 0
+                        listening: { lessonsCompleted: [], bestScores: {}, badges: [] },
+                        reading: { chaptersCompleted: [], bestScores: {}, badges: [] },
+                        roommate: { chaptersCompleted: [], bestScores: {}, badges: [] },
+                        neighbor: { chaptersCompleted: [], bestScores: {}, badges: [] },
+                        globalBadges: [],
+                        totalStudyTime: 0
                     };
-                }
-                if (!this.data.neighbor) {
-                    this.data.neighbor = { chaptersCompleted: [], bestScores: {}, totalAttempts: 0, badges: [] };
                 }
             }
 
-            getProgressBadge(category, totalChapters) {
-                const completed = this.data[category] ? this.data[category].chaptersCompleted.length : 0;
-                if (completed === 0) return '✅ Disponível';
-                if (completed === totalChapters) return '🏆 Completo';
-                return `${completed}/${totalChapters} ✓`;
+            getReadingStats() {
+                // Neighbor é A2-Low disponível
+                const neighbor = this.data.neighbor || { chaptersCompleted: [], bestScores: {}, badges: [] };
+                const reading = this.data.reading || { chaptersCompleted: [], bestScores: {}, badges: [] };
+                
+                const totalCompleted = neighbor.chaptersCompleted.length + reading.chaptersCompleted.length;
+                const totalBadges = neighbor.badges.length + reading.badges.length;
+                
+                // Calcular pontuação média
+                const allScores = { ...neighbor.bestScores, ...reading.bestScores };
+                const scores = Object.values(allScores);
+                const averageScore = scores.length > 0 ? 
+                    (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : 0;
+
+                // Progresso por nível
+                const a2LowCompleted = neighbor.chaptersCompleted.length; // Perfect Neighbor tem 5 capítulos
+                const a2MidCompleted = 0; // Em breve
+                const b1Completed = 0; // Em breve
+
+                return {
+                    totalCompleted,
+                    totalBadges,
+                    averageScore,
+                    a2Low: { completed: a2LowCompleted, total: 4 },
+                    a2Mid: { completed: a2MidCompleted, total: 4 },
+                    b1: { completed: b1Completed, total: 4 },
+                    // Verificações de acesso
+                    canAccessA2Mid: a2LowCompleted >= 3,
+                    canAccessB1: a2LowCompleted >= 3 && a2MidCompleted >= 2
+                };
             }
         }
 
-        // ===== INICIALIZAÇÃO SEM FIREBASE =====
-        document.addEventListener('DOMContentLoaded', function() {
-            const studentName = getStudentName();
-            const progressTracker = new ProgressTracker();
+        function goToLevel(level) {
+            console.log(`🚀 Navegando para nível: ${level}`);
             
-            console.log(`✅ Pure Reading Hub carregado - usuário: ${studentName}`);
-            console.log('📖 CSS externos + localStorage puro - ZERO Firebase');
+            // Verificar pré-requisitos
+            const progressTracker = new ReadingHubProgress();
+            const stats = progressTracker.getReadingStats();
             
-            // Atualizar informações do usuário
-            document.getElementById('userName').textContent = studentName;
-            document.getElementById('userAvatar').textContent = studentName.charAt(0).toUpperCase();
-            
-            // Atualizar badge de progresso do Perfect Neighbor REAL
-            const neighborProgress = document.getElementById('neighborProgress');
-            if (neighborProgress) {
-                neighborProgress.textContent = progressTracker.getProgressBadge('neighbor', 5);
-                if (progressTracker.data.neighbor && progressTracker.data.neighbor.chaptersCompleted.length > 0) {
-                    neighborProgress.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-                }
+            if (level === 'a2-mid' && !stats.canAccessA2Mid) {
+                alert('🔒 ACESSO BLOQUEADO!\n\nPara acessar o A2 Mid Level, você precisa completar pelo menos 3 histórias do A2 Low Level primeiro.\n\nProgresso atual: ' + stats.a2Low.completed + '/4 histórias A2 Low concluídas.');
+                return;
             }
             
-            console.log('📊 Badge de progresso Perfect Neighbor atualizada com dados reais');
-        });
+            if (level === 'b1' && !stats.canAccessB1) {
+                alert('🔒 NÍVEL EXPERT BLOQUEADO!\n\nPara acessar o B1 Level, você precisa:\n• Completar pelo menos 3 histórias A2 Low\n• Completar pelo menos 2 histórias A2 Mid\n\nEste nível é apenas para alunos experientes!');
+                return;
+            }
+            
+            // Feedback visual no botão
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = 'Carregando...';
+            button.style.opacity = '0.7';
+            
+            setTimeout(() => {
+                if (level === 'a2-low') {
+                    window.location.href = 'pure-reading-a2-low.html';
+                } else if (level === 'a2-mid') {
+                    window.location.href = 'pure-reading-a2-mid.html';
+                } else if (level === 'b1') {
+                    window.location.href = 'pure-reading-b1.html';
+                }
+            }, 600);
+        }
 
-        // ===== NAVEGAÇÃO COM LOADING =====
-        document.querySelectorAll('.story-card[href]').forEach(card => {
-            card.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Efeito de loading
-                const button = this.querySelector('.story-button');
-                const originalText = button.textContent;
-                button.textContent = 'Carregando...';
-                button.style.background = '#6b7280';
-                
-                // Feedback visual
-                this.style.opacity = '0.7';
-                
-                setTimeout(() => {
-                    window.location.href = this.getAttribute('href');
-                }, 800);
-            });
-        });
+        function updateLevelProgress(level, completed, total) {
+            const percentage = (completed / total) * 100;
+            const progressElement = document.getElementById(`${level}Progress`);
+            const textElement = document.getElementById(`${level}Text`);
+            
+            if (progressElement && textElement) {
+                progressElement.style.width = percentage + '%';
+                textElement.textContent = `${completed}/${total} Concluídas`;
+            }
+        }
 
-        console.log('✅ Pure Reading Hub - Versão CSS Externa + Tema Cinza');
-        console.log('📉 Redução: ~45% menor (22KB → 12KB)');
-        console.log('🎯 Arquitetura limpa preparada para Firebase futuro');
+        // ===== INICIALIZAÇÃO =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const studentName = getStudentName();
+            const progressTracker = new ReadingHubProgress();
+            const stats = progressTracker.getReadingStats();
+            
+            console.log(`📖 Pure Reading Hub REVOLUTIONIZED carregado - usuário: ${studentName}`);
+            console.log('📊 Stats de reading:', stats);
+            console.log('🚀 3 sub-páginas criadas: A2-Low, A2-Mid, B1');
+            
+            // Atualizar user info
+            document.getElementById('userName').textContent = studentName;
+            
+            // Atualizar overview global
+            document.getElementById('totalCompleted').textContent = stats.totalCompleted;
+            document.getElementById('totalBadges').textContent = stats.totalBadges;
+            document.getElementById('averageScore').textContent = stats.averageScore;
+            
+            // Atualizar progresso por nível
+            updateLevelProgress('a2Low', stats.a2Low.completed, stats.a2Low.total);
+            updateLevelProgress('a2Mid', stats.a2Mid.completed, stats.a2Mid.total);
+            updateLevelProgress('b1', stats.b1.completed, stats.b1.total);
+            
+            // Aplicar estilos de bloqueio se necessário
+            const a2MidButton = document.querySelector('.level-a2-mid .level-button');
+            const b1Button = document.querySelector('.level-b1 .level-button');
+            
+            if (!stats.canAccessA2Mid && a2MidButton) {
+                a2MidButton.style.background = '#9ca3af';
+                a2MidButton.style.cursor = 'not-allowed';
+                a2MidButton.textContent = '🔒 Bloqueado';
+            }
+            
+            if (!stats.canAccessB1 && b1Button) {
+                b1Button.style.background = '#9ca3af';
+                b1Button.style.cursor = 'not-allowed';
+                b1Button.textContent = '🔒 Expert Bloqueado';
+            }
+            
+            console.log('✅ Pure Reading Hub inicializado com 3 níveis: A2-Low(4) + A2-Mid(4) + B1(4) = 12 histórias!');
+        });
     </script>
 </body>
 </html>
