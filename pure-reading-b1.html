@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pure Reading B1 - Teacher Alex English Academy BETA</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="theme-patriot.css">
+    <style>
+        /* CSS específico do B1 Level */
+        .b1-title {
+            font-size: 2.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #111827, #030712);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .b1-subtitle {
+            font-size: 1.2em;
+            color: #111827;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .back-to-hub {
+            background: linear-gradient(135deg, #6b7280, #374155);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            font-size: 1em;
+        }
+
+        .back-to-hub:hover {
+            background: linear-gradient(135deg, #374155, #6b7280);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Expert Level Notice */
+        .expert-notice {
+            background: linear-gradient(135deg, rgba(17, 24, 39, 0.05), rgba(3, 7, 18, 0.05));
+            border: 2px solid rgba(17, 24, 39, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .expert-notice::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #111827, #030712);
+        }
+
+        .expert-notice h3 {
+            color: #111827;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .expert-notice p {
+            color: #374151;
+            font-size: 1.1em;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        /* Stories Navigation */
+        .stories-navigation {
+            padding: 40px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stories-navigation::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #111827, #030712, #000000);
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 35px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Story Card - B1 Expert Style */
+        .story-card {
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 40px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 450px;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .story-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(17, 24, 39, 0.08), transparent);
+            transition: left 0.6s;
+            z-index: 1;
+        }
+
+        .story-card:hover::before {
+            left: 100%;
+        }
+
+        .story-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.2);
+            border-color: #111827;
+            background: white;
+        }
+
+        .story-card.coming-soon {
+            opacity: 0.8;
+            border-style: dashed;
+            cursor: default;
+        }
+
+        .story-card.coming-soon:hover {
+            transform: translateY(-5px);
+            opacity: 1;
+        }
+
+        .story-icon {
+            font-size: 5em;
+            margin-bottom: 25px;
+            text-align: center;
+            filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.15));
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-title {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 18px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-description {
+            color: #4b5563;
+            font-size: 1.15em;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 500;
+            flex-grow: 1;
+            position: relative;
+            z-index: 2;
+            line-height: 1.6;
+        }
+
+        .story-features {
+            list-style: none;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-features li {
+            color: #4b5563;
+            margin-bottom: 12px;
+            font-weight: 500;
+            position: relative;
+            padding-left: 35px;
+            font-size: 1.1em;
+        }
+
+        .story-features li::before {
+            content: '🏆';
+            position: absolute;
+            left: 0;
+            font-size: 1.3em;
+        }
+
+        .story-button {
+            background: linear-gradient(135deg, #111827, #030712);
+            color: white;
+            padding: 18px 35px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.4s ease;
+            text-align: center;
+            margin-top: auto;
+            position: relative;
+            z-index: 2;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .story-button:hover {
+            background: linear-gradient(135deg, #030712, #000000);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(17, 24, 39, 0.5);
+        }
+
+        .story-button.coming-soon-button {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        .progress-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #fbbf24;
+            color: #92400e;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 700;
+            z-index: 3;
+            box-shadow: 0 5px 15px rgba(251, 191, 36, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .difficulty-indicator {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(135deg, #111827, #030712);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 800;
+            z-index: 3;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 768px) {
+            .b1-title {
+                font-size: 1.8em;
+            }
+
+            .stories-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .story-card {
+                padding: 30px;
+                min-height: 400px;
+            }
+            
+            .story-icon {
+                font-size: 4em;
+            }
+            
+            .story-title {
+                font-size: 1.6em;
+            }
+        }
+    </style>
+</head>
+<body class="reading-page">
+    <!-- User Info -->
+    <div style="position: fixed; top: 15px; right: 15px; z-index: 1000;">
+        <div style="background: rgba(255,255,255,0.95); border-radius: 15px; padding: 8px 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #111827; backdrop-filter: blur(10px);">
+            <span style="color: #111827; font-weight: 700; margin-right: 8px; font-size: 0.8em;">👋 <span id="userName">Aluno</span></span>
+            <button onclick="logout()" style="background: #111827; color: white; border: none; padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 0.75em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='#030712'" onmouseout="this.style.background='#111827'">🚪 Sair</button>
+        </div>
+    </div>
+    
+    <div class="container reading-page">
+        <button class="back-to-hub" onclick="goBackToHub()">← Voltar ao Reading Hub</button>
+        
+        <div class="header">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <div class="logo">
+                    Teacher Alex <span class="logo-highlight">English Academy</span> BETA
+                </div>
+            </a>
+            <div class="b1-title">⚫ Pure Reading B1 Level</div>
+            <div class="b1-subtitle">4 histórias • Interpretação textual avançada para experts</div>
+        </div>
+
+        <!-- Expert Level Notice -->
+        <div class="expert-notice">
+            <h3>⚫ NÍVEL EXPERT - SOMENTE PARA ALUNOS AVANÇADOS</h3>
+            <p>Este nível é destinado aos <strong>poucos alunos</strong> que já dominaram completamente os níveis A2. As histórias aqui contêm vocabulário técnico, temas complexos e exigem <strong>interpretação crítica avançada</strong>. Recomendado apenas após dominar pelo menos 6 histórias dos níveis anteriores.</p>
+        </div>
+        
+        <!-- NAVEGAÇÃO DE HISTÓRIAS B1 -->
+        <div class="stories-navigation">
+            <div class="nav-title">🏆 Escolha sua História B1 Expert</div>
+            <div class="stories-grid">
+                
+                <!-- The Digital Detective - EM BREVE -->
+                <div class="story-card coming-soon">
+                    <div class="difficulty-indicator">EXPERT</div>
+                    <div class="progress-badge">🚀 Em Breve</div>
+                    <div class="story-icon">🕵️</div>
+                    <div class="story-title">The Digital Detective</div>
+                    <div class="story-description">Investigador especializado em crimes cibernéticos enfrenta seu maior desafio quando hackers ameaçam todo o sistema financeiro global</div>
+                    <ul class="story-features">
+                        <li>7 capítulos de suspense tecnológico</li>
+                        <li>Vocabulário técnico de TI avançado</li>
+                        <li>Interpretação crítica complexa</li>
+                        <li>Leitura analítica profunda</li>
+                        <li>Temas cibernéticos atuais</li>
+                    </ul>
+                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                </div>
+
+                <!-- The Climate Warrior - EM BREVE -->
+                <div class="story-card coming-soon">
+                    <div class="difficulty-indicator">EXPERT</div>
+                    <div class="progress-badge">🚀 Em Breve</div>
+                    <div class="story-icon">🌍</div>
+                    <div class="story-title">The Climate Warrior</div>
+                    <div class="story-description">Ativista ambiental luta contra corporações multinacionais que destroem o planeta, descobrindo uma conspiração global</div>
+                    <ul class="story-features">
+                        <li>6 capítulos inspiradores e dramáticos</li>
+                        <li>Vocabulário ambiental científico</li>
+                        <li>Leitura consciente e política</li>
+                        <li>Interpretação de dados científicos</li>
+                        <li>Mensagem social profunda</li>
+                    </ul>
+                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                </div>
+
+                <!-- The Quantum Architect - EM BREVE -->
+                <div class="story-card coming-soon">
+                    <div class="difficulty-indicator">EXPERT</div>
+                    <div class="progress-badge">🚀 Em Breve</div>
+                    <div class="story-icon">⚛️</div>
+                    <div class="story-title">The Quantum Architect</div>
+                    <div class="story-description">Física quântica descobre que pode alterar a realidade através de cálculos matemáticos, mas cada mudança tem consequências</div>
+                    <ul class="story-features">
+                        <li>5 capítulos de ficção científica hard</li>
+                        <li>Vocabulário científico complexo</li>
+                        <li>Conceitos físicos avançados</li>
+                        <li>Interpretação de teorias</li>
+                        <li>Reflexões filosóficas profundas</li>
+                    </ul>
+                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                </div>
+
+                <!-- The Neural Network - EM BREVE -->
+                <div class="story-card coming-soon">
+                    <div class="difficulty-indicator">EXPERT</div>
+                    <div class="progress-badge">🚀 Em Breve</div>
+                    <div class="story-icon">🧠</div>
+                    <div class="story-title">The Neural Network</div>
+                    <div class="story-description">Neurocientista desenvolve IA que consegue ler pensamentos humanos, levantando questões éticas sobre privacidade mental</div>
+                    <ul class="story-features">
+                        <li>6 capítulos de thriller científico</li>
+                        <li>Vocabulário de neurociência e IA</li>
+                        <li>Dilemas éticos complexos</li>
+                        <li>Interpretação de dados técnicos</li>
+                        <li>Futuro da humanidade</li>
+                    </ul>
+                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // ===== SISTEMA DE PROTEÇÃO DE LOGIN =====
+        function checkLogin() {
+            if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+
+        function logout() {
+            sessionStorage.removeItem('studentLoggedIn');
+            sessionStorage.removeItem('studentUsername');
+            window.location.href = 'login.html';
+        }
+
+        function getStudentName() {
+            return sessionStorage.getItem('studentUsername') || 'Student';
+        }
+
+        function goBackToHub() {
+            window.location.href = 'pure-reading-hub.html';
+        }
+
+        if (!checkLogin()) throw new Error('Not logged in');
+
+        // ===== INICIALIZAÇÃO =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const studentName = getStudentName();
+            
+            console.log(`⚫ B1 Expert Level carregado - usuário: ${studentName}`);
+            console.log('🏆 4 histórias expert: Digital Detective, Climate Warrior, Quantum Architect, Neural Network');
+            console.log('💀 NÍVEL EXPERT - Somente para os poucos alunos avançados!');
+            
+            // Atualizar user info
+            document.getElementById('userName').textContent = studentName;
+            
+            console.log('✅ B1 Expert Level inicializado - preparado para os mestres da leitura');
+        });
+    </script>
+</body>
+</html>

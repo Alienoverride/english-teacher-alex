@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pure Reading A2 Low - Teacher Alex English Academy BETA</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="theme-patriot.css">
+    <style>
+        /* CSS específico do A2 Low Level */
+        .a2-low-title {
+            font-size: 2.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .a2-low-subtitle {
+            font-size: 1.2em;
+            color: #4b5563;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .back-to-hub {
+            background: linear-gradient(135deg, #6b7280, #374155);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            font-size: 1em;
+        }
+
+        .back-to-hub:hover {
+            background: linear-gradient(135deg, #374155, #6b7280);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Stories Navigation */
+        .stories-navigation {
+            padding: 40px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stories-navigation::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #6b7280, #4b5563, #374151);
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Story Card - A2 Low Style */
+        .story-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 3px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 35px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 420px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .story-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(107, 114, 128, 0.1), transparent);
+            transition: left 0.6s;
+            z-index: 1;
+        }
+
+        .story-card:hover::before {
+            left: 100%;
+        }
+
+        .story-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+            border-color: #6b7280;
+            background: white;
+        }
+
+        .story-card.available {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .story-card.available:hover {
+            border-color: #059669;
+        }
+
+        .story-card.coming-soon {
+            opacity: 0.7;
+            border-style: dashed;
+            cursor: default;
+        }
+
+        .story-card.coming-soon:hover {
+            transform: translateY(-4px);
+            opacity: 1;
+        }
+
+        .story-icon {
+            font-size: 4.5em;
+            margin-bottom: 20px;
+            text-align: center;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-title {
+            font-size: 1.7em;
+            font-weight: 800;
+            color: #374155;
+            margin-bottom: 15px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-description {
+            color: #64748b;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 500;
+            flex-grow: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-features {
+            list-style: none;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-features li {
+            color: #64748b;
+            margin-bottom: 10px;
+            font-weight: 500;
+            position: relative;
+            padding-left: 30px;
+            font-size: 1.05em;
+        }
+
+        .story-features li::before {
+            content: '📖';
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+
+        .story-button {
+            background: linear-gradient(135deg, #6b7280, #374155);
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.4s ease;
+            text-align: center;
+            margin-top: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-button:hover {
+            background: linear-gradient(135deg, #374155, #1f2937);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(107, 114, 128, 0.4);
+        }
+
+        .story-button.available-button {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .story-button.available-button:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+        }
+
+        .story-button.coming-soon-button {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        .progress-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #10b981;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 700;
+            z-index: 3;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        .story-card.coming-soon .progress-badge {
+            background: #fbbf24;
+            color: #92400e;
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .a2-low-title {
+                font-size: 1.8em;
+            }
+
+            .stories-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .story-card {
+                padding: 25px;
+                min-height: 380px;
+            }
+            
+            .story-icon {
+                font-size: 3.5em;
+            }
+            
+            .story-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body class="reading-page">
+    <!-- User Info -->
+    <div style="position: fixed; top: 15px; right: 15px; z-index: 1000;">
+        <div style="background: rgba(255,255,255,0.95); border-radius: 15px; padding: 8px 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #6b7280; backdrop-filter: blur(10px);">
+            <span style="color: #374151; font-weight: 700; margin-right: 8px; font-size: 0.8em;">👋 <span id="userName">Aluno</span></span>
+            <button onclick="logout()" style="background: #6b7280; color: white; border: none; padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 0.75em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='#374155'" onmouseout="this.style.background='#6b7280'">🚪 Sair</button>
+        </div>
+    </div>
+    
+    <div class="container reading-page">
+        <button class="back-to-hub" onclick="goBackToHub()">← Voltar ao Reading Hub</button>
+        
+        <div class="header">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <div class="logo">
+                    Teacher Alex <span class="logo-highlight">English Academy</span> BETA
+                </div>
+            </a>
+            <div class="a2-low-title">🔸 Pure Reading A2 Low Level</div>
+            <div class="a2-low-subtitle">4 histórias • Interpretação textual elementar inicial</div>
+        </div>
+        
+        <!-- NAVEGAÇÃO DE HISTÓRIAS A2 LOW -->
+        <div class="stories-navigation">
+            <div class="nav-title">📖 Escolha sua História A2 Low</div>
+            <div class="stories-grid">
+                
+                <!-- The Perfect Neighbor - DISPONÍVEL -->
+                <a href="neighbor.html" class="story-card available">
+                    <div class="progress-badge" id="neighborProgress">✅ Disponível</div>
+                    <div class="story-icon">📺</div>
+                    <div class="story-title">The Perfect Neighbor</div>
+                    <div class="story-description">Thriller psicológico sobre Helena, uma vizinha que quer roubar a vida de Paula</div>
+                    <ul class="story-features">
+                        <li>5 capítulos envolventes</li>
+                        <li>Leitura pura sem áudio</li>
+                        <li>Vocabulário A2 estruturado</li>
+                        <li>Foco na interpretação</li>
+                        <li>História de suspense</li>
+                    </ul>
+                    <button class="story-button available-button">📖 Começar Leitura</button>
+                </a>
+
+                <!-- The Hospital Mystery - EM BREVE -->
+                <div class="story-card coming-soon">
+                    <div class="progress-badge">🚀 Em Breve</div>
+                    <div class="story-icon">🏥</div>
+                    <div class="story-title">The Hospital Mystery</div>
+                    <div class="story-description">Enfermeira descobre segredos obscuros no hospital onde trabalha</div>
+                    <ul class="story-features">
+                        <li>4 capítulos de mistério</li>
+                        <li>Vocabulário médico básico</li>
+                        <li>Tensão psicológica</li>
+                        <li>Interpretação avançada</li>
+                        <li>Final surpreendente</li>
+                    </ul>
+                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                </div>
+
+                <!-- The New Teacher - EM BREVE -->
+                <div class="story-card coming-soon">
+                    <div class="progress-badge">🚀 Em Breve</div>
+                    <div class="story-icon">🏫</div>
+                    <div class="story-title">The New Teacher</div>
+                    <div class="story-description">Professor substituto esconde um passado sombrio que ameaça a escola</div>
+                    <ul class="story-features">
+                        <li>5 capítulos dramáticos</li>
+                        <li>Vocabulário escolar avançado</li>
+                        <li>Desenvolvimento de personagens</li>
+                        <li>Leitura independente</li>
+                        <li>Reflexões pedagógicas</li>
+                    </ul>
+                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                </div>
+
+                <!-- The Coffee Shop Secrets - EM BREVE -->
+                <div class="story-card coming-soon">
+                    <div class="progress-badge">🚀 Em Breve</div>
+                    <div class="story-icon">☕</div>
+                    <div class="story-title">The Coffee Shop Secrets</div>
+                    <div class="story-description">Barista descobre que sua cafeteria é ponto de encontro de espiões</div>
+                    <ul class="story-features">
+                        <li>4 capítulos misteriosos</li>
+                        <li>Vocabulário cotidiano</li>
+                        <li>Aventura urbana</li>
+                        <li>Interpretação contextual</li>
+                        <li>Plot twist inesperado</li>
+                    </ul>
+                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // ===== SISTEMA DE PROTEÇÃO DE LOGIN =====
+        function checkLogin() {
+            if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+
+        function logout() {
+            sessionStorage.removeItem('studentLoggedIn');
+            sessionStorage.removeItem('studentUsername');
+            window.location.href = 'login.html';
+        }
+
+        function getStudentName() {
+            return sessionStorage.getItem('studentUsername') || 'Student';
+        }
+
+        function goBackToHub() {
+            window.location.href = 'pure-reading-hub.html';
+        }
+
+        if (!checkLogin()) throw new Error('Not logged in');
+
+        // ===== SISTEMA DE PROGRESSO A2 LOW =====
+        class A2LowProgress {
+            constructor() {
+                this.studentId = sessionStorage.getItem('studentUsername') || 'student';
+                this.progressKey = `progress_${this.studentId}`;
+                this.loadProgress();
+            }
+
+            loadProgress() {
+                const saved = localStorage.getItem(this.progressKey);
+                if (saved) {
+                    this.data = JSON.parse(saved);
+                } else {
+                    this.data = {
+                        listening: { lessonsCompleted: [], bestScores: {}, badges: [] },
+                        reading: { chaptersCompleted: [], bestScores: {}, badges: [] },
+                        roommate: { chaptersCompleted: [], bestScores: {}, badges: [] },
+                        neighbor: { chaptersCompleted: [], bestScores: {}, badges: [] },
+                        globalBadges: [],
+                        totalStudyTime: 0
+                    };
+                }
+            }
+
+            getNeighborProgress() {
+                const neighbor = this.data.neighbor || { chaptersCompleted: [], bestScores: {}, badges: [] };
+                const completed = neighbor.chaptersCompleted.length;
+                if (completed === 0) return '✅ Disponível';
+                if (completed === 5) return '🏆 Completo';
+                return `${completed}/5 ✓`;
+            }
+        }
+
+        // ===== INICIALIZAÇÃO =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const studentName = getStudentName();
+            const progressTracker = new A2LowProgress();
+            
+            console.log(`🔸 A2 Low Level carregado - usuário: ${studentName}`);
+            console.log('📖 4 histórias: Perfect Neighbor (disponível) + 3 em breve');
+            
+            // Atualizar user info
+            document.getElementById('userName').textContent = studentName;
+            
+            // Atualizar badge de progresso do Perfect Neighbor
+            const neighborProgress = document.getElementById('neighborProgress');
+            if (neighborProgress) {
+                neighborProgress.textContent = progressTracker.getNeighborProgress();
+                if (progressTracker.data.neighbor && progressTracker.data.neighbor.chaptersCompleted.length > 0) {
+                    neighborProgress.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                }
+            }
+            
+            console.log('✅ A2 Low Level inicializado com progresso real');
+        });
+
+        // ===== NAVEGAÇÃO COM LOADING =====
+        document.querySelectorAll('.story-card[href]').forEach(card => {
+            card.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Efeito de loading
+                const button = this.querySelector('.story-button');
+                const originalText = button.textContent;
+                button.textContent = 'Carregando...';
+                button.style.background = '#6b7280';
+                
+                // Feedback visual
+                this.style.opacity = '0.7';
+                
+                setTimeout(() => {
+                    window.location.href = this.getAttribute('href');
+                }, 800);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pure Reading A2 Mid - Teacher Alex English Academy BETA</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="theme-patriot.css">
+    <style>
+        /* CSS específico do A2 Mid Level */
+        .a2-mid-title {
+            font-size: 2.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #374151, #1f2937);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .a2-mid-subtitle {
+            font-size: 1.2em;
+            color: #1f2937;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .back-to-hub {
+            background: linear-gradient(135deg, #6b7280, #374155);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            font-size: 1em;
+        }
+
+        .back-to-hub:hover {
+            background: linear-gradient(135deg, #374155, #6b7280);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Stories Navigation */
+        .stories-navigation {
+            padding: 40px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stories-navigation::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #374151, #1f2937, #111827);
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Story Card - A2 Mid Style */
+        .story-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 3px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 35px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 420px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .story-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(55, 65, 81, 0.1), transparent);
+            transition: left 0.6s;
+            z-index: 1;
+        }
+
+        .story-card:hover::before {
+            left: 100%;
+        }
+
+        .story-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+            border-color: #374151;
+            background: white;
+        }
+
+        .story-card.coming-soon {
+            opacity: 0.75;
+            border-style: dashed;
+            cursor: default;
+        }
+
+        .story-card.coming-soon:hover {
+            transform: translateY(-4px);
+            opacity: 1;
+        }
+
+        .story-icon {
+            font-size: 4.5em;
+            margin-bottom: 20px;
+            text-align: center;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-title {
+            font-size: 1.7em;
+            font-weight: 800;
+            color: #374155;
+            margin-bottom: 15px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-description {
+            color: #64748b;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 500;
+            flex-grow: 1;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-features {
+            list-style: none;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-features li {
+            color: #64748b;
+            margin-bottom: 10px;
+            font-weight: 500;
+            position: relative;
+            padding-left: 30px;
+            font-size: 1.05em;
+        }
+
+        .story-features li::before {
+            content: '📚';
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+
+        .story-button {
+            background: linear-gradient(135deg, #374151, #1f2937);
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.4s ease;
+            text-align: center;
+            margin-top: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-button:hover {
+            background: linear-gradient(135deg, #1f2937, #111827);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(55, 65, 81, 0.4);
+        }
+
+        .story-button.coming-soon-button {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        .progress-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #fbbf24;
+            color: #92400e;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 700;
+            z-index: 3;
+            box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
+        }
+
+        .prerequisite-notice {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.1));
+            border: 2px solid rgba(251, 191, 36, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .prerequisite-notice h3 {
+            color: #92400e;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .prerequisite-notice p {
+            color: #78716c;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .a2-mid-title {
+                font-size: 1.8em;
+            }
+
+            .stories-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .story-card {
+                padding: 25px;
+                min-height: 380px;
+            }
+            
+            .story-icon {
+                font-size: 3.5em;
+            }
+            
+            .story-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body class="reading-page">
+    <!-- User Info -->
+    <div style="position: fixed; top: 15px; right: 15px; z-index: 1000;">
+        <div style="background: rgba(255,255,255,0.95); border-radius: 15px; padding: 8px 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px solid #374151; backdrop-filter: blur(10px);">
+            <span style="color: #374151; font-weight: 700; margin-right: 8px; font-size: 0.8em;">👋 <span id="userName">Aluno</span></span>
+            <button onclick="logout()" style="background: #374151; color: white; border: none; padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 0.75em; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.background='#1f2937'" onmouseout="this.style.background='#374151'">🚪 Sair</button>
+        </div>
+    </div>
+    
+    <div class="container reading-page">
+        <button class="back-to-hub" onclick="goBackToHub()">← Voltar ao Reading Hub</button>
+        
+        <div class="header">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <div class="logo">
+                    Teacher Alex <span class="logo-highlight">English Academy</span> BETA
+                </div>
+            </a>
+            <div class="a2-mid-title">🔹 Pure Reading A2 Mid Level</div>
+            <div class="a2-mid-subtitle">4 histórias • Interpretação textual elementar avançado</div>
+        </div>
+
+        <!-- Prerequisite Notice -->
+        <div class="prerequisite-notice">
+            <h3>📋 Pré-requisito Recomendado</h3>
+            <p>Complete pelo menos 3 histórias do <strong>A2 Low Level</strong> antes de começar este nível mais desafiador!</p>
+        </div>
+        
+        <!-- NAVEGAÇÃO DE HISTÓRIAS A2 MID -->
+        <div class="stories-navigation">
+            <div class="nav-title">📚 Escolha sua História A2 Mid</div>
+            <div class="stories-grid">
+                
+                <!-- City of Secrets - EM BREVE -->
+                <div class="story-card coming-soon">
+                    <div class="progress-badge">🚀 Em Breve</div>
+                    <div class="story-icon">🌃</div>
+                    <div class="story-title">City of Secrets</div>
+                    <div class="story-description">Jornalista investiga corrupção e descobre conspiração que envolve toda a cidade</div>
+                    <ul class="story-features">
+                        <li>6 capítulos investigativos</li>
+                        <li>Vocabulário jornalístico</li>
+                        <li>Interpretação complexa</li>
+                        <li>Leitura crítica</li>
+                        <li>Temas sociais atuais</li>
+                    </ul>
+                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                </div>
+
+                <!-- The Last Library - EM BREVE -->
+                <div class="story-card coming-soon">
+                    <div class="progress-badge">🚀 Em Breve</div>
+                    <div class="story-icon">🏰</div>
+                    <div class="story-title">The Last Library</div>
+                    <div class="story-description">Em futuro distópico, bibliotecária protege últimos livros da humanidade</div>
+                    <ul class="story-features">
+                        <li>5 capítulos futurísticos</li>
+                        <li>Vocabulário tecnológico</li>
+                        <li>Ficção científica</li>
+                        <li>Reflexão social profunda</li>
+                        <li>Leitura imaginativa</li>
+                    </ul>
+                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                </div>
+
+                <!-- Island of Lost Dreams - EM BREVE -->
+                <div class="story-card coming-soon">
+                    <div class="progress-badge">🚀 Em Breve</div>
+                    <div class="story-icon">⛵</div>
+                    <div class="story-title">Island of Lost Dreams</div>
+                    <div class="story-description">Náufrago descobre ilha misteriosa onde sonhos se tornam realidade</div>
+                    <ul class="story-features">
+                        <li>4 capítulos fantásticos</li>
+                        <li>Vocabulário de aventura</li>
+                        <li>Interpretação simbólica</li>
+                        <li>Narrativa psicológica</li>
+                        <li>Final reflexivo</li>
+                    </ul>
+                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                </div>
+
+                <!-- The Memory Thief - EM BREVE -->
+                <div class="story-card coming-soon">
+                    <div class="progress-badge">🚀 Em Breve</div>
+                    <div class="story-icon">🧠</div>
+                    <div class="story-title">The Memory Thief</div>
+                    <div class="story-description">Psicóloga descobre que pode roubar e transferir memórias entre pacientes</div>
+                    <ul class="story-features">
+                        <li>5 capítulos psicológicos</li>
+                        <li>Vocabulário científico</li>
+                        <li>Dilemas éticos</li>
+                        <li>Interpretação profunda</li>
+                        <li>Thriller psicológico</li>
+                    </ul>
+                    <button class="story-button coming-soon-button">🚀 Em Breve</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // ===== SISTEMA DE PROTEÇÃO DE LOGIN =====
+        function checkLogin() {
+            if (sessionStorage.getItem('studentLoggedIn') !== 'true') {
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+
+        function logout() {
+            sessionStorage.removeItem('studentLoggedIn');
+            sessionStorage.removeItem('studentUsername');
+            window.location.href = 'login.html';
+        }
+
+        function getStudentName() {
+            return sessionStorage.getItem('studentUsername') || 'Student';
+        }
+
+        function goBackToHub() {
+            window.location.href = 'pure-reading-hub.html';
+        }
+
+        if (!checkLogin()) throw new Error('Not logged in');
+
+        // ===== INICIALIZAÇÃO =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const studentName = getStudentName();
+            
+            console.log(`🔹 A2 Mid Level carregado - usuário: ${studentName}`);
+            console.log('📚 4 histórias em desenvolvimento: City Secrets, Last Library, Island Dreams, Memory Thief');
+            
+            // Atualizar user info
+            document.getElementById('userName').textContent = studentName;
+            
+            console.log('✅ A2 Mid Level inicializado - todas histórias em breve');
+        });
+    </script>
+</body>
+</html>
