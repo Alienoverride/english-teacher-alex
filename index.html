@@ -491,114 +491,42 @@ if ('serviceWorker' in navigator) {
     </div>
     
     <script>
-        // ===== SISTEMA DE PROTEÇÃO DE LOGIN CRÍTICO - CORRIGIDO =====
-// ===== CORREÇÃO COMPATIBILIDADE TOTAL - SUBSTITUA NO INDEX.HTML =====
-
-// ===== SISTEMA DE PROTEÇÃO DE LOGIN COMPATÍVEL =====
-function checkLogin() {
-    // Verifica localStorage primeiro, depois sessionStorage (compatibilidade)
-    const localLoggedIn = localStorage.getItem('studentLoggedIn') === 'true';
-    const sessionLoggedIn = sessionStorage.getItem('studentLoggedIn') === 'true';
-    
-    if (localLoggedIn || sessionLoggedIn) {
-        // Se está logado em qualquer um, migra para localStorage
-        if (sessionLoggedIn && !localLoggedIn) {
-            // Migra sessionStorage → localStorage
-            const username = sessionStorage.getItem('studentUsername');
-            localStorage.setItem('studentLoggedIn', 'true');
-            localStorage.setItem('studentUsername', username);
-            console.log('🔄 Migrado sessionStorage → localStorage');
+        // ===== SISTEMA DE PROTEÇÃO DE LOGIN COMPATÍVEL =====
+        function checkLogin() {
+            // Verifica localStorage primeiro, depois sessionStorage (compatibilidade)
+            const localLoggedIn = localStorage.getItem('studentLoggedIn') === 'true';
+            const sessionLoggedIn = sessionStorage.getItem('studentLoggedIn') === 'true';
+            
+            if (localLoggedIn || sessionLoggedIn) {
+                // Se está logado em qualquer um, migra para localStorage
+                if (sessionLoggedIn && !localLoggedIn) {
+                    // Migra sessionStorage → localStorage
+                    const username = sessionStorage.getItem('studentUsername');
+                    localStorage.setItem('studentLoggedIn', 'true');
+                    localStorage.setItem('studentUsername', username);
+                    console.log('🔄 Migrado sessionStorage → localStorage');
+                }
+                return true;
+            }
+            
+            window.location.href = 'login.html';
+            return false;
         }
-        return true;
-    }
-    
-    window.location.href = 'login.html';
-    return false;
-}
 
-function logout() {
-    // Limpa ambos para garantir
-    localStorage.removeItem('studentLoggedIn');
-    localStorage.removeItem('studentUsername');
-    sessionStorage.removeItem('studentLoggedIn');
-    sessionStorage.removeItem('studentUsername');
-    window.location.href = 'login.html';
-}
-
-function getStudentName() {
-    // Prioriza localStorage, fallback sessionStorage
-    return localStorage.getItem('studentUsername') || 
-           sessionStorage.getItem('studentUsername') || 'Student';
-}
-
-// PROTEÇÃO IMEDIATA - BLOQUEAR ACESSO SEM LOGIN
-if (!checkLogin()) {
-    document.body.innerHTML = '<div style="text-align:center;padding:50px;"><h1>Redirecionando para login...</h1></div>';
-    throw new Error('Access denied - redirecting to login');
-}
-
-// ===== SISTEMA DE PROGRESSO COMPATÍVEL =====
-class SimpleProgress {
-    constructor() {
-        // Pega username de qualquer storage
-        this.studentId = localStorage.getItem('studentUsername') || 
-                        sessionStorage.getItem('studentUsername') || 'student';
-        this.progressKey = `progress_${this.studentId}`;
-        this.loadProgress();
-    }
-
-    loadProgress() {
-        const saved = localStorage.getItem(this.progressKey);
-        if (saved) {
-            this.data = JSON.parse(saved);
-        } else {
-            this.data = {
-                listening: { lessonsCompleted: [], bestScores: {}, badges: [] },
-                reading: { chaptersCompleted: [], bestScores: {}, badges: [] },
-                roommate: { chaptersCompleted: [], bestScores: {}, badges: [] },
-                neighbor: { chaptersCompleted: [], bestScores: {}, badges: [] },
-                globalBadges: [],
-                totalStudyTime: 0
-            };
+        function logout() {
+            // Limpa ambos para garantir
+            localStorage.removeItem('studentLoggedIn');
+            localStorage.removeItem('studentUsername');
+            sessionStorage.removeItem('studentLoggedIn');
+            sessionStorage.removeItem('studentUsername');
+            window.location.href = 'login.html';
         }
-        if (!this.data.roommate) this.data.roommate = { chaptersCompleted: [], bestScores: {}, badges: [] };
-        if (!this.data.neighbor) this.data.neighbor = { chaptersCompleted: [], bestScores: {}, badges: [] };
-    }
 
-    getStats() {
-        // INCLUINDO FOUNDATION AGORA! 🟦
-        const foundationLessons = Array.from({length: 12}, (_, i) => `f${i + 1}`);
-        const foundationCompleted = foundationLessons.filter(lesson => 
-            this.data.listening.lessonsCompleted.includes(`lesson_${lesson}`)
-        ).length;
-        
-        // Lições regulares
-        const regularLessonsCompleted = this.data.listening.lessonsCompleted.filter(lesson => 
-            !lesson.startsWith('lesson_f')
-        ).length;
-        
-        // TOTAL: Foundation + Regular
-        const totalListeningLessons = foundationCompleted + regularLessonsCompleted;
-        
-        const readingChapters = this.data.reading.chaptersCompleted.length;
-        const roommateChapters = this.data.roommate.chaptersCompleted.length;
-        const neighborChapters = this.data.neighbor.chaptersCompleted.length;
-        const totalChapters = readingChapters + roommateChapters + neighborChapters;
-        const totalBadges = this.data.listening.badges.length + 
-                          this.data.reading.badges.length + 
-                          this.data.roommate.badges.length +
-                          this.data.neighbor.badges.length +
-                          this.data.globalBadges.length;
-        const studyTimeHours = Math.floor(this.data.totalStudyTime / (1000 * 60 * 60));
-
-        return {
-            lessonsCompleted: totalListeningLessons, // 📊 AGORA INCLUI FOUNDATION!
-            chaptersRead: totalChapters,
-            totalBadges: totalBadges,
-            studyTime: studyTimeHours
-        };
-    }
-}
+        function getStudentName() {
+            // Prioriza localStorage, fallback sessionStorage
+            return localStorage.getItem('studentUsername') || 
+                   sessionStorage.getItem('studentUsername') || 'Student';
+        }
 
         // PROTEÇÃO IMEDIATA - BLOQUEAR ACESSO SEM LOGIN
         if (!checkLogin()) {
@@ -606,10 +534,12 @@ class SimpleProgress {
             throw new Error('Access denied - redirecting to login');
         }
 
-        // ===== SISTEMA DE PROGRESSO PURO LOCALSTORAGE - CORRIGIDO =====
+        // ===== SISTEMA DE PROGRESSO COMPATÍVEL =====
         class SimpleProgress {
             constructor() {
-                this.studentId = localStorage.getItem('studentUsername') || 'student';
+                // Pega username de qualquer storage
+                this.studentId = localStorage.getItem('studentUsername') || 
+                                sessionStorage.getItem('studentUsername') || 'student';
                 this.progressKey = `progress_${this.studentId}`;
                 this.loadProgress();
             }
